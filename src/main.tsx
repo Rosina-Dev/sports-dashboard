@@ -153,6 +153,22 @@ const championsLeagueEvents: ScheduleEntry[] = [
   { label: "Champions League Final", date: "2027-06-05", location: "Europe" },
 ];
 
+const tennisMajorEvents: ScheduleEntry[] = [
+  { label: "Australian Open", date: "2026-01-12", location: "Melbourne", note: "Grand Slam hard-court major", url: "https://ausopen.com/" },
+  { label: "Roland-Garros", date: "2026-05-24", location: "Paris", note: "Grand Slam clay-court major", url: "https://www.rolandgarros.com/" },
+  { label: "Wimbledon: daily order of play", date: "2026-07-05", location: "London", note: "Active now; open schedule for today's matches and courts", url: "https://www.wimbledon.com/en_GB/scores/schedule/index.html" },
+  { label: "Wimbledon finals weekend", date: "2026-07-11", location: "London", note: "Ladies' final July 11; men's final July 12", url: "https://www.wimbledon.com/" },
+  { label: "US Open qualifying", date: "2026-08-24", location: "New York", note: "Qualifying week", url: "https://www.usopen.org/" },
+  { label: "US Open main draw", date: "2026-08-31", location: "New York", note: "Grand Slam hard-court major, Aug 31-Sep 13", url: "https://www.usopen.org/" },
+  { label: "WTA Finals", date: "2026-11-08", location: "Indian Wells, California", note: "Season-ending WTA championship, Nov 8-15", url: "https://www.wtatennis.com/" },
+  { label: "ATP Finals", date: "2026-11-15", location: "Turin", note: "Season-ending ATP championship window", url: "https://www.nittoatpfinals.com/" },
+];
+
+const swissTennisEvents: ScheduleEntry[] = [
+  { label: "Swiss Open Gstaad", date: "2026-07-13", location: "Gstaad, Switzerland", note: "ATP clay event after Wimbledon", url: "https://swissopengstaad.ch/" },
+  { label: "Swiss Indoors qualifying", date: "2026-10-24", location: "Basel", note: "Basel tournament opening weekend", url: "https://www.swissindoorsbasel.ch/" },
+  { label: "Swiss Indoors final", date: "2026-11-01", location: "Basel", note: "Basel final", url: "https://www.swissindoorsbasel.ch/" },
+];
 const trackFieldEvents: ScheduleEntry[] = [
   { label: "Diamond League summer stretch", date: "2026-07-10", location: "Global", note: "Elite meet season" },
   { label: "USATF Outdoor Championships window", date: "2027-06-24", location: "United States", note: "US national outdoor title window" },
@@ -475,6 +491,7 @@ const items: SportsItem[] = [
     timezone: "CH",
     note: "Basel-specific highlight in the tennis calendar.",
     source: "curated",
+    details: swissTennisEvents,
   },
   {
     id: "tennis-majors",
@@ -489,8 +506,23 @@ const items: SportsItem[] = [
     timezone: "Global",
     note: "Global tennis anchors, with majors as calendar markers.",
     source: "curated",
+    details: tennisMajorEvents,
   },
   {
+    id: "tennis-tour-watch",
+    title: "Tennis Tour Watch",
+    sport: "Tennis",
+    region: "Global",
+    seasonStart: "2026-06-29",
+    seasonEnd: "2026-11-22",
+    keyDate: "2026-07-05",
+    keyDateLabel: "Wimbledon order of play",
+    phases: ["Wimbledon", "Summer hard courts", "US Open", "WTA Finals", "ATP Finals"],
+    timezone: "Global",
+    note: "Current tennis tracker for Wimbledon, summer hard-court swing, US Open, and season finals.",
+    source: "curated",
+    details: tennisMajorEvents,
+  },  {
     id: "golf-majors",
     title: "Golf Majors",
     sport: "Golf",
