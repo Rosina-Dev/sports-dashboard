@@ -87,23 +87,17 @@ const f1Races: ScheduleEntry[] = [
   { label: "Abu Dhabi Grand Prix", date: "2026-12-06", location: "Yas Marina" },
 ];
 
-const fifaMatchUrl = "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/matches";
-
 const worldCupRounds: ScheduleEntry[] = [
-  { label: "Group stage", date: "2026-06-11", location: "USA, Mexico, Canada", note: "June 11-27", url: fifaMatchUrl },
-  { label: "Round of 32", date: "2026-06-28", location: "North America", note: "June 28-July 3; open FIFA fixtures for match-by-match results", url: fifaMatchUrl },
-  { label: "Round of 16: Morocco 3-0 Canada", date: "2026-07-04", location: "North America", note: "Completed knockout match", url: fifaMatchUrl },
-  { label: "Round of 16: France 1-0 Paraguay", date: "2026-07-04", location: "North America", note: "Completed knockout match", url: fifaMatchUrl },
-  { label: "Round of 16: Brazil vs Norway", date: "2026-07-05", location: "North America", note: "Today; listed as a Round of 16 match", url: fifaMatchUrl },
-  { label: "Round of 16: Mexico vs England", date: "2026-07-05", location: "Mexico City", note: "Today; listed as a Round of 16 match", url: fifaMatchUrl },
-  { label: "Round of 16: USA vs Belgium", date: "2026-07-06", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
-  { label: "Round of 16: Portugal vs Spain", date: "2026-07-06", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
-  { label: "Round of 16: Argentina vs Egypt", date: "2026-07-07", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
-  { label: "Round of 16: Switzerland vs Colombia", date: "2026-07-07", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
-  { label: "Quarterfinals", date: "2026-07-09", location: "North America", note: "July 9-11", url: fifaMatchUrl },
-  { label: "Semifinals", date: "2026-07-14", location: "North America", note: "July 14-15", url: fifaMatchUrl },
-  { label: "Third-place match", date: "2026-07-18", location: "North America", url: fifaMatchUrl },
-  { label: "Final", date: "2026-07-19", location: "New York/New Jersey", url: fifaMatchUrl },
+  { label: "Round of 16: Brazil vs Norway", date: "2026-07-05", location: "New York New Jersey Stadium", note: "Today, 4:00 PM ET" },
+  { label: "Round of 16: Mexico vs England", date: "2026-07-05", location: "Estadio Azteca, Mexico City", note: "Today, 8:00 PM ET" },
+  { label: "Round of 16: USA vs Belgium", date: "2026-07-06", location: "North America", note: "Date/time TBD in dashboard data" },
+  { label: "Round of 16: Portugal vs Spain", date: "2026-07-06", location: "North America", note: "Date/time TBD in dashboard data" },
+  { label: "Round of 16: Argentina vs Egypt", date: "2026-07-07", location: "North America", note: "Date/time TBD in dashboard data" },
+  { label: "Round of 16: Switzerland vs Colombia", date: "2026-07-07", location: "North America", note: "Date/time TBD in dashboard data" },
+  { label: "Quarterfinals", date: "2026-07-09", location: "North America", note: "July 9-11" },
+  { label: "Semifinals", date: "2026-07-14", location: "North America", note: "July 14-15" },
+  { label: "Third-place match", date: "2026-07-18", location: "North America" },
+  { label: "Final", date: "2026-07-19", location: "New York New Jersey Stadium", note: "World Cup Final" },
 ];
 
 
@@ -274,7 +268,7 @@ const items: SportsItem[] = [
     seasonEnd: "2026-07-19",
     keyDate: "2026-07-19",
     keyDateLabel: "World Cup Final",
-    phases: ["Group stage", "Round of 32", "Round of 16", "Quarterfinals", "Semifinals", "Final"],
+    phases: ["Round of 16", "Quarterfinals", "Semifinals", "Third-place match", "Final"],
     timezone: "Global",
     note: "Major soccer highlight across the USA, Mexico, and Canada, with both US and Swiss context relevant.",
     source: "curated",
@@ -491,7 +485,6 @@ const items: SportsItem[] = [
     timezone: "CH",
     note: "Basel-specific highlight in the tennis calendar.",
     source: "curated",
-    details: swissTennisEvents,
   },
   {
     id: "tennis-majors",
@@ -506,23 +499,8 @@ const items: SportsItem[] = [
     timezone: "Global",
     note: "Global tennis anchors, with majors as calendar markers.",
     source: "curated",
-    details: tennisMajorEvents,
   },
   {
-    id: "tennis-tour-watch",
-    title: "Tennis Tour Watch",
-    sport: "Tennis",
-    region: "Global",
-    seasonStart: "2026-06-29",
-    seasonEnd: "2026-11-22",
-    keyDate: "2026-07-05",
-    keyDateLabel: "Wimbledon order of play",
-    phases: ["Wimbledon", "Summer hard courts", "US Open", "WTA Finals", "ATP Finals"],
-    timezone: "Global",
-    note: "Current tennis tracker for Wimbledon, summer hard-court swing, US Open, and season finals.",
-    source: "curated",
-    details: tennisMajorEvents,
-  },  {
     id: "golf-majors",
     title: "Golf Majors",
     sport: "Golf",
@@ -844,17 +822,18 @@ function App() {
     [],
   );
 
-  const filtered = enriched.filter((item) => {
+  const visible = enriched.filter((item) => item.status !== "off-season" && daysUntil(nextActionDate(item)) >= 0);
+
+  const filtered = visible.filter((item) => {
     const matchesRegion = region === "All" || item.region === region;
     const matchesSport = sport === "All" || item.sport === sport;
-    const text = `${item.title} ${item.sport} ${item.region} ${item.keyDateLabel}`.toLowerCase();
+    const text = `${item.title} ${item.sport} ${regionLabel(item.region)} ${item.keyDateLabel}`.toLowerCase();
     return matchesRegion && matchesSport && text.includes(query.toLowerCase());
   });
 
-  const selected = enriched.find((item) => item.id === selectedId) ?? enriched[0];
-  const active = enriched.filter((item) => item.status === "active now" || item.status === "major event soon");
-  const upcoming = filtered.filter((item) => item.status === "upcoming" || item.status === "major event soon").slice(0, 6);
-  const selectedNext = nextDetail(selected.details);
+  const selected = visible.find((item) => item.id === selectedId) ?? visible[0];
+  const active = visible.filter((item) => item.status === "active now" || item.status === "major event soon");
+  const upcoming = filtered.filter((item) => item.status === "upcoming" || item.status === "major event soon").slice(0, 6);const selectedNext = nextDetail(selected.details);
   const selectedToday = selected.details?.filter((detail) => isToday(detail.date)) ?? [];
 
   return (
@@ -872,7 +851,7 @@ function App() {
             <span>Active now</span>
           </div>
           <div>
-            <strong>{items.length}</strong>
+            <strong>{visible.length}</strong>
             <span>Items</span>
           </div>
           <div>
