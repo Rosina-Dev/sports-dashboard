@@ -1,0 +1,130 @@
+﻿:root { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #f4f6f8; background: #08090d; font-synthesis: none; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: #08090d; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; }
+.shell { min-height: 100vh; padding: 24px; background: radial-gradient(circle at top left, rgba(204, 12, 31, .16), transparent 28%), #08090d; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 26px; align-items: end; min-height: 340px; padding: 34px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px; background-position: center; background-size: cover; box-shadow: 0 24px 80px rgba(0,0,0,.35); }
+.eyebrow { margin: 0 0 10px; color: #ff3347; font-size: .78rem; font-weight: 900; letter-spacing: 0; text-transform: uppercase; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { max-width: 820px; margin-bottom: 14px; font-size: clamp(3rem, 8vw, 6.4rem); line-height: .92; letter-spacing: 0; }
+h2 { margin-bottom: 0; font-size: 1.25rem; }
+h3 { margin-bottom: 8px; font-size: 1rem; }
+.intro { max-width: 670px; margin-bottom: 0; color: #d7dde5; font-size: 1.06rem; line-height: 1.55; }
+.sourceRail { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.sourceRail a, .heatPanel a { min-height: 38px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 8px; background: rgba(255,255,255,.1); color: #fff; font-size: .86rem; font-weight: 850; text-decoration: none; }
+.sourceRail a:hover, .heatPanel a:hover { background: rgba(255,255,255,.18); }
+.heroStats { display: grid; grid-template-columns: repeat(3, minmax(92px, 1fr)); gap: 10px; }
+.heroStats div { min-height: 92px; padding: 14px; border: 1px solid rgba(255,255,255,.18); border-radius: 8px; background: rgba(8,9,13,.62); backdrop-filter: blur(8px); }
+.heroStats strong { display: block; font-size: 1.55rem; line-height: 1.05; }
+.heroStats span { display: block; margin-top: 8px; color: #b8c0ca; font-size: .78rem; }
+.toolbar { display: grid; grid-template-columns: minmax(260px, 1fr) 220px auto; gap: 12px; align-items: center; margin: 18px 0 12px; }
+.searchBox { display: flex; align-items: center; min-height: 46px; gap: 10px; padding: 0 13px; border: 1px solid #2a2f3a; border-radius: 8px; background: #11151d; color: #aeb7c3; }
+.searchBox input { width: 100%; border: 0; outline: 0; background: transparent; color: #fff; }
+select, .segments button { min-height: 46px; border: 1px solid #2a2f3a; border-radius: 8px; background: #11151d; color: #f4f6f8; }
+select { padding: 0 12px; }
+.segments { display: flex; flex-wrap: wrap; gap: 8px; }
+.segments button { padding: 0 13px; font-weight: 800; }
+.segments button.selected { border-color: #e50924; background: #e50924; color: #fff; }
+.noticeBar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 12px 14px; border: 1px solid rgba(255,255,255,.1); border-radius: 8px; background: #10131a; color: #c7ced8; }
+.spotlightLayout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; margin-bottom: 16px; }
+.eventSpotlight, .panel, .heatPanel { border: 1px solid #252a34; border-radius: 8px; background: #11151d; box-shadow: 0 18px 55px rgba(0,0,0,.24); }
+.eventSpotlight { display: grid; grid-template-columns: 38% minmax(0, 1fr); overflow: hidden; }
+.spotlightImage { min-height: 360px; background-position: center; background-size: cover; }
+.spotlightBody { padding: 24px; }
+.sectionLabel, .eventFacts, .panelTitle, footer, .fightTier, .resultRow, .timelineItem, .noticeBar { display: flex; align-items: center; }
+.sectionLabel { justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+.sectionLabel span, .heatBadge, .newsTone, .state, .fightFlags span { display: inline-flex; align-items: center; min-height: 28px; padding: 0 9px; border-radius: 999px; background: #251017; color: #ff6a78; font-size: .76rem; font-weight: 900; white-space: nowrap; }
+.spotlightBody h2 { margin-bottom: 10px; font-size: 2rem; }
+.spotlightBody p, .heatPanel p, .storyCard p, .rankingCard p, .resultRow p, .upsetItem p, .timelineItem p { color: #aeb7c3; line-height: 1.48; }
+.eventFacts { flex-wrap: wrap; gap: 10px; margin: 18px 0; }
+.eventFacts span { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 10px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; color: #dce2ea; font-size: .86rem; }
+.mainFights { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mainFights div { min-height: 142px; padding: 14px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; }
+.mainFights small { color: #ff3347; font-weight: 900; text-transform: uppercase; }
+.mainFights strong, .mainFights span { display: block; }
+.mainFights strong { margin: 8px 0; }
+.mainFights span { color: #aeb7c3; font-size: .9rem; line-height: 1.4; }
+.heatPanel { padding: 20px; }
+.panelTitle { gap: 10px; margin-bottom: 16px; color: #ff3347; }
+.heatScore { display: grid; place-items: center; width: 178px; height: 178px; margin: 6px auto 16px; border-radius: 50%; background: conic-gradient(#e50924 var(--score), #272d37 0); position: relative; }
+.heatScore::after { content: ""; position: absolute; inset: 13px; border-radius: 50%; background: #11151d; }
+.heatScore strong, .heatScore span { position: relative; z-index: 1; }
+.heatScore strong { font-size: 3.2rem; line-height: .85; }
+.heatScore span { color: #c7ced8; font-weight: 850; }
+.heatBreakdown { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
+.heatBreakdown span { min-height: 48px; padding: 10px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; color: #dce2ea; font-size: .82rem; }
+.dashboardGrid { display: grid; gap: 16px; margin-bottom: 16px; }
+.topGrid, .detailGrid, .midGrid { grid-template-columns: minmax(0, 1fr) minmax(360px, .72fr); }
+.bottomGrid { grid-template-columns: 1fr 1fr 1fr; }
+.panel { padding: 18px; }
+.eventList, .newsList, .fightList, .timeline, .watchList, .storyList, .resultsList, .upsetList { display: grid; gap: 10px; }
+.eventRow { display: grid; grid-template-columns: minmax(0, 1fr) auto 52px 20px; gap: 12px; align-items: center; width: 100%; min-height: 76px; padding: 12px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; color: #f4f6f8; text-align: left; transition: border-color .16s ease, transform .16s ease; }
+.eventRow:hover, .eventRow:focus-visible, .eventRow.isSelected { border-color: #e50924; outline: none; transform: translateY(-1px); }
+.eventRow strong, .eventRow span, .eventRow time { display: block; }
+.eventRow span, .eventRow time { color: #aeb7c3; font-size: .86rem; }
+.eventRow time { font-weight: 900; white-space: nowrap; }
+.heatBadge { justify-content: center; min-width: 42px; border-radius: 8px; background: #2d1017; color: #ff6a78; }
+.newsItem { display: grid; gap: 7px; padding: 13px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; text-decoration: none; }
+.newsItem:hover { border-color: #e50924; }
+.newsItem p, .newsItem small { margin: 0; color: #aeb7c3; }
+.newsTone { width: fit-content; }
+.toneOfficial { background: #10231b; color: #5ff0a5; }
+.toneWatch { background: #211c10; color: #ffd166; }
+.toneMedia { background: #101e2a; color: #84c5ff; }
+.fightRow { display: grid; grid-template-columns: 132px minmax(210px, 1fr) minmax(180px, .8fr) auto; gap: 12px; align-items: center; padding: 13px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; }
+.fightTier { align-items: start; flex-direction: column; gap: 4px; }
+.fightTier span { color: #ff3347; font-weight: 900; }
+.fightTier small, .fighters span, .watchItem span, .resultRow span, .upsetItem span, .timelineItem span { color: #aeb7c3; }
+.fighters { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); gap: 8px; align-items: center; }
+.fighters span { text-align: center; font-size: .78rem; font-weight: 900; }
+.fightRow p { margin: 0; color: #c7ced8; line-height: 1.38; }
+.fightFlags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.timelineItem { align-items: start; gap: 12px; padding: 13px; border-left: 3px solid #e50924; background: #0c0f15; border-radius: 0 8px 8px 0; }
+.timelineItem time { min-width: 92px; color: #fff; font-weight: 900; }
+.timelineItem strong, .timelineItem span { display: block; }
+.timelineItem p { margin: 5px 0 0; }
+.rankingGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.rankingCard, .watchItem, .storyCard, .upsetItem { padding: 14px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; }
+.rankingCard h3 { margin: 10px 0 5px; }
+.rankingCard ol { margin: 12px 0; padding-left: 20px; color: #dce2ea; }
+.stateHot { background: #2d1017; color: #ff6a78; }
+.stateCrowded { background: #211c10; color: #ffd166; }
+.stateWaiting { background: #101e2a; color: #84c5ff; }
+.watchItem { display: grid; gap: 8px; }
+.watchItem strong, .watchItem span, .watchItem small, .watchItem b { display: block; }
+.watchItem p { margin: 0; color: #dce2ea; }
+.watchItem b { width: fit-content; padding: 6px 9px; border-radius: 999px; background: #251017; color: #ff6a78; font-size: .78rem; }
+.storyCard span { color: #ff3347; font-size: .78rem; font-weight: 900; text-transform: uppercase; }
+.storyCard h3 { margin: 8px 0; }
+.resultRow { align-items: start; gap: 12px; padding: 13px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; }
+.resultRow time { min-width: 92px; color: #ff6a78; font-weight: 900; }
+.resultRow p { margin: 5px 0 0; }
+.upsetItem strong, .upsetItem span { display: block; }
+.upsetItem span { margin-top: 5px; font-size: .88rem; }
+.upsetItem p { margin: 8px 0 0; }
+.emptyState { display: grid; justify-items: start; gap: 8px; min-height: 130px; padding: 18px; border: 1px dashed #3a424f; border-radius: 8px; background: #0c0f15; color: #c7ced8; }
+.emptyState strong { color: #fff; }
+.emptyState span { color: #aeb7c3; }
+footer { justify-content: center; gap: 8px; padding: 16px; color: #aeb7c3; }
+@media (max-width: 1100px) {
+  .hero, .spotlightLayout, .topGrid, .detailGrid, .midGrid, .bottomGrid { grid-template-columns: 1fr; }
+  .heroStats { max-width: 560px; }
+  .eventSpotlight { grid-template-columns: 1fr; }
+  .spotlightImage { min-height: 260px; }
+  .fightRow { grid-template-columns: 1fr; }
+  .fightFlags { justify-content: flex-start; }
+}
+@media (max-width: 720px) {
+  .shell { padding: 14px; }
+  .hero { min-height: 420px; padding: 22px; }
+  h1 { font-size: 3rem; }
+  .toolbar, .mainFights, .rankingGrid, .heroStats { grid-template-columns: 1fr; }
+  .eventRow { grid-template-columns: 1fr; }
+  .heatBreakdown { grid-template-columns: 1fr; }
+  .eventFacts span { width: 100%; }
+  .noticeBar { align-items: flex-start; }
+  .fighters { grid-template-columns: 1fr; }
+  .fighters span { text-align: left; }
+}
