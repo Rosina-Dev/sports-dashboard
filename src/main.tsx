@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { CalendarDays, CheckCircle2, ChevronRight, Clock3, Globe2, MapPin, Plus, Search, Trophy } from "lucide-react";
+import { CalendarDays, CheckCircle2, ChevronRight, Clock3, MapPin, Plus, Search, Trophy } from "lucide-react";
 import "./styles.css";
 
 type Region = "USA" | "Schweiz" | "Global";
@@ -771,24 +771,6 @@ function App() {
               </button>
             ))}
           </div>
-        </div>
-
-        <div className="panel">
-          <div className="panelTitle">
-            <Globe2 size={20} />
-            <h2>Coverage</h2>
-          </div>
-          <div className="coverage">
-            {regionOptions
-              .filter((option) => option !== "All")
-              .map((option) => (
-                <div className={regionClass(option as Region)} key={option}>
-                  <span>{option}</span>
-                  <strong>{items.filter((item) => item.region === option).length}</strong>
-                </div>
-              ))}
-          </div>
-          <p className="muted">Swiss items are red-coded. API-ready entries can later be enriched with scores, tables, and fixtures.</p>
         </div>
       </section>
 

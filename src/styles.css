@@ -319,7 +319,6 @@ footer,
 }
 
 .featureCard.region-schweiz,
-.coverage .region-schweiz,
 tr.region-schweiz {
   background: #fff5f5;
 }
@@ -373,7 +372,6 @@ tr.region-schweiz .status {
 }
 
 .featureCard.region-global,
-.coverage .region-global,
 tr.region-global {
   background: #fff8e8;
 }
@@ -493,7 +491,7 @@ tr.region-global td span {
 
 .dashboardGrid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  grid-template-columns: 1fr;
   gap: 16px;
   margin-bottom: 16px;
 }
@@ -551,27 +549,6 @@ td span {
   white-space: nowrap;
 }
 
-.coverage {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.coverage div {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  background: #f4f7f5;
-  border-radius: 8px;
-}
-
-.coverage .region-schweiz {
-  color: #b00010;
-}
-
-.coverage .region-global {
-  color: #8a5200;
-}
 
 .tableWrap {
   overflow-x: auto;
