@@ -55,6 +55,34 @@ type SportsItem = {
   source: "curated" | "api-ready";
   details?: ScheduleEntry[];
 };
+type LeagueTeam = {
+  name: string;
+  market: string;
+  state: string;
+  conference: string;
+};
+
+type LeagueRanking = {
+  rank: string;
+  team: string;
+  state: string;
+  record: string;
+  note: string;
+};
+
+type LeagueDepth = {
+  title: string;
+  note: string;
+  rankingLabel: string;
+  rankings: LeagueRanking[];
+  teams: LeagueTeam[];
+};
+
+type NewsItem = {
+  title: string;
+  league: string;
+  note: string;
+};
 
 const today = new Date();
 const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -204,6 +232,196 @@ const worldChampionshipEvents: ScheduleEntry[] = [
   { label: "World Aquatics Championships", date: "2027-06-26", location: "Budapest, Hungary", note: "Global swimming/diving/water polo/open-water championship window", url: "https://www.worldaquatics.com/" },
   { label: "World Athletics Championships", date: "2027-09-11", location: "Beijing, China", note: "Sep 11-19, 2027", url: "https://worldathletics.org/" },
   { label: "UCI Road World Championships", date: "2026-09-20", location: "Montreal, Canada", note: "Road cycling world championships", url: "https://www.uci.org/" },
+];
+
+const leagueDepths: Record<string, LeagueDepth> = {
+  mls: {
+    title: "MLS league depth",
+    note: "Use this as a quick map of the league: team location first, then a standings snapshot for orientation.",
+    rankingLabel: "Standings snapshot",
+    rankings: [
+      { rank: "1", team: "Philadelphia Union", state: "Pennsylvania", record: "East leader", note: "Top Eastern Conference pace" },
+      { rank: "2", team: "Inter Miami CF", state: "Florida", record: "East contender", note: "High-attention club and playoff watch" },
+      { rank: "3", team: "FC Cincinnati", state: "Ohio", record: "East contender", note: "Regular playoff-level benchmark" },
+      { rank: "4", team: "LAFC", state: "California", record: "West leader", note: "Western Conference pace team" },
+      { rank: "5", team: "Vancouver Whitecaps FC", state: "British Columbia", record: "West contender", note: "Canadian and Cascadia context" },
+    ],
+    teams: [
+      { name: "Atlanta United FC", market: "Atlanta", state: "Georgia", conference: "East" },
+      { name: "Austin FC", market: "Austin", state: "Texas", conference: "West" },
+      { name: "Charlotte FC", market: "Charlotte", state: "North Carolina", conference: "East" },
+      { name: "Chicago Fire FC", market: "Chicago", state: "Illinois", conference: "East" },
+      { name: "FC Cincinnati", market: "Cincinnati", state: "Ohio", conference: "East" },
+      { name: "Colorado Rapids", market: "Commerce City/Denver", state: "Colorado", conference: "West" },
+      { name: "Columbus Crew", market: "Columbus", state: "Ohio", conference: "East" },
+      { name: "D.C. United", market: "Washington", state: "District of Columbia", conference: "East" },
+      { name: "FC Dallas", market: "Frisco/Dallas", state: "Texas", conference: "West" },
+      { name: "Houston Dynamo FC", market: "Houston", state: "Texas", conference: "West" },
+      { name: "Inter Miami CF", market: "Fort Lauderdale/Miami", state: "Florida", conference: "East" },
+      { name: "LA Galaxy", market: "Carson/Los Angeles", state: "California", conference: "West" },
+      { name: "LAFC", market: "Los Angeles", state: "California", conference: "West" },
+      { name: "Minnesota United FC", market: "Saint Paul/Minneapolis", state: "Minnesota", conference: "West" },
+      { name: "CF Montreal", market: "Montreal", state: "Quebec", conference: "East" },
+      { name: "Nashville SC", market: "Nashville", state: "Tennessee", conference: "East" },
+      { name: "New England Revolution", market: "Foxborough/Boston", state: "Massachusetts", conference: "East" },
+      { name: "New York City FC", market: "New York City", state: "New York", conference: "East" },
+      { name: "New York Red Bulls", market: "Harrison/New York", state: "New Jersey", conference: "East" },
+      { name: "Orlando City SC", market: "Orlando", state: "Florida", conference: "East" },
+      { name: "Philadelphia Union", market: "Chester/Philadelphia", state: "Pennsylvania", conference: "East" },
+      { name: "Portland Timbers", market: "Portland", state: "Oregon", conference: "West" },
+      { name: "Real Salt Lake", market: "Sandy/Salt Lake City", state: "Utah", conference: "West" },
+      { name: "San Diego FC", market: "San Diego", state: "California", conference: "West" },
+      { name: "San Jose Earthquakes", market: "San Jose", state: "California", conference: "West" },
+      { name: "Seattle Sounders FC", market: "Seattle", state: "Washington", conference: "West" },
+      { name: "Sporting Kansas City", market: "Kansas City", state: "Kansas", conference: "West" },
+      { name: "St. Louis City SC", market: "St. Louis", state: "Missouri", conference: "West" },
+      { name: "Toronto FC", market: "Toronto", state: "Ontario", conference: "East" },
+      { name: "Vancouver Whitecaps FC", market: "Vancouver", state: "British Columbia", conference: "West" },
+    ],
+  },
+  mlb: {
+    title: "MLB league depth",
+    note: "Baseball is active now; this snapshot highlights division leaders and lets you map all clubs by state/province.",
+    rankingLabel: "Division-leader snapshot",
+    rankings: [
+      { rank: "AL East", team: "New York Yankees", state: "New York", record: "Division race", note: "Typical high-leverage AL East benchmark" },
+      { rank: "AL Central", team: "Cleveland Guardians", state: "Ohio", record: "Division race", note: "Central contender watch" },
+      { rank: "AL West", team: "Houston Astros", state: "Texas", record: "Division race", note: "West benchmark club" },
+      { rank: "NL East", team: "Atlanta Braves", state: "Georgia", record: "Division race", note: "East contender watch" },
+      { rank: "NL Central", team: "Chicago Cubs", state: "Illinois", record: "Division race", note: "Central contender watch" },
+      { rank: "NL West", team: "Los Angeles Dodgers", state: "California", record: "Division race", note: "West benchmark club" },
+    ],
+    teams: [
+      { name: "Arizona Diamondbacks", market: "Phoenix", state: "Arizona", conference: "NL West" },
+      { name: "Atlanta Braves", market: "Atlanta", state: "Georgia", conference: "NL East" },
+      { name: "Baltimore Orioles", market: "Baltimore", state: "Maryland", conference: "AL East" },
+      { name: "Boston Red Sox", market: "Boston", state: "Massachusetts", conference: "AL East" },
+      { name: "Chicago Cubs", market: "Chicago", state: "Illinois", conference: "NL Central" },
+      { name: "Chicago White Sox", market: "Chicago", state: "Illinois", conference: "AL Central" },
+      { name: "Cincinnati Reds", market: "Cincinnati", state: "Ohio", conference: "NL Central" },
+      { name: "Cleveland Guardians", market: "Cleveland", state: "Ohio", conference: "AL Central" },
+      { name: "Colorado Rockies", market: "Denver", state: "Colorado", conference: "NL West" },
+      { name: "Detroit Tigers", market: "Detroit", state: "Michigan", conference: "AL Central" },
+      { name: "Houston Astros", market: "Houston", state: "Texas", conference: "AL West" },
+      { name: "Kansas City Royals", market: "Kansas City", state: "Missouri", conference: "AL Central" },
+      { name: "Los Angeles Angels", market: "Anaheim/Los Angeles", state: "California", conference: "AL West" },
+      { name: "Los Angeles Dodgers", market: "Los Angeles", state: "California", conference: "NL West" },
+      { name: "Miami Marlins", market: "Miami", state: "Florida", conference: "NL East" },
+      { name: "Milwaukee Brewers", market: "Milwaukee", state: "Wisconsin", conference: "NL Central" },
+      { name: "Minnesota Twins", market: "Minneapolis", state: "Minnesota", conference: "AL Central" },
+      { name: "New York Mets", market: "New York City", state: "New York", conference: "NL East" },
+      { name: "New York Yankees", market: "New York City", state: "New York", conference: "AL East" },
+      { name: "Athletics", market: "West Sacramento", state: "California", conference: "AL West" },
+      { name: "Philadelphia Phillies", market: "Philadelphia", state: "Pennsylvania", conference: "NL East" },
+      { name: "Pittsburgh Pirates", market: "Pittsburgh", state: "Pennsylvania", conference: "NL Central" },
+      { name: "San Diego Padres", market: "San Diego", state: "California", conference: "NL West" },
+      { name: "San Francisco Giants", market: "San Francisco", state: "California", conference: "NL West" },
+      { name: "Seattle Mariners", market: "Seattle", state: "Washington", conference: "AL West" },
+      { name: "St. Louis Cardinals", market: "St. Louis", state: "Missouri", conference: "NL Central" },
+      { name: "Tampa Bay Rays", market: "Tampa Bay", state: "Florida", conference: "AL East" },
+      { name: "Texas Rangers", market: "Arlington/Dallas-Fort Worth", state: "Texas", conference: "AL West" },
+      { name: "Toronto Blue Jays", market: "Toronto", state: "Ontario", conference: "AL East" },
+      { name: "Washington Nationals", market: "Washington", state: "District of Columbia", conference: "NL East" },
+    ],
+  },
+  nba: {
+    title: "NBA league depth",
+    note: "NBA is between seasons here, so the snapshot is a context layer for the next season rather than a live table.",
+    rankingLabel: "Context snapshot",
+    rankings: [
+      { rank: "1", team: "Oklahoma City Thunder", state: "Oklahoma", record: "Title-core watch", note: "Recent benchmark for young-contender depth" },
+      { rank: "2", team: "Boston Celtics", state: "Massachusetts", record: "East contender", note: "Perennial top-tier East context" },
+      { rank: "3", team: "Denver Nuggets", state: "Colorado", record: "West contender", note: "Championship-core benchmark" },
+      { rank: "4", team: "Minnesota Timberwolves", state: "Minnesota", record: "West contender", note: "Defense and playoff-depth watch" },
+      { rank: "5", team: "New York Knicks", state: "New York", record: "East contender", note: "Big-market playoff watch" },
+    ],
+    teams: [
+      { name: "Atlanta Hawks", market: "Atlanta", state: "Georgia", conference: "East" },
+      { name: "Boston Celtics", market: "Boston", state: "Massachusetts", conference: "East" },
+      { name: "Brooklyn Nets", market: "Brooklyn/New York", state: "New York", conference: "East" },
+      { name: "Charlotte Hornets", market: "Charlotte", state: "North Carolina", conference: "East" },
+      { name: "Chicago Bulls", market: "Chicago", state: "Illinois", conference: "East" },
+      { name: "Cleveland Cavaliers", market: "Cleveland", state: "Ohio", conference: "East" },
+      { name: "Dallas Mavericks", market: "Dallas", state: "Texas", conference: "West" },
+      { name: "Denver Nuggets", market: "Denver", state: "Colorado", conference: "West" },
+      { name: "Detroit Pistons", market: "Detroit", state: "Michigan", conference: "East" },
+      { name: "Golden State Warriors", market: "San Francisco", state: "California", conference: "West" },
+      { name: "Houston Rockets", market: "Houston", state: "Texas", conference: "West" },
+      { name: "Indiana Pacers", market: "Indianapolis", state: "Indiana", conference: "East" },
+      { name: "LA Clippers", market: "Inglewood/Los Angeles", state: "California", conference: "West" },
+      { name: "Los Angeles Lakers", market: "Los Angeles", state: "California", conference: "West" },
+      { name: "Memphis Grizzlies", market: "Memphis", state: "Tennessee", conference: "West" },
+      { name: "Miami Heat", market: "Miami", state: "Florida", conference: "East" },
+      { name: "Milwaukee Bucks", market: "Milwaukee", state: "Wisconsin", conference: "East" },
+      { name: "Minnesota Timberwolves", market: "Minneapolis", state: "Minnesota", conference: "West" },
+      { name: "New Orleans Pelicans", market: "New Orleans", state: "Louisiana", conference: "West" },
+      { name: "New York Knicks", market: "New York City", state: "New York", conference: "East" },
+      { name: "Oklahoma City Thunder", market: "Oklahoma City", state: "Oklahoma", conference: "West" },
+      { name: "Orlando Magic", market: "Orlando", state: "Florida", conference: "East" },
+      { name: "Philadelphia 76ers", market: "Philadelphia", state: "Pennsylvania", conference: "East" },
+      { name: "Phoenix Suns", market: "Phoenix", state: "Arizona", conference: "West" },
+      { name: "Portland Trail Blazers", market: "Portland", state: "Oregon", conference: "West" },
+      { name: "Sacramento Kings", market: "Sacramento", state: "California", conference: "West" },
+      { name: "San Antonio Spurs", market: "San Antonio", state: "Texas", conference: "West" },
+      { name: "Toronto Raptors", market: "Toronto", state: "Ontario", conference: "East" },
+      { name: "Utah Jazz", market: "Salt Lake City", state: "Utah", conference: "West" },
+      { name: "Washington Wizards", market: "Washington", state: "District of Columbia", conference: "East" },
+    ],
+  },
+  nhl: {
+    title: "NHL league depth",
+    note: "NHL is between seasons here, so this is a compact map and contender context for the next hockey season.",
+    rankingLabel: "Context snapshot",
+    rankings: [
+      { rank: "1", team: "Florida Panthers", state: "Florida", record: "Cup-core watch", note: "Recent top benchmark" },
+      { rank: "2", team: "Edmonton Oilers", state: "Alberta", record: "West contender", note: "High-end star-power benchmark" },
+      { rank: "3", team: "Dallas Stars", state: "Texas", record: "West contender", note: "Deep roster watch" },
+      { rank: "4", team: "New York Rangers", state: "New York", record: "East contender", note: "Metropolitan benchmark" },
+      { rank: "5", team: "Colorado Avalanche", state: "Colorado", record: "West contender", note: "Championship-core context" },
+    ],
+    teams: [
+      { name: "Anaheim Ducks", market: "Anaheim", state: "California", conference: "West" },
+      { name: "Boston Bruins", market: "Boston", state: "Massachusetts", conference: "East" },
+      { name: "Buffalo Sabres", market: "Buffalo", state: "New York", conference: "East" },
+      { name: "Calgary Flames", market: "Calgary", state: "Alberta", conference: "West" },
+      { name: "Carolina Hurricanes", market: "Raleigh", state: "North Carolina", conference: "East" },
+      { name: "Chicago Blackhawks", market: "Chicago", state: "Illinois", conference: "West" },
+      { name: "Colorado Avalanche", market: "Denver", state: "Colorado", conference: "West" },
+      { name: "Columbus Blue Jackets", market: "Columbus", state: "Ohio", conference: "East" },
+      { name: "Dallas Stars", market: "Dallas", state: "Texas", conference: "West" },
+      { name: "Detroit Red Wings", market: "Detroit", state: "Michigan", conference: "East" },
+      { name: "Edmonton Oilers", market: "Edmonton", state: "Alberta", conference: "West" },
+      { name: "Florida Panthers", market: "Sunrise/Miami", state: "Florida", conference: "East" },
+      { name: "Los Angeles Kings", market: "Los Angeles", state: "California", conference: "West" },
+      { name: "Minnesota Wild", market: "Saint Paul/Minneapolis", state: "Minnesota", conference: "West" },
+      { name: "Montreal Canadiens", market: "Montreal", state: "Quebec", conference: "East" },
+      { name: "Nashville Predators", market: "Nashville", state: "Tennessee", conference: "West" },
+      { name: "New Jersey Devils", market: "Newark", state: "New Jersey", conference: "East" },
+      { name: "New York Islanders", market: "Elmont/New York", state: "New York", conference: "East" },
+      { name: "New York Rangers", market: "New York City", state: "New York", conference: "East" },
+      { name: "Ottawa Senators", market: "Ottawa", state: "Ontario", conference: "East" },
+      { name: "Philadelphia Flyers", market: "Philadelphia", state: "Pennsylvania", conference: "East" },
+      { name: "Pittsburgh Penguins", market: "Pittsburgh", state: "Pennsylvania", conference: "East" },
+      { name: "San Jose Sharks", market: "San Jose", state: "California", conference: "West" },
+      { name: "Seattle Kraken", market: "Seattle", state: "Washington", conference: "West" },
+      { name: "St. Louis Blues", market: "St. Louis", state: "Missouri", conference: "West" },
+      { name: "Tampa Bay Lightning", market: "Tampa", state: "Florida", conference: "East" },
+      { name: "Toronto Maple Leafs", market: "Toronto", state: "Ontario", conference: "East" },
+      { name: "Utah Mammoth", market: "Salt Lake City", state: "Utah", conference: "West" },
+      { name: "Vancouver Canucks", market: "Vancouver", state: "British Columbia", conference: "West" },
+      { name: "Vegas Golden Knights", market: "Las Vegas", state: "Nevada", conference: "West" },
+      { name: "Washington Capitals", market: "Washington", state: "District of Columbia", conference: "East" },
+      { name: "Winnipeg Jets", market: "Winnipeg", state: "Manitoba", conference: "West" },
+    ],
+  },
+};
+
+const newsItems: NewsItem[] = [
+  { title: "World Cup knockout rounds are the main global story", league: "Soccer", note: "Round of 16 matches are active and should lead the dashboard while the tournament is live." },
+  { title: "MLB holiday weekend has a full national slate", league: "MLB", note: "Baseball is the biggest US league currently in regular-season action, with all teams in the summer grind." },
+  { title: "NBA is in Summer League and offseason mode", league: "NBA", note: "Use team context and offseason movement rather than live standings until the next regular season starts." },
+  { title: "NHL is in offseason context mode", league: "NHL", note: "Track roster movement and next-season contender tiers; live standings resume with the regular season." },
+  { title: "Tennis and Tour de France remain major global side stories", league: "Global", note: "Wimbledon and the Tour are useful headline anchors alongside the World Cup." },
 ];
 const megaEvents: MegaEvent[] = [
   {
@@ -809,8 +1027,10 @@ function App() {
 
   const selected = visible.find((item) => item.id === selectedId) ?? visible[0];
   const active = visible.filter((item) => item.status === "active now" || item.status === "major event soon");
-  const upcoming = filtered.filter((item) => item.status === "upcoming" || item.status === "major event soon").slice(0, 6);const selectedNext = nextDetail(selected.details);
+  const upcoming = filtered.filter((item) => item.status === "upcoming" || item.status === "major event soon").slice(0, 6);
+  const selectedNext = nextDetail(selected.details);
   const selectedToday = selected.details?.filter((detail) => isToday(detail.date)) ?? [];
+  const selectedLeagueDepth = leagueDepths[selected.id];
 
   return (
     <main className="shell">
@@ -910,6 +1130,39 @@ function App() {
             <span>{selectedNext ? selectedNext.label : selected.keyDateLabel}</span>
             <time>{formatDate(selectedNext?.date ?? selected.keyDate, selected.timezone)}</time>
           </div>
+          {selectedLeagueDepth ? (
+            <section className="leagueDepth" aria-label={`${selected.title} league depth`}>
+              <div>
+                <p className="eyebrow">League depth</p>
+                <h3>{selectedLeagueDepth.title}</h3>
+                <p>{selectedLeagueDepth.note}</p>
+              </div>
+              <div className="rankingTable" aria-label={selectedLeagueDepth.rankingLabel}>
+                <strong>{selectedLeagueDepth.rankingLabel}</strong>
+                {selectedLeagueDepth.rankings.map((ranking) => (
+                  <div className="rankingRow" key={`${selected.id}-${ranking.rank}-${ranking.team}`}>
+                    <span>{ranking.rank}</span>
+                    <div>
+                      <strong>{ranking.team}</strong>
+                      <small>{ranking.state} - {ranking.record}</small>
+                    </div>
+                    <em>{ranking.note}</em>
+                  </div>
+                ))}
+              </div>
+              <div className="teamDirectory">
+                <strong>Teams by state/province</strong>
+                <div>
+                  {selectedLeagueDepth.teams.map((team) => (
+                    <span key={`${selected.id}-${team.name}`}>
+                      <b>{team.name}</b>
+                      <small>{team.market}, {team.state} - {team.conference}</small>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </section>
+          ) : null}
           <div className="detailList">
             {(selected.details?.length ? selected.details : selected.phases.map((phase, index) => ({ label: phase, date: selected.keyDate, location: undefined, note: index === 0 ? "Season phase" : undefined, url: undefined }))).map((detail) => (
               <div className="detailRow" key={`${detail.label}-${detail.date}`}>
@@ -1009,6 +1262,21 @@ function App() {
         </div>
       </section>
 
+      <section className="panel full newsPanel">
+        <div className="panelTitle">
+          <CalendarDays size={20} />
+          <h2>Big-picture Sports News</h2>
+        </div>
+        <div className="newsGrid">
+          {newsItems.map((item) => (
+            <article className="newsItem" key={item.title}>
+              <span>{item.league}</span>
+              <strong>{item.title}</strong>
+              <p>{item.note}</p>
+            </article>
+          ))}
+        </div>
+      </section>
       <section className="megaEvents">
         <div className="sectionHeader">
           <div>
