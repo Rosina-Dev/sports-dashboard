@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schweizer Athleten in den USA - Dashboard</title>
+  <style>
+    :root {
+      --ink: #15191f;
+      --muted: #66707d;
+      --line: #dfe5ec;
+      --paper: #ffffff;
+      --soft: #f4f7fa;
+      --soft-red: #fff1f2;
+      --red: #d00019;
+      --blue: #2457a6;
+      --green: #17745b;
+      --amber: #a46100;
+      --shadow: 0 18px 48px rgba(28, 38, 52, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: #eef2f6;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .shell {
+      width: min(1240px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    .hero {
+      min-height: 330px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      align-items: stretch;
+      padding: 28px;
+      border-radius: 8px;
+      color: #fff;
+      background:
+        linear-gradient(110deg, rgba(12, 19, 31, 0.9), rgba(29, 47, 77, 0.68)),
+        url("https://images.unsplash.com/photo-1521412644187-c49fa049e84d?auto=format&fit=crop&w=1800&q=80");
+      background-position: center;
+      background-size: cover;
+      box-shadow: var(--shadow);
+    }
+
+    .heroCopy {
+      display: grid;
+      align-content: end;
+      max-width: 760px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: #ffccd2;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 14px;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 690px;
+      margin-bottom: 0;
+      color: #edf4fb;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .heroPanel {
+      align-self: end;
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .heroPanel strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .heroPanel span {
+      color: #e8eef7;
+      font-size: 13px;
+    }
+
+    .heroPanel .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .heroPanel .tile {
+      min-height: 78px;
+      padding: 13px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) 190px 190px 190px auto;
+      gap: 10px;
+      align-items: center;
+      margin: 18px 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.94);
+      box-shadow: 0 10px 30px rgba(25,35,48,0.06);
+      backdrop-filter: blur(12px);
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .search input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+    }
+
+    select {
+      height: 44px;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 10px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .viewToggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .viewToggle button {
+      height: 42px;
+      border: 0;
+      background: #fff;
+      color: var(--muted);
+      padding: 0 12px;
+    }
+
+    .viewToggle button.active {
+      background: #172033;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .sectionHead {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: end;
+      margin: 6px 0 12px;
+    }
+
+    .sectionHead h2 {
+      margin-bottom: 0;
+      font-size: 24px;
+    }
+
+    .sectionHead span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card, .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      min-height: 246px;
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .cardTop {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+    }
+
+    h3 {
+      margin-bottom: 5px;
+      font-size: 21px;
+      line-height: 1.15;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      color: var(--muted);
+      background: #eef2f6;
+      border: 1px solid var(--line);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .badge.good { color: var(--green); background: #e8f7f1; border-color: #bfe4d7; }
+    .badge.warn { color: var(--amber); background: #fff5de; border-color: #efd29a; }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .meta div {
+      min-height: 54px;
+      padding: 10px;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .meta span {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .meta strong {
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .note {
+      margin: 0;
+      color: #46515f;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .sourceLine {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .side {
+      display: grid;
+      gap: 12px;
+      position: sticky;
+      top: 90px;
+    }
+
+    .panel {
+      padding: 16px;
+    }
+
+    .panel h2 {
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    .miniStats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .miniStats div {
+      min-height: 74px;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .miniStats strong {
+      display: block;
+      font-size: 26px;
+    }
+
+    .miniStats span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: #394454;
+      font-size: 13px;
+    }
+
+    .chip b { color: var(--ink); }
+
+    .quality {
+      display: grid;
+      gap: 8px;
+    }
+
+    .quality div {
+      display: grid;
+      grid-template-columns: 90px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8edf2;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--red);
+    }
+
+    .tableView { display: none; }
+
+    table {
+      width: 100%;
+      min-width: 980px;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      color: var(--muted);
+      background: #f8fafc;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    td strong, td span { display: block; }
+    td span { margin-top: 3px; color: var(--muted); font-size: 12px; }
+
+    .tableWrap {
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+
+    .empty {
+      display: none;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .showTable .cards { display: none; }
+    .showTable .tableView { display: block; }
+
+    .footerNote {
+      margin: 16px 0 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: #475260;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1000px) {
+      .hero, .dashboard, .controls { grid-template-columns: 1fr; }
+      .side { position: static; }
+      .heroPanel .row, .miniStats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 22px, 1240px); padding-top: 12px; }
+      .hero { min-height: 430px; padding: 20px; }
+      .cards, .meta, .heroPanel .row, .miniStats { grid-template-columns: 1fr; }
+      .sectionHead { align-items: start; flex-direction: column; }
+      .sourceLine { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="heroCopy">
+        <p class="eyebrow">Arbeitsuebersicht USA</p>
+        <h1>Schweizer Athleten in den USA</h1>
+        <p class="intro">Eine lesbare Dashboard-Ansicht fuer Schweizer Profis und College-Athleten mit Team, Liga, Stadt, US-Bundesstaat, Status und Quelle.</p>
+      </div>
+      <aside class="heroPanel" aria-label="Kurzuebersicht">
+        <div class="row">
+          <div class="tile"><strong id="totalHero">0</strong><span>Eintraege</span></div>
+          <div class="tile"><strong id="stateHero">0</strong><span>Staaten plus D.C.</span></div>
+          <div class="tile"><strong id="sportHero">0</strong><span>Sportarten</span></div>
+          <div class="tile"><strong>0</strong><span>fehlende Bundesstaaten</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="controls" aria-label="Filter und Ansicht">
+      <label class="search" aria-label="Suche">
+        <span>Search</span>
+        <input id="query" type="search" placeholder="Name, Team, Stadt, Staat, Liga...">
+      </label>
+      <select id="sport"><option value="">Alle Sportarten</option></select>
+      <select id="league"><option value="">Alle Ligen</option></select>
+      <select id="state"><option value="">Alle Bundesstaaten</option></select>
+      <div class="viewToggle" aria-label="Ansicht wechseln">
+        <button id="cardButton" class="active" type="button">Karten</button>
+        <button id="tableButton" type="button">Tabelle</button>
+      </div>
+    </section>
+
+    <section class="dashboard" id="dashboard">
+      <div>
+        <div class="sectionHead">
+          <div>
+            <p class="eyebrow">Gefilterte Liste</p>
+            <h2 id="resultTitle">Alle Athleten</h2>
+          </div>
+          <span id="resultCount">0 Treffer</span>
+        </div>
+        <div class="empty" id="empty">Keine Treffer fuer diese Filter.</div>
+        <section class="cards" id="cards" aria-label="Athletenkarten"></section>
+        <section class="tableView" aria-label="Tabellarische Ansicht">
+          <div class="tableWrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Sport / Liga</th>
+                  <th>Team</th>
+                  <th>Ort</th>
+                  <th>Status</th>
+                  <th>Quelle</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <aside class="side">
+        <section class="panel">
+          <h2>Snapshot</h2>
+          <div class="miniStats">
+            <div><strong id="activeCount">0</strong><span>aktiv bestaetigt</span></div>
+            <div><strong id="checkCount">0</strong><span>zu pruefen / Pipeline</span></div>
+            <div><strong id="proCount">0</strong><span>Profi-Ligen</span></div>
+            <div><strong id="collegeCount">0</strong><span>College-Eintraege</span></div>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>Bundesstaaten</h2>
+          <div class="chips" id="stateChips"></div>
+        </section>
+        <section class="panel">
+          <h2>Quellenqualitaet</h2>
+          <div class="quality">
+            <div><span>aktiv</span><div class="bar"><span id="activeBar"></span></div><b id="activeShare">0%</b></div>
+            <div><span>Pruefen</span><div class="bar"><span id="checkBar"></span></div><b id="checkShare">0%</b></div>
+          </div>
+        </section>
+      </aside>
+    </section>
+
+    <p class="footerNote">Hinweis: Diese Darstellung trennt bewusst zwischen bestaetigten aktiven Eintraegen und Kandidaten, die vor Outreach oder Publikation nochmals mit offiziellem Teamroster geprueft werden sollten. Bei UFC und LPGA steht der US-Bezug fuer eine US-basierte Organisation bzw. Tour; das ist weniger eindeutig als ein Team- oder Campusstandort.</p>
+  </main>
+
+  <script>
+    const athletes = [
+      ["Nico Hischier","Eishockey","New Jersey Devils","NHL","Newark","New Jersey","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Nico_Hischier","Beispiel aus Auftrag; regulaerer Teamstandort Prudential Center, Newark NJ"],
+      ["Timo Meier","Eishockey","New Jersey Devils","NHL","Newark","New Jersey","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Timo_Meier","Regulaerer Teamstandort Prudential Center, Newark NJ"],
+      ["Jonas Siegenthaler","Eishockey","New Jersey Devils","NHL","Newark","New Jersey","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Jonas_Siegenthaler","Regulaerer Teamstandort Prudential Center, Newark NJ"],
+      ["Kevin Fiala","Eishockey","Los Angeles Kings","NHL","Los Angeles","California","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Kevin_Fiala","Regulaerer Teamstandort Crypto.com Arena, Los Angeles CA"],
+      ["Roman Josi","Eishockey","Nashville Predators","NHL","Nashville","Tennessee","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Roman_Josi","Regulaerer Teamstandort Bridgestone Arena, Nashville TN"],
+      ["Janis Moser","Eishockey","Tampa Bay Lightning","NHL","Tampa","Florida","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/J._J._Moser","Auch als J. J. Moser gefuehrt"],
+      ["Pius Suter","Eishockey","St. Louis Blues","NHL","St. Louis","Missouri","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Pius_Suter","Seit 2025 bei St. Louis Blues gefuehrt"],
+      ["Akira Schmid","Eishockey","Vegas Golden Knights","NHL","Las Vegas","Nevada","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Akira_Schmid","Regulaerer Teamstandort T-Mobile Arena, Las Vegas NV"],
+      ["Philipp Kurashev","Eishockey","San Jose Sharks","NHL","San Jose","California","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Philipp_Kurashev","Schweizer-russischer Spieler; Schweiz-Bezug ueber Nationalteam"],
+      ["Lian Bichsel","Eishockey","Dallas Stars","NHL","Dallas","Texas","aktiv","Schweizer Spieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Lian_Bichsel","Regulaerer Teamstandort American Airlines Center, Dallas TX"],
+      ["Alina Muller","Eishockey","Boston Fleet","PWHL","Boston","Massachusetts","aktiv","Schweizer Nationalspielerin; geboren in der Schweiz","https://en.wikipedia.org/wiki/Alina_M%C3%BCller","Name oft als Alina Mueller/Mueller geschrieben"],
+      ["Nicole Vallario","Eishockey","New York Sirens","PWHL","Newark","New Jersey","aktiv","Schweizer Nationalspielerin; geboren in der Schweiz","https://en.wikipedia.org/wiki/Nicole_Vallario","Reserve/roster player bei New York Sirens"],
+      ["Andrea Braendli","Eishockey","Detroit PWHL expansion team","PWHL","Detroit","Michigan","ab 2026/27 erwartet","Schweizer Nationalspielerin; geboren in der Schweiz","https://www.landgrantholyland.com/ohio-state-hockey/118073/ohio-state-buckeyes-womens-ice-hockey-2026-pwhl-draft-emma-peschel-sara-swiderski-sloane-matthews","Im 2026 PWHL Draft von Detroit gewaehlt; noch kein laufender 2025/26 Roster-Eintrag"],
+      ["Laura Zimmermann","Eishockey","St. Cloud State Huskies","NCAA Division I","St. Cloud","Minnesota","aktiv","Schweizer Nationalspielerin; geboren in der Schweiz","https://en.wikipedia.org/wiki/Laura_Zimmermann","College-Hockey; WCHA"],
+      ["Naemi Herzig","Eishockey","Holy Cross Crusaders","NCAA Division I","Worcester","Massachusetts","aktiv","Schweizer Nationalspielerin; geboren in der Schweiz","https://en.wikipedia.org/wiki/Naemi_Herzig","College-Hockey; Hockey East"],
+      ["Alessia Baechler","Eishockey","Northeastern Huskies","NCAA Division I","Boston","Massachusetts","aktiv","Schweizer Nationalspielerin; geboren in der Schweiz","https://en.wikipedia.org/wiki/Alessia_Baechler","College-Hockey; Hockey East"],
+      ["Monja Wagner","Eishockey","Union Garnet Chargers","NCAA Division I","Schenectady","New York","aktiv","Schweizer Nationalspielerin; geboren in der Schweiz","https://en.wikipedia.org/wiki/Monja_Wagner","College-Hockey; ECAC"],
+      ["Clint Capela","Basketball","Houston Rockets","NBA","Houston","Texas","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Clint_Capela","Seit 2025 wieder bei Houston Rockets gefuehrt"],
+      ["Kyshawn George","Basketball","Washington Wizards","NBA","Washington","District of Columbia","aktiv","Schweizer-kanadischer Spieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Kyshawn_George","US-Bundesstaat-Feld als District of Columbia gefuehrt"],
+      ["Yanic Konan Niederhauser","Basketball","Los Angeles Clippers","NBA","Los Angeles","California","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Yanic_Konan_Niederh%C3%A4user","2025 von den Los Angeles Clippers gedraftet; moegliche G-League-Zuordnung San Diego Clippers separat beobachten"],
+      ["Volkan Oezdemir","Kampfsport/MMA","UFC","UFC","Las Vegas","Nevada","aktiv laut Profil","Schweizer MMA-Kaempfer; geboren in der Schweiz","https://en.wikipedia.org/wiki/Volkan_Oezdemir","UFC ist eine US-basierte Organisation; kein fester Team-Campus. Oezdemir wird als UFC-Light-Heavyweight gefuehrt und kaempft/trainiert international."],
+      ["Albane Valenzuela","Golf","LPGA Tour","LPGA Tour","Dallas","Texas","aktiv","Schweizer Olympionikin; Schweizer Staatsbuergerin","https://en.wikipedia.org/wiki/Albane_Valenzuela","Wohnsitz Dallas, Texas; LPGA ist eine US-basierte Tour mit globalem Turnierkalender."],
+      ["Morgane Metraux","Golf","LPGA Tour","LPGA Tour","Daytona Beach","Florida","aktiv laut Profil","Schweizer Profgolferin; geboren in der Schweiz","https://en.wikipedia.org/wiki/Morgane_M%C3%A9traux","LPGA-Tourspielerin; Daytona Beach steht fuer den US-basierten Tour-/Organisationsbezug, nicht als bestaetigter Wohnort."],
+      ["Roman Burki","Fussball/Soccer","St. Louis City SC","MLS","St. Louis","Missouri","aktiv","Schweizer Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Roman_B%C3%BCrki","Name oft als Roman Buerki geschrieben"],
+      ["Maren Haile-Selassie","Fussball/Soccer","Chicago Fire FC","MLS","Chicago","Illinois","aktiv","Ehemaliger Schweizer Nachwuchs-Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Maren_Haile-Selassie","Schweizer Jugendnationalteams"],
+      ["Silvan Hefti","Fussball/Soccer","D.C. United","MLS","Washington","District of Columbia","aktiv","Schweizer Nachwuchs-Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Silvan_Hefti","Seit Januar 2026 bei D.C. United gefuehrt"],
+      ["Stefan Frei","Fussball/Soccer","Seattle Sounders FC","MLS","Seattle","Washington","aktiv","Schweizer geboren; frueher Schweiz U15; heute auch US-Staatsbuerger","https://en.wikipedia.org/wiki/Stefan_Frei","Schweizer Bezug ueber Geburt und Juniorennationalteam"],
+      ["Lyam MacKinnon","Fussball/Soccer","Orange County SC","USL Championship","Irvine","California","aktiv laut Profil","Schweizer Spieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Lyam_MacKinnon","2026-Roster fuer finale Outreach-Liste nochmals offiziell nachpruefen"],
+      ["Raphael Spiegel","Fussball/Soccer","Oakland Roots SC","USL Championship","Oakland","California","aktiv laut Profil","Schweizer Nachwuchs-Nationalspieler; geboren in der Schweiz","https://en.wikipedia.org/wiki/Raphael_Spiegel","2026-Roster fuer finale Outreach-Liste nochmals offiziell nachpruefen"],
+      ["Nicholas Ammeter","Fussball/Soccer","Las Vegas Lights","USL Championship","Las Vegas","Nevada","unklar / zu pruefen","Schweizer Nachwuchs-Nationalspieler; Schweizer-US-Doppelbezug","https://en.wikipedia.org/wiki/Nicholas_Ammeter","Widerspruechliche Quellen zum Vertragsstatus nach 2025"]
+    ].map(([name,sport,team,league,city,state,status,swiss,source,note]) => ({name,sport,team,league,city,state,status,swiss,source,note}));
+
+    const $ = (id) => document.getElementById(id);
+    const query = $("query");
+    const sport = $("sport");
+    const league = $("league");
+    const state = $("state");
+    const cards = $("cards");
+    const tableBody = $("tableBody");
+    const empty = $("empty");
+    const dashboard = $("dashboard");
+    const cardButton = $("cardButton");
+    const tableButton = $("tableButton");
+
+    function unique(values) { return [...new Set(values)].sort(); }
+    function option(select, value) {
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = value;
+      select.append(opt);
+    }
+
+    unique(athletes.map(a => a.sport)).forEach(v => option(sport, v));
+    unique(athletes.map(a => a.league)).forEach(v => option(league, v));
+    unique(athletes.map(a => a.state)).forEach(v => option(state, v));
+
+    const active = athletes.filter(a => a.status === "aktiv");
+    const checking = athletes.filter(a => a.status !== "aktiv");
+    const states = unique(athletes.map(a => a.state));
+    const sports = unique(athletes.map(a => a.sport));
+    const pro = athletes.filter(a => !a.league.includes("NCAA"));
+    const college = athletes.filter(a => a.league.includes("NCAA"));
+
+    $("totalHero").textContent = athletes.length;
+    $("stateHero").textContent = states.length;
+    $("sportHero").textContent = sports.length;
+    $("activeCount").textContent = active.length;
+    $("checkCount").textContent = checking.length;
+    $("proCount").textContent = pro.length;
+    $("collegeCount").textContent = college.length;
+    $("activeShare").textContent = `${Math.round(active.length / athletes.length * 100)}%`;
+    $("checkShare").textContent = `${Math.round(checking.length / athletes.length * 100)}%`;
+    $("activeBar").style.width = `${active.length / athletes.length * 100}%`;
+    $("checkBar").style.width = `${checking.length / athletes.length * 100}%`;
+
+    const stateCounts = states
+      .map(s => [s, athletes.filter(a => a.state === s).length])
+      .sort((a, b) => b[1] - a[1]);
+    $("stateChips").innerHTML = stateCounts.map(([name, count]) => `<span class="chip"><b>${count}</b>${name}</span>`).join("");
+
+    function statusBadge(status) {
+      return status === "aktiv" ? "good" : "warn";
+    }
+
+    function filteredRows() {
+      const q = query.value.trim().toLowerCase();
+      return athletes.filter(a => {
+        const text = `${a.name} ${a.sport} ${a.team} ${a.league} ${a.city} ${a.state} ${a.status} ${a.swiss}`.toLowerCase();
+        return (!q || text.includes(q)) &&
+          (!sport.value || a.sport === sport.value) &&
+          (!league.value || a.league === league.value) &&
+          (!state.value || a.state === state.value);
+      });
+    }
+
+    function render() {
+      const rows = filteredRows();
+      $("resultCount").textContent = `${rows.length} Treffer`;
+      $("resultTitle").textContent = rows.length === athletes.length ? "Alle Athleten" : "Gefilterte Athleten";
+      empty.style.display = rows.length ? "none" : "block";
+
+      cards.innerHTML = rows.map(a => `
+        <article class="card">
+          <div class="cardTop">
+            <div>
+              <h3>${a.name}</h3>
+              <div class="sub">${a.swiss}</div>
+            </div>
+            <span class="badge ${statusBadge(a.status)}">${a.status}</span>
+          </div>
+          <div class="meta">
+            <div><span>Team / Schule</span><strong>${a.team}</strong></div>
+            <div><span>Liga / Verband</span><strong>${a.league}</strong></div>
+            <div><span>Sportart</span><strong>${a.sport}</strong></div>
+            <div><span>Arbeitsort</span><strong>${a.city}, ${a.state}</strong></div>
+          </div>
+          <p class="note">${a.note}</p>
+          <div class="sourceLine">
+            <span class="sub">Letzte Pruefung: 2026-07-05</span>
+            <a href="${a.source}" target="_blank" rel="noreferrer">Quelle</a>
+          </div>
+        </article>
+      `).join("");
+
+      tableBody.innerHTML = rows.map(a => `
+        <tr>
+          <td><strong>${a.name}</strong><span>${a.swiss}</span></td>
+          <td><strong>${a.sport}</strong><span>${a.league}</span></td>
+          <td>${a.team}</td>
+          <td><strong>${a.city}</strong><span>${a.state}</span></td>
+          <td><span class="badge ${statusBadge(a.status)}">${a.status}</span></td>
+          <td><a href="${a.source}" target="_blank" rel="noreferrer">oeffnen</a></td>
+        </tr>
+      `).join("");
+    }
+
+    [query, sport, league, state].forEach(el => el.addEventListener("input", render));
+    cardButton.addEventListener("click", () => {
+      dashboard.classList.remove("showTable");
+      cardButton.classList.add("active");
+      tableButton.classList.remove("active");
+    });
+    tableButton.addEventListener("click", () => {
+      dashboard.classList.add("showTable");
+      tableButton.classList.add("active");
+      cardButton.classList.remove("active");
+    });
+
+    render();
+  </script>
+</body>
+</html>
