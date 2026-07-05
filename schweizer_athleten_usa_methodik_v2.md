@@ -41,3 +41,8 @@ Diese Version ist deutlich breiter als die erste, aber fuer eine wirklich komple
 - UFC und LPGA werden als US-basierte Organisationen/Tours aufgenommen, wenn ein Schweizer Athlet dort aktuell aktiv ist.
 - Der angegebene Bundesstaat kann bei diesen Sportarten den Organisations-/Tourbezug markieren und ist nicht automatisch ein bestaetigter Wohn- oder Trainingsort.
 - MLS-Spieler bei kanadischen Clubs, z.B. CF Montreal, bleiben wegen des USA-Fokus ausserhalb der Hauptliste.
+
+## Watchlist ausserhalb der USA
+
+- `schweizer_athleten_nordamerika_watchlist.csv` sammelt relevante Schweizer in nordamerikanischen Ligen, die nicht in die USA-Hauptliste gehoeren.
+- Beispiele: MLS-Spieler bei CF Montreal, NHL-Spieler bei Winnipeg oder ehemalige NWSL-Spielerinnen, die nicht mehr in den USA aktiv sind.
