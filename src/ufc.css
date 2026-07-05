@@ -128,3 +128,16 @@ footer { justify-content: center; gap: 8px; padding: 16px; color: #aeb7c3; }
   .fighters { grid-template-columns: 1fr; }
   .fighters span { text-align: left; }
 }
+.sourceCheck { border-color: rgba(229, 9, 36, .35); background: linear-gradient(90deg, rgba(229, 9, 36, .12), #10131a); }
+.linkRow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.linkRow a { min-height: 34px; display: inline-flex; align-items: center; padding: 0 10px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; color: #f4f6f8; font-size: .82rem; font-weight: 850; text-decoration: none; }
+.linkRow a:hover { border-color: #e50924; }
+.priority { display: inline-flex; align-items: center; width: fit-content; min-height: 26px; margin-top: 7px; padding: 0 8px; border-radius: 999px; background: #2d1017; color: #ff6a78; font-size: .72rem; font-style: normal; font-weight: 900; }
+.fightNotes { display: grid; gap: 6px; }
+.fightNotes small, .fightNotes em { display: block; color: #aeb7c3; font-size: .84rem; line-height: 1.35; }
+.fightNotes em { color: #dce2ea; font-style: normal; }
+.alertStrip { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.alertStrip span { display: inline-flex; align-items: center; min-height: 26px; padding: 0 8px; border: 1px solid rgba(255, 209, 102, .35); border-radius: 999px; background: rgba(255, 209, 102, .1); color: #ffd166; font-size: .74rem; font-weight: 900; }
+@media (max-width: 1100px) {
+  .fightNotes { gap: 8px; }
+}
