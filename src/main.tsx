@@ -16,6 +16,12 @@ type Sport =
   | "Combat Sports"
   | "Sailing"
   | "Track & Field"
+  | "Marathon"
+  | "Wheelchair Marathon"
+  | "Triathlon"
+  | "Paralympics"
+  | "Winter Sports"
+  | "World Championships"
   | "Cycling"
   | "Extras";
 type Status = "active now" | "upcoming" | "off-season" | "major event soon";
@@ -25,6 +31,7 @@ type ScheduleEntry = {
   date: string;
   location?: string;
   note?: string;
+  url?: string;
 };
 
 type MegaEvent = {
@@ -79,14 +86,23 @@ const f1Races: ScheduleEntry[] = [
   { label: "Abu Dhabi Grand Prix", date: "2026-12-06", location: "Yas Marina" },
 ];
 
+const fifaMatchUrl = "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/matches";
+
 const worldCupRounds: ScheduleEntry[] = [
-  { label: "Group stage", date: "2026-06-11", location: "USA, Mexico, Canada", note: "June 11-27" },
-  { label: "Round of 32", date: "2026-06-28", location: "North America", note: "June 28-July 3" },
-  { label: "Round of 16", date: "2026-07-04", location: "North America", note: "July 4-7" },
-  { label: "Quarterfinals", date: "2026-07-09", location: "North America", note: "July 9-11" },
-  { label: "Semifinals", date: "2026-07-14", location: "North America", note: "July 14-15" },
-  { label: "Third-place match", date: "2026-07-18", location: "North America" },
-  { label: "Final", date: "2026-07-19", location: "New York/New Jersey" },
+  { label: "Group stage", date: "2026-06-11", location: "USA, Mexico, Canada", note: "June 11-27", url: fifaMatchUrl },
+  { label: "Round of 32", date: "2026-06-28", location: "North America", note: "June 28-July 3; open FIFA fixtures for match-by-match results", url: fifaMatchUrl },
+  { label: "Round of 16: Morocco 3-0 Canada", date: "2026-07-04", location: "North America", note: "Completed knockout match", url: fifaMatchUrl },
+  { label: "Round of 16: France 1-0 Paraguay", date: "2026-07-04", location: "North America", note: "Completed knockout match", url: fifaMatchUrl },
+  { label: "Round of 16: Brazil vs Norway", date: "2026-07-05", location: "North America", note: "Today; listed as a Round of 16 match", url: fifaMatchUrl },
+  { label: "Round of 16: Mexico vs England", date: "2026-07-05", location: "Mexico City", note: "Today; listed as a Round of 16 match", url: fifaMatchUrl },
+  { label: "Round of 16: USA vs Belgium", date: "2026-07-06", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
+  { label: "Round of 16: Portugal vs Spain", date: "2026-07-06", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
+  { label: "Round of 16: Argentina vs Egypt", date: "2026-07-07", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
+  { label: "Round of 16: Switzerland vs Colombia", date: "2026-07-07", location: "North America", note: "Upcoming knockout match", url: fifaMatchUrl },
+  { label: "Quarterfinals", date: "2026-07-09", location: "North America", note: "July 9-11", url: fifaMatchUrl },
+  { label: "Semifinals", date: "2026-07-14", location: "North America", note: "July 14-15", url: fifaMatchUrl },
+  { label: "Third-place match", date: "2026-07-18", location: "North America", url: fifaMatchUrl },
+  { label: "Final", date: "2026-07-19", location: "New York/New Jersey", url: fifaMatchUrl },
 ];
 
 
@@ -149,6 +165,42 @@ const cyclingEvents: ScheduleEntry[] = [
   { label: "Vuelta a Espana", date: "2026-08-22", location: "Spain", note: "Grand Tour window" },
   { label: "UCI Road World Championships", date: "2026-09-20", location: "Montreal, Canada", note: "Sep 20-27" },
   { label: "Tour de Suisse", date: "2027-06-06", location: "Switzerland", note: "Swiss cycling anchor" },
+];
+
+const worldMarathonMajorEvents: ScheduleEntry[] = [
+  { label: "Tokyo Marathon", date: "2026-03-01", location: "Tokyo", note: "World Marathon Major", url: "https://www.worldmarathonmajors.com/" },
+  { label: "Boston Marathon", date: "2026-04-20", location: "Boston", note: "World Marathon Major", url: "https://www.baa.org/" },
+  { label: "London Marathon", date: "2026-04-26", location: "London", note: "World Marathon Major", url: "https://www.tcslondonmarathon.com/" },
+  { label: "Sydney Marathon", date: "2026-08-30", location: "Sydney", note: "World Marathon Major", url: "https://tcssydneymarathon.com/" },
+  { label: "Berlin Marathon", date: "2026-09-27", location: "Berlin", note: "World Marathon Major", url: "https://www.bmw-berlin-marathon.com/" },
+  { label: "Chicago Marathon", date: "2026-10-11", location: "Chicago", note: "World Marathon Major", url: "https://www.chicagomarathon.com/" },
+  { label: "New York City Marathon", date: "2026-11-01", location: "New York City", note: "World Marathon Major", url: "https://www.nyrr.org/tcsnycmarathon" },
+];
+
+const wheelchairMarathonEvents: ScheduleEntry[] = [
+  { label: "Sydney Marathon wheelchair fields", date: "2026-08-30", location: "Sydney", note: "Track elite wheelchair divisions with the major marathon schedule", url: "https://www.worldmarathonmajors.com/" },
+  { label: "Berlin Marathon wheelchair fields", date: "2026-09-27", location: "Berlin", note: "Elite wheelchair marathon watch", url: "https://www.bmw-berlin-marathon.com/" },
+  { label: "Chicago Marathon wheelchair fields", date: "2026-10-11", location: "Chicago", note: "Elite wheelchair marathon watch", url: "https://www.chicagomarathon.com/" },
+  { label: "New York City Marathon wheelchair fields", date: "2026-11-01", location: "New York City", note: "Elite wheelchair marathon watch", url: "https://www.nyrr.org/tcsnycmarathon" },
+];
+
+const ironmanEvents: ScheduleEntry[] = [
+  { label: "IRONMAN World Championship", date: "2026-10-10", location: "Kailua-Kona, Hawaii", note: "Men's and women's championship returns to Kona in 2026", url: "https://www.ironman.com/im-world-championship" },
+  { label: "IRONMAN 70.3 World Championship", date: "2026-11-14", location: "Global championship", note: "Track final date/location from IRONMAN", url: "https://www.ironman.com/im703-world-championship" },
+];
+
+const paraAndOlympicEvents: ScheduleEntry[] = [
+  { label: "Milan Cortina 2026 Winter Olympics", date: "2026-02-06", location: "Italy", note: "Winter Olympics window: Feb 6-22, 2026", url: "https://olympics.com/en/olympic-games/milano-cortina-2026" },
+  { label: "Milan Cortina 2026 Winter Paralympics", date: "2026-03-06", location: "Italy", note: "Winter Paralympics window: Mar 6-15, 2026", url: "https://www.paralympic.org/milano-cortina-2026" },
+  { label: "LA28 Olympic Games", date: "2028-07-14", location: "Los Angeles", note: "Summer Olympics return to the US", url: "https://la28.org/" },
+  { label: "LA28 Paralympic Games", date: "2028-08-15", location: "Los Angeles", note: "Summer Paralympics in Los Angeles", url: "https://la28.org/" },
+  { label: "Utah 2034 Winter Olympics", date: "2034-02-10", location: "Utah", note: "Future US Winter Games anchor", url: "https://olympics.com/" },
+];
+
+const worldChampionshipEvents: ScheduleEntry[] = [
+  { label: "World Aquatics Championships", date: "2027-06-26", location: "Budapest, Hungary", note: "Global swimming/diving/water polo/open-water championship window", url: "https://www.worldaquatics.com/" },
+  { label: "World Athletics Championships", date: "2027-09-11", location: "Beijing, China", note: "Sep 11-19, 2027", url: "https://worldathletics.org/" },
+  { label: "UCI Road World Championships", date: "2026-09-20", location: "Montreal, Canada", note: "Road cycling world championships", url: "https://www.uci.org/" },
 ];
 const megaEvents: MegaEvent[] = [
   {
@@ -525,7 +577,98 @@ const items: SportsItem[] = [
     note: "Grand Tours, World Championships and Swiss cycling anchors.",
     source: "curated",
     details: cyclingEvents,
-  },  {
+  },
+  {
+    id: "world-marathon-majors",
+    title: "World Marathon Majors",
+    sport: "Marathon",
+    region: "Global",
+    seasonStart: "2026-03-01",
+    seasonEnd: "2026-11-01",
+    keyDate: "2026-08-30",
+    keyDateLabel: "Sydney Marathon",
+    phases: ["Tokyo", "Boston", "London", "Sydney", "Berlin", "Chicago", "New York City"],
+    timezone: "Global",
+    note: "The major global marathon circuit, now tracked separately from general track and road running.",
+    source: "curated",
+    details: worldMarathonMajorEvents,
+  },
+  {
+    id: "wheelchair-marathon-majors",
+    title: "Wheelchair Marathon Majors",
+    sport: "Wheelchair Marathon",
+    region: "Global",
+    seasonStart: "2026-03-01",
+    seasonEnd: "2026-11-01",
+    keyDate: "2026-08-30",
+    keyDateLabel: "Sydney wheelchair fields",
+    phases: ["Major marathon wheelchair fields", "Elite wheelchair road racing"],
+    timezone: "Global",
+    note: "Elite wheelchair marathon fields should be visible as their own layer, not hidden inside running.",
+    source: "curated",
+    details: wheelchairMarathonEvents,
+  },
+  {
+    id: "ironman",
+    title: "IRONMAN / Long-distance Triathlon",
+    sport: "Triathlon",
+    region: "Global",
+    seasonStart: "2026-01-01",
+    seasonEnd: "2026-12-31",
+    keyDate: "2026-10-10",
+    keyDateLabel: "IRONMAN World Championship",
+    phases: ["Qualification races", "70.3 worlds", "IRONMAN worlds"],
+    timezone: "Global",
+    note: "Long-distance triathlon championship layer, with Kona and IRONMAN 70.3 as the main anchors.",
+    source: "curated",
+    details: ironmanEvents,
+  },
+  {
+    id: "para-olympic-watch",
+    title: "Paralympics & Olympic Watch",
+    sport: "Paralympics",
+    region: "Global",
+    seasonStart: "2026-02-06",
+    seasonEnd: "2034-02-26",
+    keyDate: "2028-08-15",
+    keyDateLabel: "LA28 Paralympic Games",
+    phases: ["Winter Olympics", "Winter Paralympics", "Summer Olympics", "Summer Paralympics", "Future Winter Games"],
+    timezone: "Global",
+    note: "Dedicated Olympic and Paralympic watchlist, including winter and summer anchors.",
+    source: "curated",
+    details: paraAndOlympicEvents,
+  },
+  {
+    id: "winter-olympics",
+    title: "Winter Olympics & Winter Sports",
+    sport: "Winter Sports",
+    region: "Global",
+    seasonStart: "2026-02-06",
+    seasonEnd: "2034-02-26",
+    keyDate: "2034-02-10",
+    keyDateLabel: "Utah 2034 Winter Olympics",
+    phases: ["Milan Cortina 2026", "Winter Paralympics", "Utah 2034"],
+    timezone: "Global",
+    note: "Winter Olympics, Winter Paralympics, alpine skiing, and future US winter sport anchors.",
+    source: "curated",
+    details: paraAndOlympicEvents,
+  },
+  {
+    id: "world-championships",
+    title: "World Championships Watchlist",
+    sport: "World Championships",
+    region: "Global",
+    seasonStart: "2026-09-20",
+    seasonEnd: "2028-12-31",
+    keyDate: "2027-06-26",
+    keyDateLabel: "World Aquatics Championships",
+    phases: ["Cycling worlds", "Aquatics worlds", "Athletics worlds", "Other global championships"],
+    timezone: "Global",
+    note: "Cross-sport world championship layer for events that are bigger than a normal season stop.",
+    source: "curated",
+    details: worldChampionshipEvents,
+  },
+  {
     id: "ryder-presidents",
     title: "Ryder / Presidents Cup",
     sport: "Golf",
@@ -566,6 +709,12 @@ const sportOptions: Array<Sport | "All"> = [
   "Combat Sports",
   "Sailing",
   "Track & Field",
+  "Marathon",
+  "Wheelchair Marathon",
+  "Triathlon",
+  "Paralympics",
+  "Winter Sports",
+  "World Championships",
   "Cycling",
   "Extras",
 ];
@@ -633,6 +782,10 @@ function nextDetail(details: ScheduleEntry[] | undefined) {
   return details.find((detail) => daysUntil(detail.date) >= 0) ?? details[details.length - 1];
 }
 
+function nextActionDate(item: SportsItem) {
+  return nextDetail(item.details)?.date ?? item.keyDate;
+}
+
 function App() {
   const [region, setRegion] = React.useState<Region | "All">("All");
   const [sport, setSport] = React.useState<Sport | "All">("All");
@@ -642,8 +795,13 @@ function App() {
   const enriched = React.useMemo(
     () =>
       items
-        .map((item) => ({ ...item, status: getStatus(item), keyIn: daysUntil(item.keyDate) }))
-        .sort((a, b) => statusRank(a.status) - statusRank(b.status) || parseDate(a.keyDate).getTime() - parseDate(b.keyDate).getTime()),
+        .map((item) => ({ ...item, status: getStatus(item), keyIn: daysUntil(nextActionDate(item)) }))
+        .sort(
+          (a, b) =>
+            parseDate(nextActionDate(a)).getTime() - parseDate(nextActionDate(b)).getTime() ||
+            statusRank(a.status) - statusRank(b.status) ||
+            a.title.localeCompare(b.title),
+        ),
     [],
   );
 
@@ -666,6 +824,7 @@ function App() {
           <p className="eyebrow">USA + Switzerland Sports Calendar</p>
           <h1>Sports Dashboard</h1>
           <p className="intro">Track what is active now, what is coming next, and which season windows matter.</p>
+          <a className="athleteLink" href="./swiss-athletes.html">Schweizer Athleten in den USA oeffnen</a>
         </div>
         <div className="heroStats" aria-label="dashboard summary">
           <div>
@@ -743,13 +902,15 @@ function App() {
             <strong>{selectedNext ? "Next up" : "Key date"}</strong>
             <span>{selectedNext ? selectedNext.label : selected.keyDateLabel}</span>
             <time>{formatDate(selectedNext?.date ?? selected.keyDate, selected.timezone)}</time>
+            {selectedNext?.url ? <a href={selectedNext.url} target="_blank" rel="noreferrer">More info</a> : null}
           </div>
           <div className="detailList">
-            {(selected.details?.length ? selected.details : selected.phases.map((phase, index) => ({ label: phase, date: selected.keyDate, location: undefined, note: index === 0 ? "Season phase" : undefined }))).map((detail) => (
+            {(selected.details?.length ? selected.details : selected.phases.map((phase, index) => ({ label: phase, date: selected.keyDate, location: undefined, note: index === 0 ? "Season phase" : undefined, url: undefined }))).map((detail) => (
               <div className="detailRow" key={`${detail.label}-${detail.date}`}>
                 <div>
                   <strong>{detail.label}</strong>
                   <span>{detail.note}</span>
+                  {detail.url ? <a href={detail.url} target="_blank" rel="noreferrer">More info</a> : null}
                 </div>
                 <div className="detailPlace">
                   {detail.location ? <MapPin size={15} /> : null}

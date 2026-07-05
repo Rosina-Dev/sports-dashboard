@@ -82,6 +82,27 @@ h3 {
   font-size: 1.25rem;
 }
 
+.athleteLink {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 42px;
+  margin-top: 18px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  border-radius: 8px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.14);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.athleteLink:hover,
+.athleteLink:focus-visible {
+  background: rgba(255, 255, 255, 0.24);
+  outline: none;
+}
+
 .intro {
   max-width: 620px;
   margin-bottom: 0;
@@ -864,4 +885,18 @@ tr.region-global td span {
   .itemMeta {
     justify-content: flex-start;
   }
+}
+.detailRow a,
+.nextUp a {
+  color: #1c5b48;
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.detailRow a:hover,
+.nextUp a:hover,
+.detailRow a:focus-visible,
+.nextUp a:focus-visible {
+  text-decoration: underline;
 }
