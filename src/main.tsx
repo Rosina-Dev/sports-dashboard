@@ -1,1068 +1,136 @@
-import React from "react";
+﻿import React from "react";
 import ReactDOM from "react-dom/client";
-import { CalendarDays, CheckCircle2, ChevronRight, Clock3, MapPin, Plus, Search } from "lucide-react";
+import { Activity, AlertTriangle, BarChart3, CalendarDays, ChevronRight, Clock3, Flame, Newspaper, Radio, Search, Shield, Star, Trophy, Users } from "lucide-react";
 import "./styles.css";
 
-type Region = "USA" | "Schweiz" | "Global";
-type Sport =
-  | "Football"
-  | "Basketball"
-  | "Baseball"
-  | "Soccer"
-  | "Ice Hockey"
-  | "Tennis"
-  | "Golf"
-  | "Motorsport"
-  | "Combat Sports"
-  | "Sailing"
-  | "Track & Field"
-  | "Marathon"
-  | "Wheelchair Marathon"
-  | "Triathlon"
-  | "Paralympics"
-  | "Winter Sports"
-  | "World Championships"
-  | "Cycling"
-  | "Extras";
-type Status = "active now" | "upcoming" | "off-season" | "major event soon";
+type Division = "All" | "Heavyweight" | "Light Heavyweight" | "Middleweight" | "Welterweight" | "Lightweight" | "Featherweight" | "Bantamweight" | "Flyweight" | "Women Strawweight" | "Women Flyweight";
+type EventType = "All" | "PPV" | "Fight Night" | "International";
+type BoutTier = "Main Event" | "Co-main" | "Main Card" | "Prelims";
+type Fight = { id: string; tier: BoutTier; division: Exclude<Division, "All">; red: string; blue: string; stakes: string; ranked: number; title?: boolean; rivalry?: boolean; late?: boolean };
+type UFCEvent = { id: string; name: string; type: Exclude<EventType, "All">; date: string; venue: string; city: string; watch: string; url: string; image: string; tagline: string; note: string; fights: Fight[]; timeline: Array<{ label: string; date: string; time: string; note: string }> };
+type Fighter = { name: string; division: Exclude<Division, "All">; record: string; streak: string; next?: string; last: string; tag: string };
+type Ranking = { division: Exclude<Division, "All">; champion: string; contenders: string[]; movement: string; state: "Hot" | "Crowded" | "Waiting" };
 
-type ScheduleEntry = {
-  label: string;
-  date: string;
-  location?: string;
-  note?: string;
-  url?: string;
-};
+const links = { events: "https://www.ufc.com/events", news: "https://www.ufc.com/news", rankings: "https://www.ufc.com/rankings" };
+const lastUpdated = "Manual fallback data last updated July 5, 2026";
+const MS = 24 * 60 * 60 * 1000;
+const now = new Date();
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-type MegaEvent = {
-  title: string;
-  date: string;
-  location: string;
-  note: string;
-};
-
-type SportsItem = {
-  id: string;
-  title: string;
-  sport: Sport;
-  region: Region;
-  seasonStart: string;
-  seasonEnd: string;
-  keyDate: string;
-  keyDateLabel: string;
-  phases: string[];
-  timezone: "US" | "CH" | "Global";
-  note: string;
-  source: "curated" | "api-ready";
-  details?: ScheduleEntry[];
-};
-
-const today = new Date();
-const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-
-const f1Races: ScheduleEntry[] = [
-  { label: "Australian Grand Prix", date: "2026-03-08", location: "Melbourne" },
-  { label: "Chinese Grand Prix", date: "2026-03-15", location: "Shanghai" },
-  { label: "Japanese Grand Prix", date: "2026-03-29", location: "Suzuka" },
-  { label: "Bahrain Grand Prix", date: "2026-04-12", location: "Sakhir" },
-  { label: "Saudi Arabian Grand Prix", date: "2026-04-19", location: "Jeddah" },
-  { label: "Miami Grand Prix", date: "2026-05-03", location: "Miami" },
-  { label: "Canadian Grand Prix", date: "2026-05-24", location: "Montreal" },
-  { label: "Monaco Grand Prix", date: "2026-06-07", location: "Monte Carlo" },
-  { label: "Spanish Grand Prix", date: "2026-06-14", location: "Barcelona" },
-  { label: "Austrian Grand Prix", date: "2026-06-28", location: "Spielberg" },
-  { label: "British Grand Prix", date: "2026-07-05", location: "Silverstone" },
-  { label: "Belgian Grand Prix", date: "2026-07-19", location: "Spa-Francorchamps" },
-  { label: "Hungarian Grand Prix", date: "2026-07-26", location: "Budapest" },
-  { label: "Dutch Grand Prix", date: "2026-08-23", location: "Zandvoort" },
-  { label: "Italian Grand Prix", date: "2026-09-06", location: "Monza" },
-  { label: "Azerbaijan Grand Prix", date: "2026-09-27", location: "Baku" },
-  { label: "Singapore Grand Prix", date: "2026-10-11", location: "Singapore" },
-  { label: "United States Grand Prix", date: "2026-10-25", location: "Austin" },
-  { label: "Mexico City Grand Prix", date: "2026-11-01", location: "Mexico City" },
-  { label: "Sao Paulo Grand Prix", date: "2026-11-08", location: "Interlagos" },
-  { label: "Las Vegas Grand Prix", date: "2026-11-21", location: "Las Vegas" },
-  { label: "Qatar Grand Prix", date: "2026-11-29", location: "Lusail" },
-  { label: "Abu Dhabi Grand Prix", date: "2026-12-06", location: "Yas Marina" },
+const events: UFCEvent[] = [
+  { id: "ufc-329", name: "UFC 329", type: "PPV", date: "2026-07-11", venue: "T-Mobile Arena", city: "Las Vegas, NV", watch: "ESPN+ PPV, prelims on ESPN platforms", url: links.events, image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=1600&q=80", tagline: "International Fight Week pressure, title stakes, and ranked contenders packed into one card.", note: "Fight week watch: verify bout order and official start times before lock-in.", fights: [
+    { id: "f1", tier: "Main Event", division: "Lightweight", red: "Champion TBD", blue: "Top contender TBD", stakes: "Title implications and pound-for-pound movement", ranked: 2, title: true },
+    { id: "f2", tier: "Co-main", division: "Welterweight", red: "Ranked welterweight", blue: "Rising contender", stakes: "Winner moves into the title-shot conversation", ranked: 2, rivalry: true },
+    { id: "f3", tier: "Main Card", division: "Bantamweight", red: "Pressure boxer", blue: "Scramble-heavy grappler", stakes: "Style clash with breakout potential", ranked: 1 },
+    { id: "f4", tier: "Prelims", division: "Featherweight", red: "Prospect watch", blue: "Short-notice veteran", stakes: "Upset alert and late replacement volatility", ranked: 0, late: true }], timeline: [
+    { label: "Fight week media day", date: "2026-07-08", time: "Afternoon", note: "Track quotes, staredowns, and card-change clues." },
+    { label: "Official weigh-ins", date: "2026-07-10", time: "Morning", note: "Highest-risk moment for bout changes." },
+    { label: "Ceremonial weigh-ins", date: "2026-07-10", time: "Evening", note: "Final public faceoff before fight night." },
+    { label: "Early prelims", date: "2026-07-11", time: "Evening", note: "Prospects and late-notice fights start here." },
+    { label: "Main card", date: "2026-07-11", time: "Night", note: "PPV window and ranked fight focus." }] },
+  { id: "fn-281", name: "UFC Fight Night 281", type: "Fight Night", date: "2026-07-18", venue: "Paycom Center", city: "Oklahoma City, OK", watch: "ESPN platforms", url: links.events, image: "https://images.unsplash.com/photo-1517438322307-e67111335449?auto=format&fit=crop&w=1600&q=80", tagline: "A rankings maintenance card where one sharp performance can reset a division queue.", note: "Main card order is treated as manual fallback until official listing is checked.", fights: [
+    { id: "f5", tier: "Main Event", division: "Middleweight", red: "Top-five contender", blue: "Durable finisher", stakes: "Five-round test with title-eliminator flavor", ranked: 2 },
+    { id: "f6", tier: "Co-main", division: "Women Flyweight", red: "Former title challenger", blue: "Fast-rising striker", stakes: "Winner enters the short list for a contender fight", ranked: 2 },
+    { id: "f7", tier: "Main Card", division: "Heavyweight", red: "Power puncher", blue: "Wrestling-heavy veteran", stakes: "Low-margin heavyweight chaos", ranked: 1 }], timeline: [
+    { label: "Media availability", date: "2026-07-16", time: "Afternoon", note: "Watch for five-round cardio questions." },
+    { label: "Official weigh-ins", date: "2026-07-17", time: "Morning", note: "Weight checks and bout changes matter." },
+    { label: "Prelims", date: "2026-07-18", time: "Evening", note: "Prospect block and regional names." },
+    { label: "Main card", date: "2026-07-18", time: "Night", note: "Ranked middleweight main event." }] },
+  { id: "ufc-330", name: "UFC 330", type: "PPV", date: "2026-08-15", venue: "Wells Fargo Center", city: "Philadelphia, PA", watch: "ESPN+ PPV, prelims on ESPN platforms", url: links.events, image: "https://images.unsplash.com/photo-1569517282132-25d22f4573e6?auto=format&fit=crop&w=1600&q=80", tagline: "East Coast PPV with title-room consequences across lighter divisions.", note: "Card shell is ready for official bout confirmations.", fights: [
+    { id: "f8", tier: "Main Event", division: "Bantamweight", red: "Champion lane", blue: "No. 1 contender lane", stakes: "Possible title fight or title eliminator", ranked: 2, title: true },
+    { id: "f9", tier: "Co-main", division: "Light Heavyweight", red: "Knockout artist", blue: "Measured counter striker", stakes: "Division reboot fight", ranked: 2 },
+    { id: "f10", tier: "Main Card", division: "Women Strawweight", red: "Former champion", blue: "New contender", stakes: "Champion watch and ranking compression", ranked: 2 }], timeline: [
+    { label: "Fight week arrivals", date: "2026-08-12", time: "All day", note: "Watch final bout order updates." },
+    { label: "Official weigh-ins", date: "2026-08-14", time: "Morning", note: "Title-fight backup rules may matter." },
+    { label: "Main card", date: "2026-08-15", time: "Night", note: "PPV card and rankings impact." }] },
+  { id: "shanghai-fn", name: "UFC Fight Night Shanghai", type: "International", date: "2026-08-29", venue: "Shanghai event venue TBD", city: "Shanghai, China", watch: "ESPN platforms, local schedule TBD", url: links.events, image: "https://images.unsplash.com/photo-1533591380348-14193f1de18f?auto=format&fit=crop&w=1600&q=80", tagline: "International card built for prospects, regional momentum, and odd viewing hours.", note: "Time-zone conversion and official venue should be checked before fight week.", fights: [
+    { id: "f11", tier: "Main Event", division: "Flyweight", red: "Ranked flyweight", blue: "International contender", stakes: "High-speed contender sorting", ranked: 2 },
+    { id: "f12", tier: "Co-main", division: "Featherweight", red: "Action fighter", blue: "Prospect watch", stakes: "Breakout or veteran check", ranked: 1 }], timeline: [
+    { label: "Local media day", date: "2026-08-27", time: "Local afternoon", note: "International broadcast details expected." },
+    { label: "Official weigh-ins", date: "2026-08-28", time: "Local morning", note: "Time-zone reminder for US viewers." },
+    { label: "Main card", date: "2026-08-29", time: "Local night", note: "International Fight Night window." }] }
 ];
 
-const worldCupRounds: ScheduleEntry[] = [
-  { label: "Round of 16: Brazil vs Norway", date: "2026-07-05", location: "New York New Jersey Stadium", note: "Today, 4:00 PM ET" },
-  { label: "Round of 16: Mexico vs England", date: "2026-07-05", location: "Estadio Azteca, Mexico City", note: "Today, 8:00 PM ET" },
-  { label: "Round of 16: USA vs Belgium", date: "2026-07-06", location: "North America", note: "Date/time TBD in dashboard data" },
-  { label: "Round of 16: Portugal vs Spain", date: "2026-07-06", location: "North America", note: "Date/time TBD in dashboard data" },
-  { label: "Round of 16: Argentina vs Egypt", date: "2026-07-07", location: "North America", note: "Date/time TBD in dashboard data" },
-  { label: "Round of 16: Switzerland vs Colombia", date: "2026-07-07", location: "North America", note: "Date/time TBD in dashboard data" },
-  { label: "Quarterfinals", date: "2026-07-09", location: "North America", note: "July 9-11" },
-  { label: "Semifinals", date: "2026-07-14", location: "North America", note: "July 14-15" },
-  { label: "Third-place match", date: "2026-07-18", location: "North America" },
-  { label: "Final", date: "2026-07-19", location: "New York New Jersey Stadium", note: "World Cup Final" },
+const fighters: Fighter[] = [
+  { name: "Islam Makhachev", division: "Lightweight", record: "26-1", streak: "Long win streak", next: "Awaiting official booking", last: "Title defense win", tag: "Champion watch" },
+  { name: "Alex Pereira", division: "Light Heavyweight", record: "12-3", streak: "Title-form volatility", next: "Opponent TBD", last: "Statement win/loss tracker", tag: "Must-watch power" },
+  { name: "Zhang Weili", division: "Women Strawweight", record: "25-3", streak: "Elite title form", next: "Contender queue forming", last: "Championship-level performance", tag: "Division anchor" },
+  { name: "Shavkat Rakhmonov", division: "Welterweight", record: "18-0", streak: "Unbeaten", next: "Title eliminator watch", last: "Ranked win", tag: "Breakout pressure" },
+  { name: "Tom Aspinall", division: "Heavyweight", record: "15-3", streak: "Fast-finisher run", next: "Heavyweight title picture", last: "First-round finish", tag: "Clock starts fast" }
 ];
+const rankings: Ranking[] = [
+  { division: "Heavyweight", champion: "Champion lane TBD", contenders: ["Tom Aspinall", "Ciryl Gane", "Sergei Pavlovich"], movement: "Title clarity and injury timing drive the queue.", state: "Waiting" },
+  { division: "Light Heavyweight", champion: "Alex Pereira lane", contenders: ["Magomed Ankalaev", "Jiri Prochazka", "Jamahal Hill"], movement: "One result can reorder the top three quickly.", state: "Hot" },
+  { division: "Welterweight", champion: "Champion lane TBD", contenders: ["Shavkat Rakhmonov", "Belal Muhammad", "Leon Edwards"], movement: "Crowded title-shot debate with stylistic splits.", state: "Crowded" },
+  { division: "Lightweight", champion: "Islam Makhachev lane", contenders: ["Arman Tsarukyan", "Charles Oliveira", "Justin Gaethje"], movement: "Every ranked fight affects the title waitlist.", state: "Hot" },
+  { division: "Women Strawweight", champion: "Zhang Weili lane", contenders: ["Tatiana Suarez", "Yan Xiaonan", "Amanda Lemos"], movement: "Top contenders need clean availability and a signature win.", state: "Crowded" }
+];
+const news = [
+  { title: "Official event schedule check", tone: "Official", source: "UFC Events", url: links.events, summary: "Use the official events page as the live source of truth for bout order, venues, and broadcast windows.", updated: "Today" },
+  { title: "Card-change risk window", tone: "Breaking", source: "UFC News", url: links.news, summary: "The highest-risk period is weigh-in week: missed weights, medical scratches, and short-notice replacements can reshape the card.", updated: "Fight week" },
+  { title: "Ranking movement tracker", tone: "Watch", source: "UFC Rankings", url: links.rankings, summary: "Ranked main-card fights should be checked against official rankings after each event for contender movement.", updated: "Weekly" },
+  { title: "Media day signal board", tone: "Media", source: "UFC News", url: links.news, summary: "Press conference quotes, open workouts, and faceoffs are storyline signals, not official fight data.", updated: "As posted" }
+];
+const storylines = [
+  { title: "Lightweight title queue stays unforgiving", division: "Lightweight", impact: "Title implications", why: "A single injury, missed weight, or upset can move a contender from waiting room to main event." },
+  { title: "Welterweight needs a clean eliminator", division: "Welterweight", impact: "Contender sorting", why: "The division has names for debate, but not enough clean separation at the top." },
+  { title: "International cards are prospect accelerators", division: "Featherweight", impact: "Breakout watch", why: "Regional showcases often reveal fighters before they become main-card fixtures in US time slots." },
+  { title: "Women's strawweight remains compact and dangerous", division: "Women Strawweight", impact: "Champion pressure", why: "The top tier is small enough that one dominant performance can feel like a title argument." }
+];
+const results = [
+  { event: "Recent PPV sample", date: "2026-06-29", winner: "Ranked lightweight", loser: "Top-ten veteran", division: "Lightweight", method: "Decision, 5 rounds", impact: "Contender stayed alive but did not create a clear title claim." },
+  { event: "Recent Fight Night sample", date: "2026-06-22", winner: "Unranked prospect", loser: "Ranked veteran", division: "Featherweight", method: "TKO, Round 2", impact: "Breakout watchlist upgraded after a ranked finish." },
+  { event: "Recent international sample", date: "2026-06-15", winner: "Flyweight contender", loser: "Former challenger", division: "Flyweight", method: "Submission, Round 3", impact: "Flyweight queue became more crowded near the top five." }
+];
+const divisions: Division[] = ["All", "Heavyweight", "Light Heavyweight", "Middleweight", "Welterweight", "Lightweight", "Featherweight", "Bantamweight", "Flyweight", "Women Strawweight", "Women Flyweight"];
+const eventTypes: EventType[] = ["All", "PPV", "Fight Night", "International"];
 
+const parseDate = (value: string) => new Date(`${value}T12:00:00`);
+const daysUntil = (value: string) => Math.round((new Date(parseDate(value).getFullYear(), parseDate(value).getMonth(), parseDate(value).getDate()).getTime() - today.getTime()) / MS);
+const formatDate = (value: string) => new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(parseDate(value));
+const countdown = (value: string) => { const days = daysUntil(value); if (days === 0) return "Tonight"; if (days === 1) return "Tomorrow"; return days > 1 ? `${days} days` : `${Math.abs(days)} days ago`; };
+const heat = (event: UFCEvent) => Math.min(100, 34 + event.fights.filter((f) => f.title).length * 26 + event.fights.reduce((t, f) => t + f.ranked * 8, 0) + event.fights.filter((f) => f.rivalry).length * 10 + (event.type === "PPV" ? 12 : 4) - event.fights.filter((f) => f.late).length * 4);
+const mainFight = (event: UFCEvent, tier: BoutTier) => event.fights.find((fight) => fight.tier === tier);
+const fightText = (fight?: Fight) => fight ? `${fight.red} vs ${fight.blue}` : "Bout details awaiting official confirmation";
+const nextEvent = () => events.find((event) => daysUntil(event.date) >= 0) ?? events[events.length - 1];
+const matchesDivision = (fight: Fight, division: Division) => division === "All" || fight.division === division;
 
-const ufcEvents: ScheduleEntry[] = [
-  { label: "UFC 329", date: "2026-07-11", location: "T-Mobile Arena, Las Vegas", note: "International Fight Week" },
-  { label: "UFC Fight Night 281", date: "2026-07-18", location: "Paycom Center, Oklahoma City" },
-  { label: "UFC 330", date: "2026-08-15", location: "Philadelphia" },
-  { label: "UFC Fight Night", date: "2026-08-29", location: "Shanghai" },
-];
-
-const sailGpEvents: ScheduleEntry[] = [
-  { label: "Perth Sail Grand Prix", date: "2026-01-17", location: "Perth, Australia", note: "Jan 17-18" },
-  { label: "New Zealand Sail Grand Prix", date: "2026-02-14", location: "Auckland, New Zealand", note: "Feb 14-15" },
-  { label: "Sydney Sail Grand Prix", date: "2026-02-28", location: "Sydney, Australia", note: "Feb 28-Mar 1" },
-  { label: "Rio Sail Grand Prix", date: "2026-04-11", location: "Rio de Janeiro, Brazil", note: "Apr 11-12" },
-  { label: "Bermuda Sail Grand Prix", date: "2026-05-10", location: "Bermuda", note: "May 10-11" },
-  { label: "New York Sail Grand Prix", date: "2026-05-31", location: "New York City, USA", note: "May 31-Jun 1" },
-  { label: "Canada Sail Grand Prix", date: "2026-06-21", location: "Halifax, Canada", note: "Jun 21-22" },
-  { label: "Great Britain Sail Grand Prix", date: "2026-07-26", location: "Portsmouth, Great Britain", note: "Jul 26-27" },
-  { label: "Germany Sail Grand Prix", date: "2026-08-23", location: "Sassnitz, Germany", note: "Aug 23-24" },
-  { label: "Spain Sail Grand Prix", date: "2026-09-05", location: "Valencia, Spain", note: "Sep 5-6" },
-  { label: "Switzerland Sail Grand Prix", date: "2026-09-19", location: "Geneva, Switzerland", note: "Sep 19-20" },
-  { label: "Dubai Sail Grand Prix", date: "2026-11-21", location: "Dubai, UAE", note: "Nov 21-22" },
-  { label: "Abu Dhabi Grand Final", date: "2026-11-28", location: "Abu Dhabi, UAE", note: "Nov 28-29" },
-];
-const nwslEvents: ScheduleEntry[] = [
-  { label: "Regular season kickoff", date: "2026-03-13", location: "USA", note: "16 teams, 30-match regular season" },
-  { label: "Regular season final day", date: "2026-11-01", location: "USA" },
-  { label: "NWSL playoffs begin", date: "2026-11-06", location: "USA" },
-  { label: "NWSL Championship", date: "2026-11-21", location: "USA" },
-];
-
-const uswntEvents: ScheduleEntry[] = [
-  { label: "SheBelieves Cup: USA vs Argentina", date: "2026-03-01", location: "Nashville, TN" },
-  { label: "SheBelieves Cup: USA vs Canada", date: "2026-03-04", location: "Columbus, OH" },
-  { label: "SheBelieves Cup: USA vs Colombia", date: "2026-03-07", location: "Harrison, NJ" },
-  { label: "2027 Women's World Cup prep cycle", date: "2026-09-01", location: "International windows", note: "Use API later for exact friendlies" },
-];
-
-const championsLeagueEvents: ScheduleEntry[] = [
-  { label: "League phase begins", date: "2026-09-15", location: "Europe", note: "Matchday 1 window" },
-  { label: "League phase final matchday", date: "2027-01-27", location: "Europe" },
-  { label: "Knockout phase play-offs", date: "2027-02-16", location: "Europe", note: "Two-leg ties" },
-  { label: "Round of 16", date: "2027-03-09", location: "Europe" },
-  { label: "Quarterfinals", date: "2027-04-06", location: "Europe" },
-  { label: "Semifinals", date: "2027-04-27", location: "Europe" },
-  { label: "Champions League Final", date: "2027-06-05", location: "Europe" },
-];
-
-const tennisMajorEvents: ScheduleEntry[] = [
-  { label: "Australian Open", date: "2026-01-12", location: "Melbourne", note: "Grand Slam hard-court major", url: "https://ausopen.com/" },
-  { label: "Roland-Garros", date: "2026-05-24", location: "Paris", note: "Grand Slam clay-court major", url: "https://www.rolandgarros.com/" },
-  { label: "Wimbledon: daily order of play", date: "2026-07-05", location: "London", note: "Active now; open schedule for today's matches and courts", url: "https://www.wimbledon.com/en_GB/scores/schedule/index.html" },
-  { label: "Wimbledon finals weekend", date: "2026-07-11", location: "London", note: "Ladies' final July 11; men's final July 12", url: "https://www.wimbledon.com/" },
-  { label: "US Open qualifying", date: "2026-08-24", location: "New York", note: "Qualifying week", url: "https://www.usopen.org/" },
-  { label: "US Open main draw", date: "2026-08-31", location: "New York", note: "Grand Slam hard-court major, Aug 31-Sep 13", url: "https://www.usopen.org/" },
-  { label: "WTA Finals", date: "2026-11-08", location: "Indian Wells, California", note: "Season-ending WTA championship, Nov 8-15", url: "https://www.wtatennis.com/" },
-  { label: "ATP Finals", date: "2026-11-15", location: "Turin", note: "Season-ending ATP championship window", url: "https://www.nittoatpfinals.com/" },
-];
-
-const swissTennisEvents: ScheduleEntry[] = [
-  { label: "Swiss Open Gstaad", date: "2026-07-13", location: "Gstaad, Switzerland", note: "ATP clay event after Wimbledon", url: "https://swissopengstaad.ch/" },
-  { label: "Swiss Indoors qualifying", date: "2026-10-24", location: "Basel", note: "Basel tournament opening weekend", url: "https://www.swissindoorsbasel.ch/" },
-  { label: "Swiss Indoors final", date: "2026-11-01", location: "Basel", note: "Basel final", url: "https://www.swissindoorsbasel.ch/" },
-];
-const trackFieldEvents: ScheduleEntry[] = [
-  { label: "Diamond League summer stretch", date: "2026-07-10", location: "Global", note: "Elite meet season" },
-  { label: "USATF Outdoor Championships window", date: "2027-06-24", location: "United States", note: "US national outdoor title window" },
-  { label: "World Athletics Championships", date: "2027-09-11", location: "Beijing, China", note: "Sep 11-19, 2027" },
-  { label: "LA28 athletics", date: "2028-07-14", location: "Los Angeles", note: "Olympic track & field anchor" },
-];
-
-const cyclingEvents: ScheduleEntry[] = [
-  { label: "Giro d'Italia", date: "2026-05-08", location: "Italy", note: "Grand Tour window" },
-  { label: "Tour de France", date: "2026-07-04", location: "France / Barcelona start", note: "Jul 4-26" },
-  { label: "Vuelta a Espana", date: "2026-08-22", location: "Spain", note: "Grand Tour window" },
-  { label: "UCI Road World Championships", date: "2026-09-20", location: "Montreal, Canada", note: "Sep 20-27" },
-  { label: "Tour de Suisse", date: "2027-06-06", location: "Switzerland", note: "Swiss cycling anchor" },
-];
-
-const worldMarathonMajorEvents: ScheduleEntry[] = [
-  { label: "Tokyo Marathon", date: "2026-03-01", location: "Tokyo", note: "World Marathon Major", url: "https://www.worldmarathonmajors.com/" },
-  { label: "Boston Marathon", date: "2026-04-20", location: "Boston", note: "World Marathon Major", url: "https://www.baa.org/" },
-  { label: "London Marathon", date: "2026-04-26", location: "London", note: "World Marathon Major", url: "https://www.tcslondonmarathon.com/" },
-  { label: "Sydney Marathon", date: "2026-08-30", location: "Sydney", note: "World Marathon Major", url: "https://tcssydneymarathon.com/" },
-  { label: "Berlin Marathon", date: "2026-09-27", location: "Berlin", note: "World Marathon Major", url: "https://www.bmw-berlin-marathon.com/" },
-  { label: "Chicago Marathon", date: "2026-10-11", location: "Chicago", note: "World Marathon Major", url: "https://www.chicagomarathon.com/" },
-  { label: "New York City Marathon", date: "2026-11-01", location: "New York City", note: "World Marathon Major", url: "https://www.nyrr.org/tcsnycmarathon" },
-];
-
-const wheelchairMarathonEvents: ScheduleEntry[] = [
-  { label: "Sydney Marathon wheelchair fields", date: "2026-08-30", location: "Sydney", note: "Track elite wheelchair divisions with the major marathon schedule", url: "https://www.worldmarathonmajors.com/" },
-  { label: "Berlin Marathon wheelchair fields", date: "2026-09-27", location: "Berlin", note: "Elite wheelchair marathon watch", url: "https://www.bmw-berlin-marathon.com/" },
-  { label: "Chicago Marathon wheelchair fields", date: "2026-10-11", location: "Chicago", note: "Elite wheelchair marathon watch", url: "https://www.chicagomarathon.com/" },
-  { label: "New York City Marathon wheelchair fields", date: "2026-11-01", location: "New York City", note: "Elite wheelchair marathon watch", url: "https://www.nyrr.org/tcsnycmarathon" },
-];
-
-const ironmanEvents: ScheduleEntry[] = [
-  { label: "IRONMAN World Championship", date: "2026-10-10", location: "Kailua-Kona, Hawaii", note: "Men's and women's championship returns to Kona in 2026", url: "https://www.ironman.com/im-world-championship" },
-  { label: "IRONMAN 70.3 World Championship", date: "2026-11-14", location: "Global championship", note: "Track final date/location from IRONMAN", url: "https://www.ironman.com/im703-world-championship" },
-];
-
-const paraAndOlympicEvents: ScheduleEntry[] = [
-  { label: "Milan Cortina 2026 Winter Olympics", date: "2026-02-06", location: "Italy", note: "Winter Olympics window: Feb 6-22, 2026", url: "https://olympics.com/en/olympic-games/milano-cortina-2026" },
-  { label: "Milan Cortina 2026 Winter Paralympics", date: "2026-03-06", location: "Italy", note: "Winter Paralympics window: Mar 6-15, 2026", url: "https://www.paralympic.org/milano-cortina-2026" },
-  { label: "LA28 Olympic Games", date: "2028-07-14", location: "Los Angeles", note: "Summer Olympics return to the US", url: "https://la28.org/" },
-  { label: "LA28 Paralympic Games", date: "2028-08-15", location: "Los Angeles", note: "Summer Paralympics in Los Angeles", url: "https://la28.org/" },
-  { label: "Utah 2034 Winter Olympics", date: "2034-02-10", location: "Utah", note: "Future US Winter Games anchor", url: "https://olympics.com/" },
-];
-
-const worldChampionshipEvents: ScheduleEntry[] = [
-  { label: "World Aquatics Championships", date: "2027-06-26", location: "Budapest, Hungary", note: "Global swimming/diving/water polo/open-water championship window", url: "https://www.worldaquatics.com/" },
-  { label: "World Athletics Championships", date: "2027-09-11", location: "Beijing, China", note: "Sep 11-19, 2027", url: "https://worldathletics.org/" },
-  { label: "UCI Road World Championships", date: "2026-09-20", location: "Montreal, Canada", note: "Road cycling world championships", url: "https://www.uci.org/" },
-];
-const megaEvents: MegaEvent[] = [
-  {
-    title: "FIFA World Cup 2026",
-    date: "2026-06-11",
-    location: "USA, Mexico, Canada",
-    note: "Biggest men's World Cup yet; US hosts 11 of 16 host cities and the final is in New York/New Jersey.",
-  },
-  {
-    title: "LA28 Olympic Games",
-    date: "2028-07-14",
-    location: "Los Angeles + select US venues",
-    note: "Summer Olympics return to the US, with opening ceremony and events across LA.",
-  },
-  {
-    title: "LA28 Paralympic Games",
-    date: "2028-08-15",
-    location: "Los Angeles",
-    note: "Paralympics follow the Olympics and should be tracked as their own mega event.",
-  },
-  {
-    title: "FIFA Women's World Cup 2031",
-    date: "2031-01-01",
-    location: "United States, Mexico, Costa Rica, Jamaica",
-    note: "The US is part of the sole 2031 bid, with Mexico, Costa Rica and Jamaica also included; final FIFA Congress approval is expected in 2026.",
-  },
-  {
-    title: "Men's Rugby World Cup 2031",
-    date: "2031-09-01",
-    location: "United States",
-    note: "First Rugby World Cup hosted in the Americas; exact dates and cities still to be finalized.",
-  },
-  {
-    title: "Women's Rugby World Cup 2033",
-    date: "2033-01-01",
-    location: "United States",
-    note: "Women's Rugby World Cup is awarded to the US after the men's 2031 tournament.",
-  },
-  {
-    title: "Utah 2034 Winter Olympics",
-    date: "2034-02-10",
-    location: "Utah",
-    note: "Winter Olympics return to Salt Lake City/Utah from February 10-26, 2034.",
-  },
-];
-
-const items: SportsItem[] = [
-  {
-    id: "world-cup-2026",
-    title: "FIFA World Cup 2026",
-    sport: "Soccer",
-    region: "Global",
-    seasonStart: "2026-06-11",
-    seasonEnd: "2026-07-19",
-    keyDate: "2026-07-19",
-    keyDateLabel: "World Cup Final",
-    phases: ["Round of 16", "Quarterfinals", "Semifinals", "Third-place match", "Final"],
-    timezone: "Global",
-    note: "Major soccer highlight across the USA, Mexico, and Canada, with both US and Swiss context relevant.",
-    source: "curated",
-    details: worldCupRounds,
-  },
-  {
-    id: "nfl",
-    title: "NFL",
-    sport: "Football",
-    region: "USA",
-    seasonStart: "2026-09-03",
-    seasonEnd: "2027-02-14",
-    keyDate: "2027-02-14",
-    keyDateLabel: "Super Bowl LXI",
-    phases: ["Preseason", "Regular Season", "Playoffs", "Super Bowl"],
-    timezone: "US",
-    note: "US Football calendar with Super Bowl as the peak event.",
-    source: "api-ready",
-  },
-  {
-    id: "march-madness",
-    title: "NCAA March Madness",
-    sport: "Basketball",
-    region: "USA",
-    seasonStart: "2026-03-17",
-    seasonEnd: "2026-04-06",
-    keyDate: "2026-04-06",
-    keyDateLabel: "National Championship",
-    phases: ["First Four", "Sweet 16", "Final Four", "Championship"],
-    timezone: "US",
-    note: "College basketball tournament window, separate from regular NCAA season.",
-    source: "curated",
-  },
-  {
-    id: "nba",
-    title: "NBA",
-    sport: "Basketball",
-    region: "USA",
-    seasonStart: "2026-10-20",
-    seasonEnd: "2027-06-20",
-    keyDate: "2027-06-20",
-    keyDateLabel: "NBA Finals window",
-    phases: ["Regular Season", "Play-In", "Playoffs", "Finals"],
-    timezone: "US",
-    note: "Useful for following the long winter season into early summer.",
-    source: "api-ready",
-  },
-  {
-    id: "mlb",
-    title: "MLB",
-    sport: "Baseball",
-    region: "USA",
-    seasonStart: "2026-03-26",
-    seasonEnd: "2026-11-04",
-    keyDate: "2026-10-23",
-    keyDateLabel: "World Series starts",
-    phases: ["Opening Day", "All-Star Break", "Postseason", "World Series"],
-    timezone: "US",
-    note: "Baseball season runs through spring, summer, and fall.",
-    source: "api-ready",
-  },
-  {
-    id: "nhl",
-    title: "NHL",
-    sport: "Ice Hockey",
-    region: "USA",
-    seasonStart: "2026-10-07",
-    seasonEnd: "2027-06-22",
-    keyDate: "2027-06-20",
-    keyDateLabel: "Stanley Cup Final window",
-    phases: ["Regular Season", "Playoffs", "Stanley Cup Final"],
-    timezone: "US",
-    note: "North American hockey with clear playoff focus.",
-    source: "api-ready",
-  },
-  {
-    id: "college-football",
-    title: "College Football",
-    sport: "Football",
-    region: "USA",
-    seasonStart: "2026-08-29",
-    seasonEnd: "2027-01-19",
-    keyDate: "2027-01-19",
-    keyDateLabel: "CFP National Championship",
-    phases: ["Regular Season", "Conference Championships", "Bowls", "CFP"],
-    timezone: "US",
-    note: "Adds the big Saturday autumn calendar that NFL alone misses.",
-    source: "curated",
-  },
-  {
-    id: "nwsl",
-    title: "NWSL",
-    sport: "Soccer",
-    region: "USA",
-    seasonStart: "2026-03-13",
-    seasonEnd: "2026-11-21",
-    keyDate: "2026-11-21",
-    keyDateLabel: "NWSL Championship",
-    phases: ["Regular season", "Playoffs", "Championship"],
-    timezone: "US",
-    note: "Top-tier US women's club soccer with 16 teams and a full spring-to-fall season.",
-    source: "curated",
-    details: nwslEvents,
-  },
-  {
-    id: "uswnt",
-    title: "USWNT",
-    sport: "Soccer",
-    region: "USA",
-    seasonStart: "2026-01-01",
-    seasonEnd: "2026-12-31",
-    keyDate: "2026-09-01",
-    keyDateLabel: "International windows / 2027 prep",
-    phases: ["SheBelieves Cup", "Friendlies", "Tournament prep", "World Cup cycle"],
-    timezone: "US",
-    note: "US Women's National Team calendar layer for friendlies, SheBelieves Cup and tournament prep.",
-    source: "curated",
-    details: uswntEvents,
-  },
-  {
-    id: "mls",
-    title: "MLS",
-    sport: "Soccer",
-    region: "USA",
-    seasonStart: "2026-02-21",
-    seasonEnd: "2026-12-05",
-    keyDate: "2026-12-05",
-    keyDateLabel: "MLS Cup target window",
-    phases: ["Regular Season", "Leagues Cup", "Playoffs", "MLS Cup"],
-    timezone: "US",
-    note: "US soccer calendar, especially useful around playoffs.",
-    source: "api-ready",
-  },
-  {
-    id: "champions-league",
-    title: "UEFA Champions League",
-    sport: "Soccer",
-    region: "Global",
-    seasonStart: "2026-09-15",
-    seasonEnd: "2027-06-05",
-    keyDate: "2027-06-05",
-    keyDateLabel: "Champions League Final",
-    phases: ["League phase", "Knockout play-offs", "Round of 16", "Quarterfinals", "Semifinals", "Final"],
-    timezone: "Global",
-    note: "Europe's top club competition, useful for weekday soccer nights and final planning.",
-    source: "curated",
-    details: championsLeagueEvents,
-  },  {
-    id: "super-league",
-    title: "Swiss Super League",
-    sport: "Soccer",
-    region: "Schweiz",
-    seasonStart: "2026-07-18",
-    seasonEnd: "2027-05-30",
-    keyDate: "2027-05-30",
-    keyDateLabel: "Final round / season finale",
-    phases: ["First half", "Winter break", "Championship/Relegation Group", "Final round"],
-    timezone: "CH",
-    note: "Swiss football league calendar, useful for weekend planning.",
-    source: "api-ready",
-  },
-  {
-    id: "challenge-league",
-    title: "Swiss Challenge League",
-    sport: "Soccer",
-    region: "Schweiz",
-    seasonStart: "2026-07-18",
-    seasonEnd: "2027-05-30",
-    keyDate: "2027-05-30",
-    keyDateLabel: "Promotion / playoff window",
-    phases: ["First half", "Winter break", "Second half", "Promotion playoff"],
-    timezone: "CH",
-    note: "Optional, but important if Swiss football depth matters.",
-    source: "curated",
-  },
-  {
-    id: "national-league",
-    title: "National League",
-    sport: "Ice Hockey",
-    region: "Schweiz",
-    seasonStart: "2026-09-08",
-    seasonEnd: "2027-04-30",
-    keyDate: "2027-04-30",
-    keyDateLabel: "Playoff Final window",
-    phases: ["Regular Season", "Play-In", "Playoffs", "Final"],
-    timezone: "CH",
-    note: "Swiss ice hockey season with a clear playoff focus.",
-    source: "api-ready",
-  },
-  {
-    id: "swiss-cup",
-    title: "Swiss Cup",
-    sport: "Soccer",
-    region: "Schweiz",
-    seasonStart: "2026-08-15",
-    seasonEnd: "2027-06-06",
-    keyDate: "2027-06-06",
-    keyDateLabel: "Cup Final",
-    phases: ["Early rounds", "Quarterfinal", "Semifinal", "Final"],
-    timezone: "CH",
-    note: "Swiss knockout competition tracked separately from the league calendar.",
-    source: "curated",
-  },
-  {
-    id: "swiss-indoors",
-    title: "Swiss Indoors Basel",
-    sport: "Tennis",
-    region: "Schweiz",
-    seasonStart: "2026-10-24",
-    seasonEnd: "2026-11-01",
-    keyDate: "2026-11-01",
-    keyDateLabel: "Final in Basel",
-    phases: ["Qualifying", "Main Draw", "Semifinals", "Final"],
-    timezone: "CH",
-    note: "Basel-specific highlight in the tennis calendar.",
-    source: "curated",
-  },
-  {
-    id: "tennis-majors",
-    title: "Tennis Grand Slams",
-    sport: "Tennis",
-    region: "Global",
-    seasonStart: "2026-01-12",
-    seasonEnd: "2026-09-13",
-    keyDate: "2026-08-31",
-    keyDateLabel: "US Open stretch",
-    phases: ["Australian Open", "Roland-Garros", "Wimbledon", "US Open"],
-    timezone: "Global",
-    note: "Global tennis anchors, with majors as calendar markers.",
-    source: "curated",
-  },
-  {
-    id: "golf-majors",
-    title: "Golf Majors",
-    sport: "Golf",
-    region: "Global",
-    seasonStart: "2026-04-09",
-    seasonEnd: "2026-07-19",
-    keyDate: "2026-04-12",
-    keyDateLabel: "Masters Sunday",
-    phases: ["Masters", "PGA Championship", "U.S. Open", "The Open"],
-    timezone: "Global",
-    note: "Four majors as the clean first version for golf.",
-    source: "curated",
-  },
-  {
-    id: "f1",
-    title: "Formula 1",
-    sport: "Motorsport",
-    region: "Global",
-    seasonStart: "2026-03-08",
-    seasonEnd: "2026-12-06",
-    keyDate: "2026-07-05",
-    keyDateLabel: "British GP race day",
-    phases: ["Opening races", "European summer", "Flyaways", "Finale"],
-    timezone: "Global",
-    note: "Click here to see individual race dates and locations.",
-    source: "curated",
-    details: f1Races,
-  },
-  {
-    id: "ufc",
-    title: "UFC",
-    sport: "Combat Sports",
-    region: "USA",
-    seasonStart: "2026-01-24",
-    seasonEnd: "2026-12-31",
-    keyDate: "2026-07-11",
-    keyDateLabel: "UFC 329",
-    phases: ["Fight Nights", "PPV cards", "International Fight Week", "Title fights"],
-    timezone: "US",
-    note: "Major UFC cards and Fight Nights, with upcoming US-heavy events first.",
-    source: "curated",
-    details: ufcEvents,
-  },
-  {
-    id: "sailgp",
-    title: "SailGP",
-    sport: "Sailing",
-    region: "Global",
-    seasonStart: "2026-01-17",
-    seasonEnd: "2026-11-29",
-    keyDate: "2026-09-19",
-    keyDateLabel: "Switzerland Sail Grand Prix",
-    phases: ["Global events", "Fleet racing", "Finals", "Grand Final"],
-    timezone: "Global",
-    note: "Global F50 racing calendar, including the Geneva Switzerland Sail Grand Prix.",
-    source: "curated",
-    details: sailGpEvents,
-  },
-  {
-    id: "track-field",
-    title: "Track & Field",
-    sport: "Track & Field",
-    region: "Global",
-    seasonStart: "2026-07-10",
-    seasonEnd: "2028-08-02",
-    keyDate: "2027-09-11",
-    keyDateLabel: "World Athletics Championships",
-    phases: ["Diamond League", "National championships", "World Championships", "Olympics"],
-    timezone: "Global",
-    note: "Major athletics meets, US championship windows and the road to LA28.",
-    source: "curated",
-    details: trackFieldEvents,
-  },
-  {
-    id: "cycling",
-    title: "Cycling",
-    sport: "Cycling",
-    region: "Global",
-    seasonStart: "2026-05-08",
-    seasonEnd: "2026-09-27",
-    keyDate: "2026-07-04",
-    keyDateLabel: "Tour de France starts",
-    phases: ["Giro", "Tour de France", "Vuelta", "World Championships", "Tour de Suisse"],
-    timezone: "Global",
-    note: "Grand Tours, World Championships and Swiss cycling anchors.",
-    source: "curated",
-    details: cyclingEvents,
-  },
-  {
-    id: "world-marathon-majors",
-    title: "World Marathon Majors",
-    sport: "Marathon",
-    region: "Global",
-    seasonStart: "2026-03-01",
-    seasonEnd: "2026-11-01",
-    keyDate: "2026-08-30",
-    keyDateLabel: "Sydney Marathon",
-    phases: ["Tokyo", "Boston", "London", "Sydney", "Berlin", "Chicago", "New York City"],
-    timezone: "Global",
-    note: "The major global marathon circuit, now tracked separately from general track and road running.",
-    source: "curated",
-    details: worldMarathonMajorEvents,
-  },
-  {
-    id: "wheelchair-marathon-majors",
-    title: "Wheelchair Marathon Majors",
-    sport: "Wheelchair Marathon",
-    region: "Global",
-    seasonStart: "2026-03-01",
-    seasonEnd: "2026-11-01",
-    keyDate: "2026-08-30",
-    keyDateLabel: "Sydney wheelchair fields",
-    phases: ["Major marathon wheelchair fields", "Elite wheelchair road racing"],
-    timezone: "Global",
-    note: "Elite wheelchair marathon fields should be visible as their own layer, not hidden inside running.",
-    source: "curated",
-    details: wheelchairMarathonEvents,
-  },
-  {
-    id: "ironman",
-    title: "IRONMAN / Long-distance Triathlon",
-    sport: "Triathlon",
-    region: "Global",
-    seasonStart: "2026-01-01",
-    seasonEnd: "2026-12-31",
-    keyDate: "2026-10-10",
-    keyDateLabel: "IRONMAN World Championship",
-    phases: ["Qualification races", "70.3 worlds", "IRONMAN worlds"],
-    timezone: "Global",
-    note: "Long-distance triathlon championship layer, with Kona and IRONMAN 70.3 as the main anchors.",
-    source: "curated",
-    details: ironmanEvents,
-  },
-  {
-    id: "para-olympic-watch",
-    title: "Paralympics & Olympic Watch",
-    sport: "Paralympics",
-    region: "Global",
-    seasonStart: "2026-02-06",
-    seasonEnd: "2034-02-26",
-    keyDate: "2028-08-15",
-    keyDateLabel: "LA28 Paralympic Games",
-    phases: ["Winter Olympics", "Winter Paralympics", "Summer Olympics", "Summer Paralympics", "Future Winter Games"],
-    timezone: "Global",
-    note: "Dedicated Olympic and Paralympic watchlist, including winter and summer anchors.",
-    source: "curated",
-    details: paraAndOlympicEvents,
-  },
-  {
-    id: "winter-olympics",
-    title: "Winter Olympics & Winter Sports",
-    sport: "Winter Sports",
-    region: "Global",
-    seasonStart: "2026-02-06",
-    seasonEnd: "2034-02-26",
-    keyDate: "2034-02-10",
-    keyDateLabel: "Utah 2034 Winter Olympics",
-    phases: ["Milan Cortina 2026", "Winter Paralympics", "Utah 2034"],
-    timezone: "Global",
-    note: "Winter Olympics, Winter Paralympics, alpine skiing, and future US winter sport anchors.",
-    source: "curated",
-    details: paraAndOlympicEvents,
-  },
-  {
-    id: "world-championships",
-    title: "World Championships Watchlist",
-    sport: "World Championships",
-    region: "Global",
-    seasonStart: "2026-09-20",
-    seasonEnd: "2028-12-31",
-    keyDate: "2027-06-26",
-    keyDateLabel: "World Aquatics Championships",
-    phases: ["Cycling worlds", "Aquatics worlds", "Athletics worlds", "Other global championships"],
-    timezone: "Global",
-    note: "Cross-sport world championship layer for events that are bigger than a normal season stop.",
-    source: "curated",
-    details: worldChampionshipEvents,
-  },
-  {
-    id: "ryder-presidents",
-    title: "Ryder / Presidents Cup",
-    sport: "Golf",
-    region: "Global",
-    seasonStart: "2026-09-24",
-    seasonEnd: "2026-09-27",
-    keyDate: "2026-09-27",
-    keyDateLabel: "Team golf final day",
-    phases: ["Practice", "Fourballs", "Foursomes", "Singles"],
-    timezone: "Global",
-    note: "Included as an important extra when team golf is in season.",
-    source: "curated",
-  },
-];
-
-const missingSuggestions = [
-  "UFC / Boxing fight nights",
-  "WNBA",
-  "LPGA and womens golf majors",
-  "Rugby World Cup / major rugby windows",
-  "Volleyball Nations League / LOVB",
-  "Olympics / World Championships",
-  "Alpine skiing, Schwingen, or more Swiss cycling",
-  "Europa League / Conference League",
-];
-
-const regionOptions: Array<Region | "All"> = ["All", "USA", "Schweiz", "Global"];
-const sportOptions: Array<Sport | "All"> = [
-  "All",
-  "Football",
-  "Basketball",
-  "Baseball",
-  "Soccer",
-  "Ice Hockey",
-  "Tennis",
-  "Golf",
-  "Motorsport",
-  "Combat Sports",
-  "Sailing",
-  "Track & Field",
-  "Marathon",
-  "Wheelchair Marathon",
-  "Triathlon",
-  "Paralympics",
-  "Winter Sports",
-  "World Championships",
-  "Cycling",
-  "Extras",
-];
-
-function parseDate(value: string) {
-  return new Date(`${value}T12:00:00`);
+function EmptyState({ title, note }: { title: string; note: string }) {
+  return <div className="emptyState"><Shield size={22} /><strong>{title}</strong><span>{note}</span></div>;
 }
-
-function daysUntil(value: string) {
-  const targetDate = parseDate(value);
-  const targetDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
-  return Math.round((targetDay.getTime() - todayDate.getTime()) / MS_PER_DAY);
-}
-
-function isToday(value: string) {
-  return daysUntil(value) === 0;
-}
-
-function getStatus(item: SportsItem): Status {
-  const start = parseDate(item.seasonStart);
-  const end = parseDate(item.seasonEnd);
-  const keyIn = daysUntil(item.keyDate);
-  if (today >= start && today <= end) {
-    if (keyIn >= 0 && keyIn <= 30) return "major event soon";
-    return "active now";
-  }
-  if (today < start) return "upcoming";
-  return "off-season";
-}
-
-function formatDate(value: string, timezone: SportsItem["timezone"]) {
-  const date = parseDate(value);
-  const locale = timezone === "US" ? "en-US" : "de-CH";
-  return new Intl.DateTimeFormat(locale, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-}
-
-function statusLabel(status: Status) {
-  const labels: Record<Status, string> = {
-    "active now": "Active now",
-    upcoming: "Upcoming",
-    "off-season": "Off-season",
-    "major event soon": "Major event soon",
-  };
-  return labels[status];
-}
-
-function statusRank(status: Status) {
-  const ranks: Record<Status, number> = {
-    "major event soon": 0,
-    "active now": 1,
-    upcoming: 2,
-    "off-season": 3,
-  };
-  return ranks[status];
-}
-
-function regionLabel(region: Region) {
-  return region === "Schweiz" ? "Switzerland" : region;
-}
-
-function regionClass(region: Region) {
-  return `region-${region.toLowerCase()}`;
-}
-
-function nextDetail(details: ScheduleEntry[] | undefined) {
-  if (!details?.length) return undefined;
-  return details.find((detail) => daysUntil(detail.date) >= 0) ?? details[details.length - 1];
-}
-
-function nextActionDate(item: SportsItem) {
-  return nextDetail(item.details)?.date ?? item.keyDate;
-}
-
 function App() {
-  const [region, setRegion] = React.useState<Region | "All">("All");
-  const [sport, setSport] = React.useState<Sport | "All">("All");
+  const [division, setDivision] = React.useState<Division>("All");
+  const [eventType, setEventType] = React.useState<EventType>("All");
   const [query, setQuery] = React.useState("");
-  const [selectedId, setSelectedId] = React.useState("world-cup-2026");
-
-  const enriched = React.useMemo(
-    () =>
-      items
-        .map((item) => ({ ...item, status: getStatus(item), keyIn: daysUntil(nextActionDate(item)) }))
-        .sort(
-          (a, b) =>
-            parseDate(nextActionDate(a)).getTime() - parseDate(nextActionDate(b)).getTime() ||
-            statusRank(a.status) - statusRank(b.status) ||
-            a.title.localeCompare(b.title),
-        ),
-    [],
-  );
-
-  const visible = enriched.filter((item) => item.status !== "off-season" && daysUntil(nextActionDate(item)) >= 0);
-
-  const filtered = visible.filter((item) => {
-    const matchesRegion = region === "All" || item.region === region;
-    const matchesSport = sport === "All" || item.sport === sport;
-    const text = `${item.title} ${item.sport} ${regionLabel(item.region)} ${item.keyDateLabel}`.toLowerCase();
-    return matchesRegion && matchesSport && text.includes(query.toLowerCase());
+  const [selectedId, setSelectedId] = React.useState(nextEvent().id);
+  const filteredEvents = events.filter((event) => {
+    const text = `${event.name} ${event.type} ${event.city} ${event.venue} ${event.fights.map((fight) => `${fight.red} ${fight.blue} ${fight.division}`).join(" ")}`.toLowerCase();
+    return (eventType === "All" || event.type === eventType) && event.fights.some((fight) => matchesDivision(fight, division)) && text.includes(query.toLowerCase());
   });
+  const selected = events.find((event) => event.id === selectedId) ?? nextEvent();
+  const main = mainFight(selected, "Main Event");
+  const coMain = mainFight(selected, "Co-main");
+  const fights = selected.fights.filter((fight) => matchesDivision(fight, division));
+  const watchlist = fighters.filter((fighter) => division === "All" || fighter.division === division);
+  const activeRankings = rankings.filter((ranking) => division === "All" || ranking.division === division);
+  const activeStories = storylines.filter((story) => division === "All" || story.division === division);
+  const cardHeat = heat(selected);
+  const heatLabel = cardHeat >= 85 ? "Must watch" : cardHeat >= 70 ? "Strong card" : "Scout card";
 
-  const selected = visible.find((item) => item.id === selectedId) ?? visible[0];
-  const active = visible.filter((item) => item.status === "active now" || item.status === "major event soon");
-  const upcoming = filtered.filter((item) => item.status === "upcoming" || item.status === "major event soon").slice(0, 6);const selectedNext = nextDetail(selected.details);
-  const selectedToday = selected.details?.filter((detail) => isToday(detail.date)) ?? [];
-
-  return (
-    <main className="shell">
-      <section className="hero">
-        <div>
-          <p className="eyebrow">USA + Switzerland Sports Calendar</p>
-          <h1>Sports Dashboard</h1>
-          <p className="intro">Track what is active now, what is coming next, and which season windows matter.</p>
-          <a className="athleteLink" href="./swiss-athletes.html">Schweizer Athleten in den USA oeffnen</a>
-        </div>
-        <div className="heroStats" aria-label="dashboard summary">
-          <div>
-            <strong>{active.length}</strong>
-            <span>Active now</span>
-          </div>
-          <div>
-            <strong>{visible.length}</strong>
-            <span>Items</span>
-          </div>
-          <div>
-            <strong>3</strong>
-            <span>Regions</span>
-          </div>
-        </div>
-      </section>
-
-      <section className="toolbar" aria-label="filters">
-        <label className="searchBox">
-          <Search size={18} />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search league, event, sport..." />
-        </label>
-        <div className="segments" aria-label="region filter">
-          {regionOptions.map((option) => (
-            <button className={`${region === option ? "selected" : ""} ${option === "Schweiz" ? "swissRegister" : ""} ${option === "Global" ? "globalRegister" : ""}`} key={option} onClick={() => setRegion(option)}>
-              {option === "All" ? "All" : regionLabel(option)}
-            </button>
-          ))}
-        </div>
-        <select value={sport} onChange={(event) => setSport(event.target.value as Sport | "All")} aria-label="sport filter">
-          {sportOptions.map((option) => (
-            <option key={option} value={option}>
-              {option === "All" ? "All sports" : option}
-            </option>
-          ))}
-        </select>
-      </section>
-
-      <section className="sectionHeader">
-        <div>
-          <p className="eyebrow">Calendar</p>
-          <h2>Sports & Events</h2>
-        </div>
-        <span>Select an item to see details</span>
-      </section>
-
-      <section className="selectionLayout">
-        <div className="itemList" aria-label="sports and events">
-          {filtered.map((item) => (
-            <button className={`itemRow ${selected.id === item.id ? "isSelected" : ""}`} key={item.id} onClick={() => setSelectedId(item.id)}>
-              <div>
-                <strong>{item.title}</strong>
-                <span>{item.sport} - {item.keyDateLabel}</span>
-              </div>
-              <div className="itemMeta">
-                <span className={`status ${item.status.replace(/ /g, "-")}`}>{statusLabel(item.status)}</span>
-                <span className={`regionBadge ${regionClass(item.region)}`}>{regionLabel(item.region)}</span>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        <aside className="detailPanel" aria-live="polite">
-          <div className="detailIntro">
-            <p className="eyebrow">Selected</p>
-            <h2>{selected.title}</h2>
-            <p>{selected.note}</p>
-            <div className="detailMeta">
-              <span>{regionLabel(selected.region)}</span>
-              <span>{selected.sport}</span>
-              <span>{statusLabel(selected.status)}</span>
-            </div>
-          </div>
-          {selectedToday.length ? (
-            <div className="todayPanel">
-              <strong>Today</strong>
-              {selectedToday.map((detail) => (
-                <div className="todayMatch" key={`${detail.label}-${detail.date}`}>
-                  <span>{detail.label}</span>
-                  <time>{formatDate(detail.date, selected.timezone)}</time>
-                  {detail.url ? <a href={detail.url} target="_blank" rel="noreferrer">More info</a> : null}
-                </div>
-              ))}
-            </div>
-          ) : null}
-
-          <div className="nextUp">
-            <strong>{selectedNext ? "Next up" : "Key date"}</strong>
-            <span>{selectedNext ? selectedNext.label : selected.keyDateLabel}</span>
-            <time>{formatDate(selectedNext?.date ?? selected.keyDate, selected.timezone)}</time>
-            {selectedNext?.url ? <a href={selectedNext.url} target="_blank" rel="noreferrer">More info</a> : null}
-          </div>
-          <div className="detailList">
-            {(selected.details?.length ? selected.details : selected.phases.map((phase, index) => ({ label: phase, date: selected.keyDate, location: undefined, note: index === 0 ? "Season phase" : undefined, url: undefined }))).map((detail) => (
-              <div className="detailRow" key={`${detail.label}-${detail.date}`}>
-                <div>
-                  <strong>{detail.label}</strong>
-                  <span>{detail.note}</span>
-                  {detail.url ? <a href={detail.url} target="_blank" rel="noreferrer">More info</a> : null}
-                </div>
-                <div className="detailPlace">
-                  {detail.location ? <MapPin size={15} /> : null}
-                  <span>{detail.location}</span>
-                </div>
-                <time>{formatDate(detail.date, selected.timezone)}</time>
-              </div>
-            ))}
-          </div>
-        </aside>
-      </section>
-
-      <section className="dashboardGrid">
-        <div className="panel wide">
-          <div className="panelTitle">
-            <CalendarDays size={20} />
-            <h2>Upcoming Major Events</h2>
-          </div>
-          <div className="eventList">
-            {upcoming.map((item) => (
-              <button className={`eventRow ${regionClass(item.region)}`} key={item.id} onClick={() => setSelectedId(item.id)}>
-                <div>
-                  <strong>{item.keyDateLabel}</strong>
-                  <span>
-                    {item.title} - {item.sport} - {regionLabel(item.region)}
-                  </span>
-                </div>
-                <time>{formatDate(item.keyDate, item.timezone)}</time>
-                <ChevronRight size={18} />
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="panel full">
-        <div className="panelTitle">
-          <Clock3 size={20} />
-          <h2>Season Windows</h2>
-        </div>
-        <div className="tableWrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Sport</th>
-                <th>Region</th>
-                <th>Season</th>
-                <th>Status</th>
-                <th>Key Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((item) => (
-                <tr className={`${regionClass(item.region)} ${selected.id === item.id ? "selectedRow" : ""}`} key={item.id} onClick={() => setSelectedId(item.id)}>
-                  <td>
-                    <strong>{item.title}</strong>
-                    <span>{item.phases.join(" / ")}</span>
-                  </td>
-                  <td>{item.sport}</td>
-                  <td>{regionLabel(item.region)}</td>
-                  <td>
-                    {formatDate(item.seasonStart, item.timezone)} - {formatDate(item.seasonEnd, item.timezone)}
-                  </td>
-                  <td>
-                    <span className={`status ${item.status.replace(/ /g, "-")}`}>{statusLabel(item.status)}</span>
-                  </td>
-                  <td>
-                    {item.keyDateLabel}
-                    <span>{formatDate(item.keyDate, item.timezone)}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section className="missed">
-        <div>
-          <p className="eyebrow">Did we miss something?</p>
-          <h2>Useful additions to consider</h2>
-        </div>
-        <div className="suggestions">
-          {missingSuggestions.map((suggestion) => (
-            <span key={suggestion}>
-              <Plus size={15} />
-              {suggestion}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      <section className="megaEvents">
-        <div className="sectionHeader">
-          <div>
-            <p className="eyebrow">Major future anchors</p>
-            <h2>Mega Events Watchlist</h2>
-          </div>
-          <span>Olympics, World Cups and multi-year anchors</span>
-        </div>
-        <div className="megaGrid">
-          {megaEvents.map((event) => (
-            <article className="megaCard" key={event.title}>
-              <div>
-                <strong>{event.title}</strong>
-                <span>{event.location}</span>
-              </div>
-              <time>{formatDate(event.date, "US")}</time>
-              <p>{event.note}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <footer>
-        <CheckCircle2 size={18} />
-        Works without API key. Curated calendar data first, live providers later.
-      </footer>
-    </main>
-  );
+  return <main className="shell">
+    <section className="hero" style={{ backgroundImage: `linear-gradient(90deg, rgba(6,6,8,.94), rgba(20,22,28,.62)), url(${nextEvent().image})` }}>
+      <div className="heroCopy"><p className="eyebrow">UFC Fan Command</p><h1>UFC Fight Dashboard</h1><p className="intro">Next fights, card heat, rankings pressure, fight-week signals, and the stories that make a bout matter.</p><div className="sourceRail"><a href={links.events} target="_blank" rel="noreferrer">UFC Events</a><a href={links.news} target="_blank" rel="noreferrer">UFC News</a><a href={links.rankings} target="_blank" rel="noreferrer">UFC Rankings</a></div></div>
+      <div className="heroStats"><div><strong>{countdown(nextEvent().date)}</strong><span>Until next card</span></div><div><strong>{events.length}</strong><span>Upcoming events</span></div><div><strong>{selected.fights.filter((fight) => fight.ranked > 0).length}</strong><span>Ranked fights on deck</span></div></div>
+    </section>
+    <section className="toolbar"><label className="searchBox"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search events, fighters, divisions..." /></label><select value={division} onChange={(event) => setDivision(event.target.value as Division)}>{divisions.map((option) => <option key={option} value={option}>{option === "All" ? "All divisions" : option}</option>)}</select><div className="segments">{eventTypes.map((option) => <button className={eventType === option ? "selected" : ""} key={option} onClick={() => setEventType(option)}>{option}</button>)}</div></section>
+    <section className="noticeBar"><Radio size={18} /><span>{lastUpdated}. Official UFC pages are linked for live verification before fight night.</span></section>
+    <section className="spotlightLayout"><article className="eventSpotlight"><div className="spotlightImage" style={{ backgroundImage: `url(${selected.image})` }} /><div className="spotlightBody"><div className="sectionLabel"><span>{selected.type}</span><span>{countdown(selected.date)}</span></div><h2>{selected.name}</h2><p>{selected.tagline}</p><div className="eventFacts"><span><CalendarDays size={16} />{formatDate(selected.date)}</span><span><Activity size={16} />{selected.venue}, {selected.city}</span><span><Clock3 size={16} />{selected.watch}</span></div><div className="mainFights"><div><small>Main event</small><strong>{fightText(main)}</strong><span>{main?.stakes ?? "Official listing pending"}</span></div><div><small>Co-main</small><strong>{fightText(coMain)}</strong><span>{coMain?.stakes ?? "Official listing pending"}</span></div></div></div></article><aside className="heatPanel"><div className="panelTitle"><Flame size={21} /><h2>Card Heat</h2></div><div className="heatScore" style={{ "--score": `${cardHeat}%` } as React.CSSProperties}><strong>{cardHeat}</strong><span>{heatLabel}</span></div><div className="heatBreakdown"><span>{selected.fights.filter((fight) => fight.title).length} title-stakes fights</span><span>{selected.fights.reduce((total, fight) => total + fight.ranked, 0)} ranked fighters</span><span>{selected.fights.filter((fight) => fight.rivalry).length} rivalry flags</span><span>{selected.fights.filter((fight) => fight.late).length} replacement alerts</span></div><p>{selected.note}</p><a href={selected.url} target="_blank" rel="noreferrer">Check official event page</a></aside></section>
+    <section className="dashboardGrid topGrid"><article className="panel"><div className="panelTitle"><CalendarDays size={20} /><h2>Upcoming Fight Cards</h2></div><div className="eventList">{filteredEvents.length ? filteredEvents.map((event) => <button className={`eventRow ${selected.id === event.id ? "isSelected" : ""}`} key={event.id} onClick={() => setSelectedId(event.id)}><div><strong>{event.name}</strong><span>{event.city} - {mainFight(event, "Main Event")?.division ?? "Card details pending"}</span></div><time>{formatDate(event.date)}</time><span className="heatBadge">{heat(event)}</span><ChevronRight size={18} /></button>) : <EmptyState title="No cards match" note="Clear search or widen the division/event filter." />}</div></article><article className="panel"><div className="panelTitle"><Newspaper size={20} /><h2>News Pulse</h2></div><div className="newsList">{news.map((item) => <a className="newsItem" href={item.url} target="_blank" rel="noreferrer" key={item.title}><span className={`newsTone tone${item.tone}`}>{item.tone}</span><strong>{item.title}</strong><p>{item.summary}</p><small>{item.source} - {item.updated}</small></a>)}</div></article></section>
+    <section className="dashboardGrid detailGrid"><article className="panel fightCardPanel"><div className="panelTitle"><Users size={20} /><h2>{selected.name} Card</h2></div><div className="fightList">{fights.length ? fights.map((fight) => <div className="fightRow" key={fight.id}><div className="fightTier"><span>{fight.tier}</span><small>{fight.division}</small></div><div className="fighters"><strong>{fight.red}</strong><span>vs</span><strong>{fight.blue}</strong></div><p>{fight.stakes}</p><div className="fightFlags">{fight.title ? <span>Title stakes</span> : null}{fight.rivalry ? <span>Rivalry</span> : null}{fight.late ? <span>Late replacement</span> : null}{!fight.title && !fight.rivalry && !fight.late ? <span>{fight.ranked} ranked fighter(s)</span> : null}</div></div>) : <EmptyState title="No bouts in this division" note="The selected event has no matching fights in the current fallback data." />}</div></article><article className="panel"><div className="panelTitle"><Clock3 size={20} /><h2>Fight Week Timeline</h2></div><div className="timeline">{selected.timeline.map((item) => <div className="timelineItem" key={`${item.label}-${item.date}`}><time>{formatDate(item.date)}</time><div><strong>{item.label}</strong><span>{item.time}</span><p>{item.note}</p></div></div>)}</div></article></section>
+    <section className="dashboardGrid midGrid"><article className="panel"><div className="panelTitle"><Trophy size={20} /><h2>Champions & Rankings Radar</h2></div><div className="rankingGrid">{activeRankings.length ? activeRankings.map((ranking) => <div className="rankingCard" key={ranking.division}><div><span className={`state state${ranking.state}`}>{ranking.state}</span><h3>{ranking.division}</h3><strong>{ranking.champion}</strong></div><ol>{ranking.contenders.map((name) => <li key={name}>{name}</li>)}</ol><p>{ranking.movement}</p></div>) : <EmptyState title="No ranking panel" note="This division is ready for data once official rankings are added." />}</div></article><article className="panel"><div className="panelTitle"><Star size={20} /><h2>Fighter Watchlist</h2></div><div className="watchList">{watchlist.length ? watchlist.map((fighter) => <div className="watchItem" key={fighter.name}><div><strong>{fighter.name}</strong><span>{fighter.division} - {fighter.record}</span></div><p>{fighter.next ?? "No booked fight in fallback data"}</p><small>{fighter.streak} - {fighter.last}</small><b>{fighter.tag}</b></div>) : <EmptyState title="No watchlist fighters" note="No saved fighters match the active division filter." />}</div></article></section>
+    <section className="dashboardGrid bottomGrid"><article className="panel"><div className="panelTitle"><Flame size={20} /><h2>Storylines</h2></div><div className="storyList">{activeStories.length ? activeStories.map((story) => <div className="storyCard" key={story.title}><span>{story.impact}</span><h3>{story.title}</h3><p>{story.why}</p></div>) : <EmptyState title="No storyline yet" note="This filter has no curated storyline in the current fallback set." />}</div></article><article className="panel"><div className="panelTitle"><BarChart3 size={20} /><h2>Recent Results</h2></div><div className="resultsList">{results.map((result) => <div className="resultRow" key={`${result.event}-${result.winner}`}><time>{formatDate(result.date)}</time><div><strong>{result.winner}</strong><span>def. {result.loser} - {result.method}</span><p>{result.impact}</p></div></div>)}</div></article><article className="panel"><div className="panelTitle"><AlertTriangle size={20} /><h2>Upset & Breakout Watch</h2></div><div className="upsetList">{events.flatMap((event) => event.fights.filter((fight) => fight.late || fight.ranked <= 1).map((fight) => ({ event, fight }))).slice(0, 5).map(({ event, fight }) => <div className="upsetItem" key={`${event.id}-${fight.id}`}><strong>{fight.red} vs {fight.blue}</strong><span>{event.name} - {fight.division}</span><p>{fight.late ? "Short-notice volatility can create live upset value." : "Prospect or lower-ranked fighter has a path to a breakout moment."}</p></div>)}</div></article></section>
+    <footer><Shield size={18} />Hybrid dashboard: curated fallback data first, official UFC links for verification, API-ready shapes for later live feeds.</footer>
+  </main>;
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
