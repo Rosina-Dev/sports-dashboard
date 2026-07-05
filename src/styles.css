@@ -900,3 +900,52 @@ tr.region-global td span {
 .nextUp a:focus-visible {
   text-decoration: underline;
 }
+.todayPanel {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #d5a14a;
+  background: #fff9ea;
+  border-radius: 8px;
+}
+
+.todayPanel > strong {
+  color: #7c4a00;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.todayMatch {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.todayMatch span {
+  font-weight: 800;
+}
+
+.todayMatch time {
+  color: #7c4a00;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.todayMatch a {
+  color: #1c5b48;
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.todayMatch a:hover,
+.todayMatch a:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .todayMatch {
+    grid-template-columns: 1fr;
+  }
+}

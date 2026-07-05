@@ -58,6 +58,7 @@ type SportsItem = {
 };
 
 const today = new Date();
+const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 const f1Races: ScheduleEntry[] = [
@@ -724,7 +725,13 @@ function parseDate(value: string) {
 }
 
 function daysUntil(value: string) {
-  return Math.ceil((parseDate(value).getTime() - today.getTime()) / MS_PER_DAY);
+  const targetDate = parseDate(value);
+  const targetDay = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+  return Math.round((targetDay.getTime() - todayDate.getTime()) / MS_PER_DAY);
+}
+
+function isToday(value: string) {
+  return daysUntil(value) === 0;
 }
 
 function getStatus(item: SportsItem): Status {
@@ -816,6 +823,7 @@ function App() {
   const active = enriched.filter((item) => item.status === "active now" || item.status === "major event soon");
   const upcoming = filtered.filter((item) => item.status === "upcoming" || item.status === "major event soon").slice(0, 6);
   const selectedNext = nextDetail(selected.details);
+  const selectedToday = selected.details?.filter((detail) => isToday(detail.date)) ?? [];
 
   return (
     <main className="shell">
@@ -898,6 +906,19 @@ function App() {
               <span>{statusLabel(selected.status)}</span>
             </div>
           </div>
+          {selectedToday.length ? (
+            <div className="todayPanel">
+              <strong>Today</strong>
+              {selectedToday.map((detail) => (
+                <div className="todayMatch" key={`${detail.label}-${detail.date}`}>
+                  <span>{detail.label}</span>
+                  <time>{formatDate(detail.date, selected.timezone)}</time>
+                  {detail.url ? <a href={detail.url} target="_blank" rel="noreferrer">More info</a> : null}
+                </div>
+              ))}
+            </div>
+          ) : null}
+
           <div className="nextUp">
             <strong>{selectedNext ? "Next up" : "Key date"}</strong>
             <span>{selectedNext ? selectedNext.label : selected.keyDateLabel}</span>
