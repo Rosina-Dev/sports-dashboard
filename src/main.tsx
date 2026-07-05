@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { CalendarDays, CheckCircle2, ChevronRight, Clock3, MapPin, Plus, Search, Trophy } from "lucide-react";
+import { CalendarDays, CheckCircle2, ChevronRight, Clock3, MapPin, Plus, Search } from "lucide-react";
 import "./styles.css";
 
 type Region = "USA" | "Schweiz" | "Global";
@@ -207,7 +207,7 @@ const items: SportsItem[] = [
     keyDateLabel: "World Cup Final",
     phases: ["Group stage", "Round of 32", "Round of 16", "Quarterfinals", "Semifinals", "Final"],
     timezone: "Global",
-    note: "Grosses Soccer-Highlight in USA, Mexico und Canada. Schweizer und US-Kontext sind beide relevant.",
+    note: "Major soccer highlight across the USA, Mexico, and Canada, with both US and Swiss context relevant.",
     source: "curated",
     details: worldCupRounds,
   },
@@ -361,10 +361,10 @@ const items: SportsItem[] = [
     seasonStart: "2026-07-18",
     seasonEnd: "2027-05-30",
     keyDate: "2027-05-30",
-    keyDateLabel: "Finalrunde / Saisonfinal",
-    phases: ["Hinrunde", "Winterpause", "Championship/Relegation Group", "Finalrunde"],
+    keyDateLabel: "Final round / season finale",
+    phases: ["First half", "Winter break", "Championship/Relegation Group", "Final round"],
     timezone: "CH",
-    note: "Schwiizer Fussball im Liga-Modus, guet fuer Weekend-Planig.",
+    note: "Swiss football league calendar, useful for weekend planning.",
     source: "api-ready",
   },
   {
@@ -375,8 +375,8 @@ const items: SportsItem[] = [
     seasonStart: "2026-07-18",
     seasonEnd: "2027-05-30",
     keyDate: "2027-05-30",
-    keyDateLabel: "Aufstieg / Barrage window",
-    phases: ["Hinrunde", "Winterpause", "Rueckrunde", "Barrage"],
+    keyDateLabel: "Promotion / playoff window",
+    phases: ["First half", "Winter break", "Second half", "Promotion playoff"],
     timezone: "CH",
     note: "Optional, but important if Swiss football depth matters.",
     source: "curated",
@@ -392,7 +392,7 @@ const items: SportsItem[] = [
     keyDateLabel: "Playoff Final window",
     phases: ["Regular Season", "Play-In", "Playoffs", "Final"],
     timezone: "CH",
-    note: "Schwiizer Iishockey-Saison mit Playoff-Schwerpunkt.",
+    note: "Swiss ice hockey season with a clear playoff focus.",
     source: "api-ready",
   },
   {
@@ -406,7 +406,7 @@ const items: SportsItem[] = [
     keyDateLabel: "Cup Final",
     phases: ["Early rounds", "Quarterfinal", "Semifinal", "Final"],
     timezone: "CH",
-    note: "Knockout-Wettbewerb als eigene Rubrik neben der Liga.",
+    note: "Swiss knockout competition tracked separately from the league calendar.",
     source: "curated",
   },
   {
@@ -420,7 +420,7 @@ const items: SportsItem[] = [
     keyDateLabel: "Final in Basel",
     phases: ["Qualifying", "Main Draw", "Semifinals", "Final"],
     timezone: "CH",
-    note: "Basel-spezifisches Highlight im Tennis-Kalender.",
+    note: "Basel-specific highlight in the tennis calendar.",
     source: "curated",
   },
   {
@@ -548,7 +548,7 @@ const missingSuggestions = [
   "Rugby World Cup / major rugby windows",
   "Volleyball Nations League / LOVB",
   "Olympics / World Championships",
-  "Ski Alpin, Schwingen oder Radsport fuer Schweiz",
+  "Alpine skiing, Schwingen, or more Swiss cycling",
   "Europa League / Conference League",
 ];
 
@@ -602,12 +602,26 @@ function formatDate(value: string, timezone: SportsItem["timezone"]) {
 
 function statusLabel(status: Status) {
   const labels: Record<Status, string> = {
-    "active now": "Jetzt aktiv",
-    upcoming: "Kommt bald",
+    "active now": "Active now",
+    upcoming: "Upcoming",
     "off-season": "Off-season",
-    "major event soon": "Highlight bald",
+    "major event soon": "Major event soon",
   };
   return labels[status];
+}
+
+function statusRank(status: Status) {
+  const ranks: Record<Status, number> = {
+    "major event soon": 0,
+    "active now": 1,
+    upcoming: 2,
+    "off-season": 3,
+  };
+  return ranks[status];
+}
+
+function regionLabel(region: Region) {
+  return region === "Schweiz" ? "Switzerland" : region;
 }
 
 function regionClass(region: Region) {
@@ -623,13 +637,13 @@ function App() {
   const [region, setRegion] = React.useState<Region | "All">("All");
   const [sport, setSport] = React.useState<Sport | "All">("All");
   const [query, setQuery] = React.useState("");
-  const [selectedId, setSelectedId] = React.useState("f1");
+  const [selectedId, setSelectedId] = React.useState("world-cup-2026");
 
   const enriched = React.useMemo(
     () =>
       items
         .map((item) => ({ ...item, status: getStatus(item), keyIn: daysUntil(item.keyDate) }))
-        .sort((a, b) => parseDate(a.keyDate).getTime() - parseDate(b.keyDate).getTime()),
+        .sort((a, b) => statusRank(a.status) - statusRank(b.status) || parseDate(a.keyDate).getTime() - parseDate(b.keyDate).getTime()),
     [],
   );
 
@@ -649,22 +663,22 @@ function App() {
     <main className="shell">
       <section className="hero">
         <div>
-          <p className="eyebrow">USA + Schweiz Sportkalender</p>
+          <p className="eyebrow">USA + Switzerland Sports Calendar</p>
           <h1>Sports Dashboard</h1>
-          <p className="intro">Was laeuft jetzt, was chunnt als naechsts, und welche Saisonfenster sind wichtig.</p>
+          <p className="intro">Track what is active now, what is coming next, and which season windows matter.</p>
         </div>
         <div className="heroStats" aria-label="dashboard summary">
           <div>
             <strong>{active.length}</strong>
-            <span>Jetzt aktiv</span>
+            <span>Active now</span>
           </div>
           <div>
             <strong>{items.length}</strong>
-            <span>Rubriken</span>
+            <span>Items</span>
           </div>
           <div>
             <strong>3</strong>
-            <span>Regionen</span>
+            <span>Regions</span>
           </div>
         </div>
       </section>
@@ -672,19 +686,19 @@ function App() {
       <section className="toolbar" aria-label="filters">
         <label className="searchBox">
           <Search size={18} />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Suche Liga, Event, Sport..." />
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search league, event, sport..." />
         </label>
         <div className="segments" aria-label="region filter">
           {regionOptions.map((option) => (
             <button className={`${region === option ? "selected" : ""} ${option === "Schweiz" ? "swissRegister" : ""} ${option === "Global" ? "globalRegister" : ""}`} key={option} onClick={() => setRegion(option)}>
-              {option === "All" ? "Alle" : option}
+              {option === "All" ? "All" : regionLabel(option)}
             </button>
           ))}
         </div>
         <select value={sport} onChange={(event) => setSport(event.target.value as Sport | "All")} aria-label="sport filter">
           {sportOptions.map((option) => (
             <option key={option} value={option}>
-              {option === "All" ? "Alle Sportarten" : option}
+              {option === "All" ? "All sports" : option}
             </option>
           ))}
         </select>
@@ -692,63 +706,60 @@ function App() {
 
       <section className="sectionHeader">
         <div>
-          <p className="eyebrow">Live-Rubrik</p>
-          <h2>Now Active</h2>
+          <p className="eyebrow">Calendar</p>
+          <h2>Sports & Events</h2>
         </div>
-        <span>Click a card or row for details</span>
+        <span>Select an item to see details</span>
       </section>
 
-      <section className="activeGrid">
-        {active.map((item) => (
-          <button className={`featureCard ${regionClass(item.region)} ${selected.id === item.id ? "isSelected" : ""}`} key={item.id} onClick={() => setSelectedId(item.id)}>
-            <div className="cardTop">
-              <span className={`status ${item.status.replace(/ /g, "-")}`}>{statusLabel(item.status)}</span>
-              <span>{item.region}</span>
-            </div>
-            <h3>{item.title}</h3>
-            <p>{item.note}</p>
-            <div className="metricLine">
-              <Trophy size={18} />
-              <span>{item.keyDateLabel}</span>
-            </div>
-            <div className="dateRange">
-              {formatDate(item.seasonStart, item.timezone)} - {formatDate(item.seasonEnd, item.timezone)}
-            </div>
-          </button>
-        ))}
-      </section>
+      <section className="selectionLayout">
+        <div className="itemList" aria-label="sports and events">
+          {filtered.map((item) => (
+            <button className={`itemRow ${selected.id === item.id ? "isSelected" : ""}`} key={item.id} onClick={() => setSelectedId(item.id)}>
+              <div>
+                <strong>{item.title}</strong>
+                <span>{item.sport} - {item.keyDateLabel}</span>
+              </div>
+              <div className="itemMeta">
+                <span className={`status ${item.status.replace(/ /g, "-")}`}>{statusLabel(item.status)}</span>
+                <span className={`regionBadge ${regionClass(item.region)}`}>{regionLabel(item.region)}</span>
+              </div>
+            </button>
+          ))}
+        </div>
 
-      <section className={`detailPanel ${regionClass(selected.region)}`} aria-live="polite">
-        <div className="detailIntro">
-          <p className="eyebrow">Selected</p>
-          <h2>{selected.title}</h2>
-          <p>{selected.note}</p>
-          <div className="detailMeta">
-            <span>{selected.region}</span>
-            <span>{selected.sport}</span>
-            <span>{statusLabel(selected.status)}</span>
+        <aside className="detailPanel" aria-live="polite">
+          <div className="detailIntro">
+            <p className="eyebrow">Selected</p>
+            <h2>{selected.title}</h2>
+            <p>{selected.note}</p>
+            <div className="detailMeta">
+              <span>{regionLabel(selected.region)}</span>
+              <span>{selected.sport}</span>
+              <span>{statusLabel(selected.status)}</span>
+            </div>
           </div>
-        </div>
-        <div className="detailList">
           <div className="nextUp">
             <strong>{selectedNext ? "Next up" : "Key date"}</strong>
             <span>{selectedNext ? selectedNext.label : selected.keyDateLabel}</span>
             <time>{formatDate(selectedNext?.date ?? selected.keyDate, selected.timezone)}</time>
           </div>
-          {(selected.details?.length ? selected.details : selected.phases.map((phase, index) => ({ label: phase, date: selected.keyDate, location: undefined, note: index === 0 ? "Season phase" : undefined }))).map((detail) => (
-            <div className="detailRow" key={`${detail.label}-${detail.date}`}>
-              <div>
-                <strong>{detail.label}</strong>
-                <span>{detail.note}</span>
+          <div className="detailList">
+            {(selected.details?.length ? selected.details : selected.phases.map((phase, index) => ({ label: phase, date: selected.keyDate, location: undefined, note: index === 0 ? "Season phase" : undefined }))).map((detail) => (
+              <div className="detailRow" key={`${detail.label}-${detail.date}`}>
+                <div>
+                  <strong>{detail.label}</strong>
+                  <span>{detail.note}</span>
+                </div>
+                <div className="detailPlace">
+                  {detail.location ? <MapPin size={15} /> : null}
+                  <span>{detail.location}</span>
+                </div>
+                <time>{formatDate(detail.date, selected.timezone)}</time>
               </div>
-              <div className="detailPlace">
-                {detail.location ? <MapPin size={15} /> : null}
-                <span>{detail.location}</span>
-              </div>
-              <time>{formatDate(detail.date, selected.timezone)}</time>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </aside>
       </section>
 
       <section className="dashboardGrid">
@@ -763,7 +774,7 @@ function App() {
                 <div>
                   <strong>{item.keyDateLabel}</strong>
                   <span>
-                    {item.title} - {item.sport} - {item.region}
+                    {item.title} - {item.sport} - {regionLabel(item.region)}
                   </span>
                 </div>
                 <time>{formatDate(item.keyDate, item.timezone)}</time>
@@ -783,10 +794,10 @@ function App() {
           <table>
             <thead>
               <tr>
-                <th>Rubrik</th>
+                <th>Item</th>
                 <th>Sport</th>
                 <th>Region</th>
-                <th>Saison</th>
+                <th>Season</th>
                 <th>Status</th>
                 <th>Key Date</th>
               </tr>
@@ -799,7 +810,7 @@ function App() {
                     <span>{item.phases.join(" / ")}</span>
                   </td>
                   <td>{item.sport}</td>
-                  <td>{item.region}</td>
+                  <td>{regionLabel(item.region)}</td>
                   <td>
                     {formatDate(item.seasonStart, item.timezone)} - {formatDate(item.seasonEnd, item.timezone)}
                   </td>
@@ -820,7 +831,7 @@ function App() {
       <section className="missed">
         <div>
           <p className="eyebrow">Did we miss something?</p>
-          <h2>Naechsti sinnvolle Rubrike</h2>
+          <h2>Useful additions to consider</h2>
         </div>
         <div className="suggestions">
           {missingSuggestions.map((suggestion) => (
@@ -835,7 +846,7 @@ function App() {
       <section className="megaEvents">
         <div className="sectionHeader">
           <div>
-            <p className="eyebrow">Supra big things coming to the US</p>
+            <p className="eyebrow">Major future anchors</p>
             <h2>Mega Events Watchlist</h2>
           </div>
           <span>Olympics, World Cups and multi-year anchors</span>
