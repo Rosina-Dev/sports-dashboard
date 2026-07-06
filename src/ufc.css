@@ -204,3 +204,12 @@ footer { justify-content: center; gap: 8px; padding: 16px; color: #aeb7c3; }
   .focusPanel { padding: 16px; }
   .focusPanel h2::after { display: none; }
 }
+.officialLinks { align-items: center; }
+.officialLinks small { width: 100%; color: #aeb7c3; font-size: .76rem; font-weight: 900; text-transform: uppercase; }
+.officialLinks a { border-color: rgba(229, 9, 36, .42); background: rgba(229, 9, 36, .14); }
+.hero.compactHero h1 { text-transform: uppercase; }
+.overviewGrid { margin-top: 16px; }
+@media (max-width: 720px) {
+  .officialLinks small { font-size: .7rem; }
+  .hero.compactHero h1 { font-size: 2.55rem; }
+}

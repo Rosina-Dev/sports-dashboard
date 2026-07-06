@@ -198,13 +198,13 @@ const includesQuery = (value: string, query: string) => !query || value.toLowerC
 function EmptyState({ title, note }: { title: string; note: string }) {
   return <div className="emptyState"><Shield size={22} /><strong>{title}</strong><span>{note}</span></div>;
 }
-const focusModes = ["Top fights", "News", "Rankings", "Alerts", "Prospects"] as const;
+const focusModes = ["Top Fights", "Full Card", "Card Alerts", "Prospects", "Timeline"] as const;
 type FocusMode = typeof focusModes[number];
 const topPriorities: Priority[] = ["Must-watch", "Rankings impact", "Style clash"];
 
 function App() {
   const [division, setDivision] = React.useState<Division>("All");
-  const [focusMode, setFocusMode] = React.useState<FocusMode>("Top fights");
+  const [focusMode, setFocusMode] = React.useState<FocusMode>("Top Fights");
   const [query, setQuery] = React.useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const [selectedId, setSelectedId] = React.useState(nextEvent().id);
@@ -228,40 +228,39 @@ function App() {
   const heatLabel = cardHeat >= 85 ? "Must watch" : cardHeat >= 70 ? "Strong card" : "Scout card";
   const alertCount = selected.fights.reduce((total, fight) => total + (fight.alerts?.length ?? 0), 0);
   const topThree = selected.fights.filter((fight) => topPriorities.includes(fight.priority)).slice(0, 3);
-  const focusFights = focusMode === "Prospects" ? prospectFights : focusMode === "Alerts" ? selectedAlertFights : topFights.length ? topFights : searchedFights;
+  const focusFights = focusMode === "Prospects" ? prospectFights : focusMode === "Card Alerts" ? selectedAlertFights : focusMode === "Full Card" ? searchedFights : topFights.length ? topFights : searchedFights;
 
   const renderFightFeed = (title: string, list: Fight[], emptyNote: string) => (
     <section className="panel fightCardPanel focusPanel"><div className="feedHeader"><div><p className="eyebrow">{focusMode}</p><h2>{title}</h2></div><select value={division} onChange={(event) => setDivision(event.target.value as Division)} aria-label="Filter fights by division">{divisions.map((option) => <option key={option} value={option}>{option === "All" ? "All divisions" : option}</option>)}</select></div><div className="fightList">{list.length ? list.map((fight) => <div className="fightRow" key={fight.id}><div className="fightTier"><span>{fight.tier}</span><small>{fight.division}</small><b className="priority">{fight.priority}</b></div><div className="fighters"><strong>{fight.red}</strong><span>vs</span><strong>{fight.blue}</strong></div><div className="fightNotes"><p>{fight.stakes}</p><small>{fight.impact}</small><em>{fight.why}</em>{fight.alerts?.length ? <div className="alertStrip">{fight.alerts.map((alert) => <span key={alert}>{alert}</span>)}</div> : null}</div><div className="fightFlags">{fight.title ? <span>Title stakes</span> : null}{fight.rivalry ? <span>Rivalry</span> : null}{fight.late ? <span>Card-change risk</span> : null}{!fight.title && !fight.rivalry && !fight.late ? <span>{fight.ranked} ranked/name signal(s)</span> : null}</div></div>) : <EmptyState title="No fights match" note={emptyNote} />}</div></section>
   );
 
-  const focusPanel = focusMode === "News" ? (
-    <section className="panel focusPanel"><div className="panelTitle"><Newspaper size={20} /><h2>News Pulse</h2></div><div className="newsList">{activeNews.length ? activeNews.map((item) => <a className="newsItem" href={item.url} target="_blank" rel="noreferrer" key={item.title}><span className={`newsTone tone${item.tone}`}>{item.tone}</span><strong>{item.title}</strong><p>{item.summary}</p><small>{item.source} - {item.updated}</small></a>) : <EmptyState title="No news matches" note="Try a fighter, event, division, or alert phrase." />}</div></section>
-  ) : focusMode === "Rankings" ? (
-    <section className="panel focusPanel"><div className="feedHeader"><div><p className="eyebrow">Rankings</p><h2>Rankings Radar</h2></div><select value={division} onChange={(event) => setDivision(event.target.value as Division)} aria-label="Filter rankings by division">{divisions.map((option) => <option key={option} value={option}>{option === "All" ? "All divisions" : option}</option>)}</select></div><div className="rankingGrid">{activeRankings.length ? activeRankings.map((ranking) => <div className="rankingCard" key={ranking.division}><div><span className={`state state${ranking.state}`}>{ranking.state}</span><h3>{ranking.division}</h3><strong>{ranking.champion}</strong></div><ol>{ranking.contenders.map((name) => <li key={name}>{name}</li>)}</ol><p>{ranking.movement}</p></div>) : <EmptyState title="No ranking panel" note="Clear search or change division." />}</div></section>
-  ) : focusMode === "Alerts" ? renderFightFeed("Alerts & Card Changes", selectedAlertFights, "No alert fights match this card/filter.") : focusMode === "Prospects" ? renderFightFeed("Prospect Watch", prospectFights, "No prospect fights match this card/filter.") : renderFightFeed("Top Fights", focusFights, "No top fights match this card/filter.");
+  const focusPanel = focusMode === "Timeline" ? (
+    <section className="panel focusPanel"><div className="panelTitle"><Clock3 size={20} /><h2>Fight Week Timeline</h2></div><div className="timeline">{selected.timeline.map((item) => <div className="timelineItem" key={`${item.label}-${item.date}`}><time>{formatDate(item.date)}</time><div><strong>{item.label}</strong><span>{item.time}</span><p>{item.note}</p></div></div>)}</div></section>
+  ) : focusMode === "Card Alerts" ? renderFightFeed("Card Alerts & Changes", selectedAlertFights, "No alerts match this selected card.") : focusMode === "Prospects" ? renderFightFeed("Prospect Watch", prospectFights, "No prospect fights match this selected card.") : focusMode === "Full Card" ? renderFightFeed("Full Card", searchedFights, "No fights match this selected card/filter.") : renderFightFeed("Top Fights", focusFights, "No top fights match this selected card/filter.");
 
   return <main className="shell">
     <section className="hero compactHero" style={{ backgroundImage: `linear-gradient(90deg, rgba(6,6,8,.94), rgba(20,22,28,.62)), url(${selected.image})` }}>
-      <div className="heroCopy"><p className="eyebrow">UFC Fan Command</p><h1>{selected.name}</h1><p className="intro">Card overview, rankings movement, alerts, and fight context without scrolling through random clips.</p><div className="sourceRail"><a href={links.events} target="_blank" rel="noreferrer">UFC Events</a><a href={links.news} target="_blank" rel="noreferrer">UFC News</a><a href={links.rankings} target="_blank" rel="noreferrer">UFC Rankings</a></div></div>
+      <div className="heroCopy"><p className="eyebrow">Curated UFC dashboard</p><h1>UFC FAN COMMAND</h1><p className="intro"><strong>{selected.name}</strong> is selected. Pick an upcoming card first, then use the tabs below for card-specific fights, alerts, prospects, and timeline.</p><div className="sourceRail officialLinks"><small>Official UFC website links</small><a href={links.events} target="_blank" rel="noreferrer">Open UFC Events</a><a href={links.news} target="_blank" rel="noreferrer">Open UFC News</a><a href={links.rankings} target="_blank" rel="noreferrer">Open UFC Rankings</a></div></div>
       <div className="heroStats"><div><strong>{countdown(selected.date)}</strong><span>Until card</span></div><div><strong>{cardHeat}</strong><span>Card heat</span></div><div><strong>{alertCount}</strong><span>Alerts</span></div></div>
     </section>
 
-    <section className="toolbar mobileToolbar"><label className="searchBox"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search fighter, ranking, alert..." /></label></section>
     <section className="overviewGrid">
       <article className="panel upcomingOverview"><div className="panelTitle"><CalendarDays size={20} /><h2>Upcoming Cards</h2></div><div className="eventList">{events.map((event) => <button className={`eventRow ${selected.id === event.id ? "isSelected" : ""}`} key={event.id} onClick={() => setSelectedId(event.id)}><div><strong>{event.name}</strong><span>{event.city} - {mainFight(event, "Main Event")?.division ?? "Card details pending"}</span></div><time>{formatDate(event.date)}</time><span className="heatBadge">{heat(event)}</span><ChevronRight size={18} /></button>)}</div></article>
       <aside className="heatPanel"><div className="panelTitle"><Flame size={21} /><h2>Card Heat</h2></div><div className="heatScore" style={{ "--score": `${cardHeat}%` } as React.CSSProperties}><strong>{cardHeat}</strong><span>{heatLabel}</span></div><div className="heatBreakdown"><span>{selected.fights.filter((fight) => fight.priority === "Must-watch").length} must-watch fights</span><span>{selected.fights.reduce((total, fight) => total + fight.ranked, 0)} ranked/name-value signals</span><span>{selected.fights.filter((fight) => fight.priority === "Prospect watch").length} prospect watches</span><span>{alertCount} alert flags</span></div><p>{selected.note}</p><a href={selected.url} target="_blank" rel="noreferrer">Official UFC check</a></aside>
     </section>
+
+    <section className="toolbar mobileToolbar"><label className="searchBox"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search fighter, ranking, alert..." /></label></section>
 
     <nav className="focusTabs" aria-label="UFC dashboard focus">{focusModes.map((mode) => <button className={focusMode === mode ? "selected" : ""} key={mode} onClick={() => setFocusMode(mode)}>{mode}</button>)}</nav>
     {normalizedQuery ? <section className="searchSummary"><Search size={17} /><span>{searchMatchCount} dashboard matches for <strong>{query.trim()}</strong></span><button onClick={() => setQuery("")}>Clear</button></section> : null}
 
     {focusPanel}
 
-    <section className="noticeBar sourceCheck"><Radio size={18} /><span>{lastUpdated}. Curated from public card listings; verify final bout order on UFC.com before fight night.</span></section>
+    <section className="noticeBar sourceCheck"><Radio size={18} /><span>{lastUpdated}. Everything in the tabs below follows the selected card; official UFC links open UFC.com for final verification.</span></section>
 
-    <section className="pulseGrid" aria-label="news rankings and alerts pulse">
-      <article className="pulseCard urgentPulse"><div className="panelTitle"><Newspaper size={19} /><h2>Latest Intel</h2></div>{activeNews.slice(0, 2).length ? activeNews.slice(0, 2).map((item) => <a href={item.url} target="_blank" rel="noreferrer" key={item.title}><span>{item.tone}</span><strong>{item.title}</strong><p>{item.summary}</p></a>) : <EmptyState title="No news matches" note="Try a fighter, event, division, or alert phrase." />}</article>
-      <article className="pulseCard"><div className="panelTitle"><Trophy size={19} /><h2>Ranking Pulse</h2></div>{activeRankings.slice(0, 3).length ? activeRankings.slice(0, 3).map((ranking) => <div key={ranking.division}><span>{ranking.state}</span><strong>{ranking.division}</strong><p>{ranking.movement}</p></div>) : <EmptyState title="No rankings match" note="Clear search or change division." />}</article>
+    <section className="pulseGrid" aria-label="global UFC news rankings and alerts pulse">
+      <article className="pulseCard urgentPulse"><div className="panelTitle"><Newspaper size={19} /><h2>UFC News Pulse</h2></div>{activeNews.slice(0, 2).length ? activeNews.slice(0, 2).map((item) => <a href={item.url} target="_blank" rel="noreferrer" key={item.title}><span>{item.tone}</span><strong>{item.title}</strong><p>{item.summary}</p></a>) : <EmptyState title="No news matches" note="Try a fighter, event, division, or alert phrase." />}</article>
+      <article className="pulseCard"><div className="panelTitle"><Trophy size={19} /><h2>UFC Ranking Pulse</h2></div>{activeRankings.slice(0, 3).length ? activeRankings.slice(0, 3).map((ranking) => <div key={ranking.division}><span>{ranking.state}</span><strong>{ranking.division}</strong><p>{ranking.movement}</p></div>) : <EmptyState title="No rankings match" note="Clear search or change division." />}</article>
       <article className="pulseCard"><div className="panelTitle"><AlertTriangle size={19} /><h2>What Changed</h2></div>{alertItems.slice(0, 3).length ? alertItems.slice(0, 3).map(({ event, fight }) => <div key={`${event.id}-${fight.id}`}><span>{fight.priority}</span><strong>{fight.red} vs {fight.blue}</strong><p>{fight.alerts?.[0] ?? fight.why}</p></div>) : <EmptyState title="No alert matches" note="Try replacement, TBD, backup, or prospect." />}</article>
     </section>
 
