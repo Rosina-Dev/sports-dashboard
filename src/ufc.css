@@ -240,3 +240,5 @@ footer { justify-content: center; gap: 8px; padding: 16px; color: #aeb7c3; }
   .upcomingOverview .heatBadge { grid-column: 1; }
   .upcomingOverview .alertBadge { grid-column: 2; }
 }
+.cardSourceNote { border-color: rgba(132, 197, 255, .28); background: linear-gradient(90deg, rgba(132, 197, 255, .1), #10131a); }
+.cardSourceNote a { color: #84c5ff; font-weight: 900; }
