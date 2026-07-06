@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { Activity, AlertTriangle, BarChart3, CalendarDays, ChevronRight, Clock3, Flame, Newspaper, Radio, Search, Shield, Star, Trophy, Users } from "lucide-react";
 import "./ufc.css";
@@ -11,6 +11,8 @@ type Fight = { id: string; tier: BoutTier; division: Exclude<Division, "All">; r
 type UFCEvent = { id: string; name: string; type: Exclude<EventType, "All">; date: string; venue: string; city: string; watch: string; url: string; sourceUrl: string; sourceLabel: string; image: string; tagline: string; note: string; fights: Fight[]; timeline: Array<{ label: string; date: string; time: string; note: string }> };
 type Fighter = { name: string; division: Exclude<Division, "All">; record: string; streak: string; next?: string; last: string; tag: string };
 type Ranking = { division: Exclude<Division, "All">; champion: string; contenders: string[]; movement: string; state: "Hot" | "Crowded" | "Waiting" };
+type LiveSource = { id: string; label: string; url: string; status: "ok" | "warning" | "error" | "seeded"; checkedAt: string; httpStatus?: number; headline: string; summary: string; nextAction: string };
+type LiveSnapshot = { schemaVersion: number; generatedAt: string; cadence: string; sources: LiveSource[]; notes: string[] };
 
 const links = {
   events: "https://www.ufc.com/events",
@@ -20,6 +22,17 @@ const links = {
   fightNight281: "https://en.wikipedia.org/wiki/UFC_Fight_Night_281",
 };
 const lastUpdated = "Curated card data last updated July 5, 2026";
+const fallbackLiveSnapshot: LiveSnapshot = {
+  schemaVersion: 1,
+  generatedAt: "2026-07-05T22:30:00.000Z",
+  cadence: "Curated fallback is bundled with the dashboard; official UFC source checks load from ufc-live.json when available.",
+  sources: [
+    { id: "ufc-events", label: "UFC Events", url: links.events, status: "seeded", checkedAt: "2026-07-05T22:30:00.000Z", headline: "Official UFC Events page", summary: "Fallback source link for official event and bout-order verification.", nextAction: "Verify selected cards against UFC.com." },
+    { id: "ufc-news", label: "UFC News", url: links.news, status: "seeded", checkedAt: "2026-07-05T22:30:00.000Z", headline: "Official UFC News page", summary: "Fallback source link for headlines and fight-week updates.", nextAction: "Refresh news pulse from official UFC headlines." },
+    { id: "ufc-rankings", label: "UFC Rankings", url: links.rankings, status: "seeded", checkedAt: "2026-07-05T22:30:00.000Z", headline: "Official UFC Rankings page", summary: "Fallback source link for division ranking calibration.", nextAction: "Compare ranked-fighter labels against official UFC rankings." },
+  ],
+  notes: ["Curated fan analysis remains local; official source checks are loaded separately."],
+};
 const MS = 24 * 60 * 60 * 1000;
 const now = new Date();
 const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -186,6 +199,7 @@ const eventTypes: EventType[] = ["All", "PPV", "Fight Night", "International"];
 const parseDate = (value: string) => new Date(`${value}T12:00:00`);
 const daysUntil = (value: string) => Math.round((new Date(parseDate(value).getFullYear(), parseDate(value).getMonth(), parseDate(value).getDate()).getTime() - today.getTime()) / MS);
 const formatDate = (value: string) => new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(parseDate(value));
+const formatDateTime = (value: string) => new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(new Date(value));
 const countdown = (value: string) => { const days = daysUntil(value); if (days === 0) return "Tonight"; if (days === 1) return "Tomorrow"; return days > 1 ? `${days} days` : `${Math.abs(days)} days ago`; };
 const priorityWeight: Record<Priority, number> = { "Must-watch": 20, "Rankings impact": 14, "Style clash": 10, "Prospect watch": 6, "Upset watch": 8, "Volatility watch": 5 };
 const heat = (event: UFCEvent) => Math.min(100, 18 + event.fights.reduce((total, fight) => total + fight.ranked * 5 + priorityWeight[fight.priority] + (fight.alerts?.length ? 2 : 0), 0) + (event.type === "PPV" ? 10 : 2) - event.fights.filter((fight) => fight.late).length * 2);
@@ -208,6 +222,16 @@ function App() {
   const [query, setQuery] = React.useState("");
   const normalizedQuery = query.trim().toLowerCase();
   const [selectedId, setSelectedId] = React.useState(nextEvent().id);
+  const [liveSnapshot, setLiveSnapshot] = React.useState<LiveSnapshot>(fallbackLiveSnapshot);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    fetch("/sports-dashboard/ufc-live.json", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error(`UFC snapshot returned ${response.status}`)))
+      .then((snapshot: LiveSnapshot) => { if (!cancelled && Array.isArray(snapshot.sources)) setLiveSnapshot(snapshot); })
+      .catch(() => { if (!cancelled) setLiveSnapshot(fallbackLiveSnapshot); });
+    return () => { cancelled = true; };
+  }, []);
 
   const selected = events.find((event) => event.id === selectedId) ?? nextEvent();
   const main = mainFight(selected, "Main Event");
@@ -229,6 +253,8 @@ function App() {
   const alertCount = selected.fights.reduce((total, fight) => total + (fight.alerts?.length ?? 0), 0);
   const topThree = selected.fights.filter((fight) => topPriorities.includes(fight.priority)).slice(0, 3);
   const focusFights = focusMode === "Prospects" ? prospectFights : focusMode === "Card Alerts" ? selectedAlertFights : focusMode === "Full Card" ? searchedFights : topFights.length ? topFights : searchedFights;
+  const liveOkCount = liveSnapshot.sources.filter((source) => source.status === "ok").length;
+  const liveStatusLabel = liveOkCount === liveSnapshot.sources.length ? "Official sources fresh" : liveOkCount > 0 ? "Partial source check" : "Curated fallback active";
 
   const renderFightFeed = (title: string, list: Fight[], emptyNote: string) => (
     <section className="panel fightCardPanel focusPanel"><div className="feedHeader"><div><p className="eyebrow">{focusMode}</p><h2>{title}</h2></div><select value={division} onChange={(event) => setDivision(event.target.value as Division)} aria-label="Filter fights by division">{divisions.map((option) => <option key={option} value={option}>{option === "All" ? "All divisions" : option}</option>)}</select></div><div className="fightList">{list.length ? list.map((fight) => <div className="fightRow" key={fight.id}><div className="fightTier"><span>{fight.tier}</span><small>{fight.division}</small><b className="priority">{fight.priority}</b></div><div className="fighters"><strong>{fight.red}</strong><span>vs</span><strong>{fight.blue}</strong></div><div className="fightNotes"><p>{fight.stakes}</p><small>{fight.impact}</small><em>{fight.why}</em>{fight.alerts?.length ? <div className="alertStrip">{fight.alerts.map((alert) => <span key={alert}>{alert}</span>)}</div> : null}</div><div className="fightFlags">{fight.title ? <span>Title stakes</span> : null}{fight.rivalry ? <span>Rivalry</span> : null}{fight.late ? <span>Card-change risk</span> : null}{!fight.title && !fight.rivalry && !fight.late ? <span>{fight.ranked} ranked/name signal(s)</span> : null}</div></div>) : <EmptyState title="No fights match" note={emptyNote} />}</div></section>
@@ -257,6 +283,8 @@ function App() {
     {focusPanel}
 
     <section className="noticeBar sourceCheck"><Radio size={18} /><span>{lastUpdated}. Everything in the tabs below follows the selected card; official UFC links open UFC.com for final verification.</span></section>
+
+    <section className="panel hybridPanel"><div className="feedHeader"><div><p className="eyebrow">Hybrid update layer</p><h2>{liveStatusLabel}</h2></div><span className="snapshotTime">Checked {formatDateTime(liveSnapshot.generatedAt)}</span></div><div className="sourceGrid">{liveSnapshot.sources.map((source) => <a className="sourceCard" href={source.url} target="_blank" rel="noreferrer" key={source.id}><span className={`sourceState source-${source.status}`}>{source.status}</span><strong>{source.label}</strong><p>{source.summary}</p><small>{source.nextAction}</small></a>)}</div><p className="hybridNote">Hybrid means official UFC source checks can refresh on schedule, while card heat, watch priority, and why-it-matters notes stay curated.</p></section>
 
     <section className="pulseGrid" aria-label="global UFC news rankings and alerts pulse">
       <article className="pulseCard urgentPulse"><div className="panelTitle"><Newspaper size={19} /><h2>UFC News Pulse</h2></div>{activeNews.slice(0, 2).length ? activeNews.slice(0, 2).map((item) => <a href={item.url} target="_blank" rel="noreferrer" key={item.title}><span>{item.tone}</span><strong>{item.title}</strong><p>{item.summary}</p></a>) : <EmptyState title="No news matches" note="Try a fighter, event, division, or alert phrase." />}</article>

@@ -213,3 +213,19 @@ footer { justify-content: center; gap: 8px; padding: 16px; color: #aeb7c3; }
   .officialLinks small { font-size: .7rem; }
   .hero.compactHero h1 { font-size: 2.55rem; }
 }
+.hybridPanel { margin-bottom: 16px; border-color: rgba(95, 240, 165, .22); }
+.snapshotTime { align-self: center; color: #aeb7c3; font-size: .82rem; font-weight: 850; white-space: nowrap; }
+.sourceGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sourceCard { display: grid; gap: 7px; min-height: 150px; padding: 13px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; text-decoration: none; }
+.sourceCard:hover { border-color: #5ff0a5; }
+.sourceCard p, .sourceCard small, .hybridNote { margin: 0; color: #aeb7c3; line-height: 1.4; }
+.sourceCard small { color: #dce2ea; }
+.sourceState { width: fit-content; min-height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: 999px; font-size: .72rem; font-weight: 900; text-transform: uppercase; }
+.source-ok { background: #10231b; color: #5ff0a5; }
+.source-warning, .source-seeded { background: #211c10; color: #ffd166; }
+.source-error { background: #2d1017; color: #ff6a78; }
+.hybridNote { margin-top: 12px; }
+@media (max-width: 900px) {
+  .sourceGrid { grid-template-columns: 1fr; }
+  .snapshotTime { white-space: normal; }
+}
