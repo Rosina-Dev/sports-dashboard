@@ -247,15 +247,15 @@ function App() {
     </section>
 
     <section className="toolbar mobileToolbar"><label className="searchBox"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search fighter, ranking, alert..." /></label></section>
-    <nav className="focusTabs" aria-label="UFC dashboard focus">{focusModes.map((mode) => <button className={focusMode === mode ? "selected" : ""} key={mode} onClick={() => setFocusMode(mode)}>{mode}</button>)}</nav>
-    {normalizedQuery ? <section className="searchSummary"><Search size={17} /><span>{searchMatchCount} dashboard matches for <strong>{query.trim()}</strong></span><button onClick={() => setQuery("")}>Clear</button></section> : null}
-
-    {focusPanel}
-
     <section className="overviewGrid">
       <article className="panel upcomingOverview"><div className="panelTitle"><CalendarDays size={20} /><h2>Upcoming Cards</h2></div><div className="eventList">{events.map((event) => <button className={`eventRow ${selected.id === event.id ? "isSelected" : ""}`} key={event.id} onClick={() => setSelectedId(event.id)}><div><strong>{event.name}</strong><span>{event.city} - {mainFight(event, "Main Event")?.division ?? "Card details pending"}</span></div><time>{formatDate(event.date)}</time><span className="heatBadge">{heat(event)}</span><ChevronRight size={18} /></button>)}</div></article>
       <aside className="heatPanel"><div className="panelTitle"><Flame size={21} /><h2>Card Heat</h2></div><div className="heatScore" style={{ "--score": `${cardHeat}%` } as React.CSSProperties}><strong>{cardHeat}</strong><span>{heatLabel}</span></div><div className="heatBreakdown"><span>{selected.fights.filter((fight) => fight.priority === "Must-watch").length} must-watch fights</span><span>{selected.fights.reduce((total, fight) => total + fight.ranked, 0)} ranked/name-value signals</span><span>{selected.fights.filter((fight) => fight.priority === "Prospect watch").length} prospect watches</span><span>{alertCount} alert flags</span></div><p>{selected.note}</p><a href={selected.url} target="_blank" rel="noreferrer">Official UFC check</a></aside>
     </section>
+
+    <nav className="focusTabs" aria-label="UFC dashboard focus">{focusModes.map((mode) => <button className={focusMode === mode ? "selected" : ""} key={mode} onClick={() => setFocusMode(mode)}>{mode}</button>)}</nav>
+    {normalizedQuery ? <section className="searchSummary"><Search size={17} /><span>{searchMatchCount} dashboard matches for <strong>{query.trim()}</strong></span><button onClick={() => setQuery("")}>Clear</button></section> : null}
+
+    {focusPanel}
 
     <section className="noticeBar sourceCheck"><Radio size={18} /><span>{lastUpdated}. Curated from public card listings; verify final bout order on UFC.com before fight night.</span></section>
 
@@ -266,7 +266,6 @@ function App() {
     </section>
 
     <section className="eventSpotlight feedSpotlight"><div className="spotlightBody"><div className="sectionLabel"><span>{selected.type}</span><span>{formatDate(selected.date)}</span></div><h2>{fightText(main)}</h2><p>{main?.why ?? selected.tagline}</p><div className="eventFacts"><span><Activity size={16} />{selected.venue}, {selected.city}</span><span><Clock3 size={16} />{selected.watch}</span></div><div className="mainFights"><div><small>Main event</small><strong>{fightText(main)}</strong><span>{main?.stakes ?? "Official listing pending"}</span></div><div><small>Next priority</small><strong>{fightText(coMain)}</strong><span>{coMain?.stakes ?? "Official listing pending"}</span></div></div><div className="linkRow"><a href={selected.sourceUrl} target="_blank" rel="noreferrer">{selected.sourceLabel}</a><a href={selected.url} target="_blank" rel="noreferrer">Official UFC check</a></div></div></section>
-
 
     <section className="dashboardGrid topGrid"><article className="panel"><div className="panelTitle"><Flame size={20} /><h2>Top 3 To Watch</h2></div><div className="storyList">{topThree.map((fight) => <div className="storyCard" key={fight.id}><span>{fight.priority}</span><h3>{fight.red} vs {fight.blue}</h3><p>{fight.why}</p></div>)}</div></article><article className="panel"><div className="panelTitle"><Clock3 size={20} /><h2>Fight Week Timeline</h2></div><div className="timeline">{selected.timeline.map((item) => <div className="timelineItem" key={`${item.label}-${item.date}`}><time>{formatDate(item.date)}</time><div><strong>{item.label}</strong><span>{item.time}</span><p>{item.note}</p></div></div>)}</div></article></section>
 
