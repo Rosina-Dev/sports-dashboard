@@ -233,7 +233,11 @@ function App() {
     return () => { cancelled = true; };
   }, []);
 
-  const selected = events.find((event) => event.id === selectedId) ?? nextEvent();
+  const heroEvent = nextEvent();
+  const heroMain = mainFight(heroEvent, "Main Event");
+  const heroHeat = heat(heroEvent);
+  const heroAlertCount = heroEvent.fights.reduce((total, fight) => total + (fight.alerts?.length ?? 0), 0);
+  const selected = events.find((event) => event.id === selectedId) ?? heroEvent;
   const main = mainFight(selected, "Main Event");
   const coMain = selected.fights.find((fight) => fight.id !== main?.id && (fight.tier === "Co-main" || fight.tier === "Main Card"));
   const selectedDivisionFights = selected.fights.filter((fight) => matchesDivision(fight, division));
@@ -265,14 +269,13 @@ function App() {
   ) : focusMode === "Card Alerts" ? renderFightFeed("Card Alerts & Changes", selectedAlertFights, "No alerts match this selected card.") : focusMode === "Prospects" ? renderFightFeed("Prospect Watch", prospectFights, "No prospect fights match this selected card.") : focusMode === "Full Card" ? renderFightFeed("Full Card", searchedFights, "No fights match this selected card/filter.") : renderFightFeed("Top Fights", focusFights, "No top fights match this selected card/filter.");
 
   return <main className="shell">
-    <section className="hero compactHero" style={{ backgroundImage: `linear-gradient(90deg, rgba(6,6,8,.94), rgba(20,22,28,.62)), url(${selected.image})` }}>
-      <div className="heroCopy"><p className="eyebrow">Curated UFC dashboard</p><h1>UFC FAN COMMAND</h1><p className="intro"><strong>{selected.name}</strong> is selected. Pick an upcoming card first, then use the tabs below for card-specific fights, alerts, prospects, and timeline.</p><div className="sourceRail officialLinks"><small>Official UFC website links</small><a href={links.events} target="_blank" rel="noreferrer">Open UFC Events</a><a href={links.news} target="_blank" rel="noreferrer">Open UFC News</a><a href={links.rankings} target="_blank" rel="noreferrer">Open UFC Rankings</a></div></div>
-      <div className="heroStats"><div><strong>{countdown(selected.date)}</strong><span>Until card</span></div><div><strong>{cardHeat}</strong><span>Card heat</span></div><div><strong>{alertCount}</strong><span>Alerts</span></div></div>
+    <section className="hero compactHero" style={{ backgroundImage: `linear-gradient(90deg, rgba(6,6,8,.94), rgba(20,22,28,.62)), url(${heroEvent.image})` }}>
+      <div className="heroCopy"><p className="eyebrow">Next upcoming UFC card</p><h1>{heroEvent.name}</h1><p className="intro"><strong>{fightText(heroMain)}</strong>. {heroEvent.tagline}</p><div className="sourceRail officialLinks"><small>Official UFC website links</small><a href={links.events} target="_blank" rel="noreferrer">Open UFC Events</a><a href={links.news} target="_blank" rel="noreferrer">Open UFC News</a><a href={links.rankings} target="_blank" rel="noreferrer">Open UFC Rankings</a></div></div>
+      <div className="heroStats"><div><strong>{countdown(heroEvent.date)}</strong><span>Until card</span></div><div><strong>{heroHeat}</strong><span>Card heat</span></div><div><strong>{heroAlertCount}</strong><span>Alerts</span></div></div>
     </section>
 
     <section className="overviewGrid">
-      <article className="panel upcomingOverview"><div className="panelTitle"><CalendarDays size={20} /><h2>Upcoming Cards</h2></div><div className="eventList">{events.map((event) => <button className={`eventRow ${selected.id === event.id ? "isSelected" : ""}`} key={event.id} onClick={() => setSelectedId(event.id)}><div><strong>{event.name}</strong><span>{event.city} - {mainFight(event, "Main Event")?.division ?? "Card details pending"}</span></div><time>{formatDate(event.date)}</time><span className="heatBadge">{heat(event)}</span><ChevronRight size={18} /></button>)}</div></article>
-      <aside className="heatPanel"><div className="panelTitle"><Flame size={21} /><h2>Card Heat</h2></div><div className="heatScore" style={{ "--score": `${cardHeat}%` } as React.CSSProperties}><strong>{cardHeat}</strong><span>{heatLabel}</span></div><div className="heatBreakdown"><span>{selected.fights.filter((fight) => fight.priority === "Must-watch").length} must-watch fights</span><span>{selected.fights.reduce((total, fight) => total + fight.ranked, 0)} ranked/name-value signals</span><span>{selected.fights.filter((fight) => fight.priority === "Prospect watch").length} prospect watches</span><span>{alertCount} alert flags</span></div><p>{selected.note}</p><a href={selected.url} target="_blank" rel="noreferrer">Official UFC check</a></aside>
+      <article className="panel upcomingOverview"><div className="panelTitle"><CalendarDays size={20} /><h2>Upcoming Cards</h2></div><div className="eventList">{events.map((event) => <button className={`eventRow ${selected.id === event.id ? "isSelected" : ""}`} key={event.id} onClick={() => setSelectedId(event.id)}><div><strong>{event.name}</strong><span>{event.city} - {mainFight(event, "Main Event")?.division ?? "Card details pending"}</span></div><time>{formatDate(event.date)}</time><span className="heatBadge">Heat {heat(event)}</span><span className="alertBadge">{event.fights.reduce((total, fight) => total + (fight.alerts?.length ?? 0), 0)} alerts</span><ChevronRight size={18} /></button>)}</div></article>
     </section>
 
     <section className="toolbar mobileToolbar"><label className="searchBox"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search fighter, ranking, alert..." /></label></section>
