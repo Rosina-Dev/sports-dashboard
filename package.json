@@ -3,7 +3,9 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "update:ufc": "node scripts/update-ufc-snapshot.mjs"
+    "update:ufc": "node scripts/update-ufc-snapshot.mjs",
+    "update:sports": "node scripts/update-sports-snapshot.mjs",
+    "update:snapshots": "node scripts/update-ufc-snapshot.mjs && node scripts/update-sports-snapshot.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

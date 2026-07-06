@@ -1,41 +1,44 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-05T22:30:00.000Z",
-  "cadence": "Hybrid seed: curated dashboard data plus scheduled official UFC source checks.",
+  "generatedAt": "2026-07-06T03:36:05.928Z",
+  "cadence": "Scheduled GitHub Pages refresh: official UFC source checks plus curated dashboard analysis.",
   "sources": [
     {
       "id": "ufc-events",
       "label": "UFC Events",
       "url": "https://www.ufc.com/events",
-      "status": "seeded",
-      "checkedAt": "2026-07-05T22:30:00.000Z",
-      "headline": "Official UFC Events page",
-      "summary": "Use this as the official event and bout-order verification source before fight night.",
-      "nextAction": "Compare official event listings with curated upcoming-card data."
+      "nextAction": "Compare official event listings with curated upcoming-card data.",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:05.929Z",
+      "httpStatus": 200,
+      "headline": "Events",
+      "summary": "UFC Events responded and exposed 9 relevant UFC signal(s) in the page text."
     },
     {
       "id": "ufc-news",
       "label": "UFC News",
       "url": "https://www.ufc.com/news",
-      "status": "seeded",
-      "checkedAt": "2026-07-05T22:30:00.000Z",
-      "headline": "Official UFC News page",
-      "summary": "Use this for headlines, injury notes, interviews, and fight-week media updates.",
-      "nextAction": "Refresh dashboard news pulse from recent official headlines."
+      "nextAction": "Refresh dashboard news pulse from recent official headlines.",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:05.982Z",
+      "httpStatus": 200,
+      "headline": "VIDEOS, ARTICLES & GALLERIES",
+      "summary": "UFC News responded and exposed 16 relevant UFC signal(s) in the page text."
     },
     {
       "id": "ufc-rankings",
       "label": "UFC Rankings",
       "url": "https://www.ufc.com/rankings",
-      "status": "seeded",
-      "checkedAt": "2026-07-05T22:30:00.000Z",
-      "headline": "Official UFC Rankings page",
-      "summary": "Use this to recalibrate ranked-fighter labels and division radar after UFC updates rankings.",
-      "nextAction": "Compare official rankings with curated ranking impact notes."
+      "nextAction": "Compare official rankings with curated ranking impact notes.",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:05.983Z",
+      "httpStatus": 200,
+      "headline": "Rankings | UFC",
+      "summary": "UFC Rankings responded and exposed 63 relevant UFC signal(s) in the page text."
     }
   ],
   "notes": [
     "The dashboard keeps curated fan analysis locally: card heat, why-it-matters notes, prospect labels, alerts, and ranking impact.",
-    "This snapshot is the official-source layer. A scheduled workflow can refresh it without changing the dashboard UI code."
+    "This snapshot is refreshed from official UFC source pages and displayed as the live-ish verification layer."
   ]
 }

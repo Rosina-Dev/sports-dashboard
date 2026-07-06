@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-06T03:36:06.195Z",
+  "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
+  "sources": [
+    {
+      "id": "mlb-news",
+      "label": "MLB News",
+      "league": "MLB",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:06.196Z",
+      "httpStatus": 200,
+      "headline": "Padres snap their 8-game skid with 5-2 win over Dodgers on Manny Machado's 3-run homer",
+      "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
+      "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
+    },
+    {
+      "id": "nba-news",
+      "label": "NBA News",
+      "league": "NBA",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:06.249Z",
+      "httpStatus": 200,
+      "headline": "Duke Brennan throws down big slam vs. Milwaukee Bucks",
+      "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
+      "nextAction": "Refresh offseason and summer-league headline context."
+    },
+    {
+      "id": "nhl-news",
+      "label": "NHL News",
+      "league": "NHL",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:06.250Z",
+      "httpStatus": 200,
+      "headline": "Anaheim Ducks re-sign Pavel Mintyukov to five-year contract",
+      "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
+      "nextAction": "Refresh offseason and schedule headline context."
+    },
+    {
+      "id": "mls-news",
+      "label": "MLS News",
+      "league": "MLS",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:06.251Z",
+      "httpStatus": 200,
+      "headline": "Chicago Fire 'open' to offers for Mbekezeli Mbokazi after stellar World Cup - Agent Basia Michaels",
+      "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
+      "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
+    },
+    {
+      "id": "fifa-world-cup",
+      "label": "FIFA World Cup",
+      "league": "FIFA",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:06.251Z",
+      "httpStatus": 200,
+      "headline": "FIFA World Cup",
+      "summary": "FIFA World Cup responded; review the official page for current details.",
+      "nextAction": "Check official World Cup event hub for major schedule/status changes."
+    },
+    {
+      "id": "wimbledon",
+      "label": "Wimbledon",
+      "league": "Tennis",
+      "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
+      "status": "ok",
+      "checkedAt": "2026-07-06T03:36:06.252Z",
+      "httpStatus": 200,
+      "headline": "Order of Play",
+      "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
+      "nextAction": "Check order of play while Wimbledon is active."
+    }
+  ],
+  "newsItems": [
+    {
+      "title": "Padres snap their 8-game skid with 5-2 win over Dodgers on Manny Machado's 3-run homer",
+      "league": "MLB",
+      "note": "Manny Machado hit a three-run homer, Jackson Merrill and Fernando Tatis Jr. added RBI singles, and the San Diego Padres snapped their eight-game losing streak with...",
+      "url": "http://www.espn.com/mlb/recap?gameId=401816043"
+    },
+    {
+      "title": "San Diego Padres vs. Los Angeles Dodgers: Game Highlights",
+      "league": "MLB",
+      "note": "San Diego Padres vs. Los Angeles Dodgers: Game Highlights",
+      "url": "https://www.espn.com/video/clip/_/id/49282942/game-highlights"
+    },
+    {
+      "title": "Duke Brennan throws down big slam vs. Milwaukee Bucks",
+      "league": "NBA",
+      "note": "Duke Brennan throws down big slam vs. Milwaukee Bucks",
+      "url": "https://www.espn.com/video/clip/_/id/49279392/duke-brennan-throws-big-slam-vs-milwaukee-bucks"
+    },
+    {
+      "title": "Why Darryn Peterson, Cam Boozer stood out in summer league debuts",
+      "league": "NBA",
+      "note": "Why Darryn Peterson, Cam Boozer stood out in summer league debuts",
+      "url": "https://www.espn.com/video/clip/_/id/49276422/why-darryn-peterson-cam-boozer-stood-summer-league-debuts"
+    },
+    {
+      "title": "Anaheim Ducks re-sign Pavel Mintyukov to five-year contract",
+      "league": "NHL",
+      "note": "Restricted free agent defenseman Pavel Mintyukov, who has 17 goals and 52 assists over 204 games in his first three seasons, signed a five-year contract extension S...",
+      "url": "https://www.espn.com/nhl/story/_/id/49281762/anaheim-ducks-re-sign-pavel-mintyukov-five-year-contract"
+    }
+  ],
+  "notes": [
+    "The dashboard remains curated for calendar logic, major-event selection, and league context.",
+    "This file adds a scheduled public-source freshness layer; it does not replace official league standings APIs."
+  ]
+}

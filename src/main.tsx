@@ -82,6 +82,29 @@ type NewsItem = {
   title: string;
   league: string;
   note: string;
+  url?: string;
+};
+
+type LiveSource = {
+  id: string;
+  label: string;
+  league: string;
+  url: string;
+  status: "ok" | "warning" | "error" | "seeded";
+  checkedAt: string;
+  httpStatus?: number;
+  headline: string;
+  summary: string;
+  nextAction: string;
+};
+
+type LiveSnapshot = {
+  schemaVersion: number;
+  generatedAt: string;
+  cadence: string;
+  sources: LiveSource[];
+  newsItems: NewsItem[];
+  notes: string[];
 };
 
 const today = new Date();
@@ -423,6 +446,24 @@ const newsItems: NewsItem[] = [
   { title: "NHL is in offseason context mode", league: "NHL", note: "Track roster movement and next-season contender tiers; live standings resume with the regular season." },
   { title: "Tennis and Tour de France remain major global side stories", league: "Global", note: "Wimbledon and the Tour are useful headline anchors alongside the World Cup." },
 ];
+const fallbackLiveSnapshot: LiveSnapshot = {
+  schemaVersion: 1,
+  generatedAt: "2026-07-06T03:29:36.342Z",
+  cadence: "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
+  sources: [
+    { id: "mlb-news", label: "MLB News", league: "MLB", url: "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news", status: "seeded", checkedAt: "2026-07-06T03:29:36.342Z", headline: "MLB public feed", summary: "Fallback public-source check for baseball headlines.", nextAction: "Refresh baseball headlines and compare against dashboard MLB context." },
+    { id: "nba-news", label: "NBA News", league: "NBA", url: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news", status: "seeded", checkedAt: "2026-07-06T03:29:36.342Z", headline: "NBA public feed", summary: "Fallback public-source check for NBA offseason headlines.", nextAction: "Refresh offseason and summer-league headline context." },
+    { id: "nhl-news", label: "NHL News", league: "NHL", url: "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news", status: "seeded", checkedAt: "2026-07-06T03:29:36.342Z", headline: "NHL public feed", summary: "Fallback public-source check for NHL headlines.", nextAction: "Refresh offseason and schedule headline context." },
+    { id: "mls-news", label: "MLS News", league: "MLS", url: "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news", status: "seeded", checkedAt: "2026-07-06T03:29:36.342Z", headline: "MLS public feed", summary: "Fallback public-source check for MLS headlines.", nextAction: "Refresh MLS headline context and compare against dashboard standings snapshot." },
+    { id: "fifa-world-cup", label: "FIFA World Cup", league: "FIFA", url: "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026", status: "seeded", checkedAt: "2026-07-06T03:29:36.342Z", headline: "FIFA World Cup hub", summary: "Fallback official-source check for major World Cup schedule changes.", nextAction: "Check official World Cup event hub for major schedule/status changes." },
+    { id: "wimbledon", label: "Wimbledon", league: "Tennis", url: "https://www.wimbledon.com/en_GB/scores/schedule/index.html", status: "seeded", checkedAt: "2026-07-06T03:29:36.342Z", headline: "Wimbledon order of play", summary: "Fallback official-source check while Wimbledon is active.", nextAction: "Check order of play while Wimbledon is active." },
+  ],
+  newsItems,
+  notes: [
+    "The dashboard remains curated for calendar logic, major-event selection, and league context.",
+    "This file adds a scheduled public-source freshness layer; it does not replace official league standings APIs.",
+  ],
+};
 const megaEvents: MegaEvent[] = [
   {
     title: "FIFA World Cup 2026",
@@ -960,6 +1001,16 @@ function formatDate(value: string, timezone: SportsItem["timezone"]) {
   }).format(date);
 }
 
+function formatDateTime(value: string) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  }).format(new Date(value));
+}
 function statusLabel(status: Status) {
   const labels: Record<Status, string> = {
     "active now": "Active now",
@@ -1002,6 +1053,20 @@ function App() {
   const [sport, setSport] = React.useState<Sport | "All">("All");
   const [query, setQuery] = React.useState("");
   const [selectedId, setSelectedId] = React.useState("world-cup-2026");
+  const [liveSnapshot, setLiveSnapshot] = React.useState<LiveSnapshot>(fallbackLiveSnapshot);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    fetch(`${import.meta.env.BASE_URL}sports-live.json`, { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error(`Sports snapshot returned ${response.status}`)))
+      .then((snapshot: LiveSnapshot) => {
+        if (!cancelled && Array.isArray(snapshot.sources)) setLiveSnapshot(snapshot);
+      })
+      .catch(() => {
+        if (!cancelled) setLiveSnapshot(fallbackLiveSnapshot);
+      });
+    return () => { cancelled = true; };
+  }, []);
 
   const enriched = React.useMemo(
     () =>
@@ -1031,6 +1096,13 @@ function App() {
   const selectedNext = nextDetail(selected.details);
   const selectedToday = selected.details?.filter((detail) => isToday(detail.date)) ?? [];
   const selectedLeagueDepth = leagueDepths[selected.id];
+  const liveNewsItems = liveSnapshot.newsItems?.length ? liveSnapshot.newsItems : newsItems;
+  const sourceOkCount = liveSnapshot.sources.filter((source) => source.status === "ok").length;
+  const sourceStatusLabel = sourceOkCount === liveSnapshot.sources.length
+    ? "All scheduled sources checked"
+    : sourceOkCount > 0
+      ? "Partial scheduled source check"
+      : "Scheduled source check pending";
 
   return (
     <main className="shell">
@@ -1267,9 +1339,20 @@ function App() {
           <CalendarDays size={20} />
           <h2>Big-picture Sports News</h2>
         </div>
+        <div className="liveStatus">
+          <div>
+            <strong>{sourceStatusLabel}</strong>
+            <span>Last refreshed {formatDateTime(liveSnapshot.generatedAt)}. {liveSnapshot.cadence}</span>
+          </div>
+          <div className="sourcePills" aria-label="scheduled source checks">
+            {liveSnapshot.sources.slice(0, 6).map((source) => (
+              <span className={`sourcePill source-${source.status}`} key={source.id}>{source.label}</span>
+            ))}
+          </div>
+        </div>
         <div className="newsGrid">
-          {newsItems.map((item) => (
-            <article className="newsItem" key={item.title}>
+          {liveNewsItems.map((item) => (
+            <article className="newsItem" key={`${item.league}-${item.title}`}>
               <span>{item.league}</span>
               <strong>{item.title}</strong>
               <p>{item.note}</p>
