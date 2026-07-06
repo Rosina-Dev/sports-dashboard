@@ -146,3 +146,40 @@ footer { justify-content: center; gap: 8px; padding: 16px; color: #aeb7c3; }
 .searchSummary button { margin-left: auto; min-height: 32px; padding: 0 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; background: #11151d; color: #f4f6f8; font-weight: 850; }
 .searchSummary button:hover, .searchSummary button:focus-visible { border-color: #e50924; outline: none; }
 @media (max-width: 720px) { .searchSummary { align-items: flex-start; flex-direction: column; } .searchSummary button { margin-left: 0; } }
+.compactHero { min-height: 290px; }
+.mobileToolbar { grid-template-columns: 1fr; margin-bottom: 10px; }
+.focusTabs { display: flex; gap: 8px; margin: 0 0 12px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+.focusTabs button, .cardSwitcher button { flex: 0 0 auto; min-height: 40px; border: 1px solid #2a2f3a; border-radius: 999px; background: #11151d; color: #f4f6f8; padding: 0 13px; font-weight: 850; white-space: nowrap; }
+.focusTabs button.selected, .cardSwitcher button.selected { border-color: #e50924; background: #e50924; color: #fff; }
+.cardSwitcher { display: grid; grid-template-columns: minmax(0, .5fr) minmax(0, 1fr); gap: 12px; align-items: center; margin: 0 0 14px; padding: 12px; border: 1px solid #252a34; border-radius: 8px; background: #10131a; }
+.cardSwitcher span, .cardSwitcher strong { display: block; }
+.cardSwitcher span { color: #ff3347; font-size: .76rem; font-weight: 900; text-transform: uppercase; }
+.cardSwitcher strong { margin-top: 3px; color: #dce2ea; font-size: .88rem; }
+.cardSwitcher > div:last-child { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+.pulseGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+.pulseCard { display: grid; gap: 10px; padding: 15px; border: 1px solid #252a34; border-radius: 8px; background: #11151d; box-shadow: 0 18px 55px rgba(0,0,0,.18); }
+.pulseCard.urgentPulse { border-color: rgba(229, 9, 36, .42); }
+.pulseCard a, .pulseCard > div:not(.panelTitle) { display: grid; gap: 5px; padding: 10px; border: 1px solid #2a2f3a; border-radius: 8px; background: #0c0f15; text-decoration: none; }
+.pulseCard span { width: fit-content; min-height: 24px; display: inline-flex; align-items: center; padding: 0 8px; border-radius: 999px; background: #251017; color: #ff6a78; font-size: .72rem; font-weight: 900; }
+.pulseCard strong { color: #fff; }
+.pulseCard p { margin: 0; color: #aeb7c3; line-height: 1.4; }
+.feedSpotlight { grid-template-columns: 1fr; margin-bottom: 16px; }
+.feedPanel { margin-bottom: 16px; }
+.feedHeader { display: flex; justify-content: space-between; gap: 12px; align-items: end; margin-bottom: 14px; }
+.feedHeader select { min-width: 190px; }
+@media (max-width: 900px) {
+  .pulseGrid { grid-template-columns: 1fr; }
+  .cardSwitcher { grid-template-columns: 1fr; }
+  .compactHero { min-height: 260px; }
+}
+@media (max-width: 720px) {
+  .hero.compactHero { min-height: 260px; padding: 20px; }
+  .hero.compactHero h1 { font-size: 2.35rem; line-height: 1; }
+  .sourceRail { gap: 8px; }
+  .sourceRail a { min-height: 34px; font-size: .78rem; }
+  .focusTabs { margin-left: -2px; margin-right: -2px; }
+  .focusTabs button { min-height: 38px; padding: 0 12px; font-size: .86rem; }
+  .feedHeader { align-items: stretch; flex-direction: column; }
+  .feedHeader select { width: 100%; }
+  .pulseCard { padding: 13px; }
+}
