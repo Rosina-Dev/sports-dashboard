@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-06T03:36:06.195Z",
+  "generatedAt": "2026-07-06T18:19:10.349Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T03:36:06.196Z",
+      "checkedAt": "2026-07-06T18:19:10.349Z",
       "httpStatus": 200,
-      "headline": "Padres snap their 8-game skid with 5-2 win over Dodgers on Manny Machado's 3-run homer",
+      "headline": "Fantasy baseball free agent pickups: Pitching takes center stage",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T03:36:06.249Z",
+      "checkedAt": "2026-07-06T18:19:10.385Z",
       "httpStatus": 200,
-      "headline": "Duke Brennan throws down big slam vs. Milwaukee Bucks",
+      "headline": "Giannis Antetokounmpo posts Bucks goodbye, officially with Heat",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T03:36:06.250Z",
+      "checkedAt": "2026-07-06T18:19:10.387Z",
       "httpStatus": 200,
-      "headline": "Anaheim Ducks re-sign Pavel Mintyukov to five-year contract",
+      "headline": "Alex Ovechkin not sure when he's done, wife says maybe 2 years",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,7 +45,7 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T03:36:06.251Z",
+      "checkedAt": "2026-07-06T18:19:10.388Z",
       "httpStatus": 200,
       "headline": "Chicago Fire 'open' to offers for Mbekezeli Mbokazi after stellar World Cup - Agent Basia Michaels",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-07-06T03:36:06.251Z",
+      "checkedAt": "2026-07-06T18:19:10.388Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-07-06T03:36:06.252Z",
+      "checkedAt": "2026-07-06T18:19:10.389Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Padres snap their 8-game skid with 5-2 win over Dodgers on Manny Machado's 3-run homer",
+      "title": "Fantasy baseball free agent pickups: Pitching takes center stage",
       "league": "MLB",
-      "note": "Manny Machado hit a three-run homer, Jackson Merrill and Fernando Tatis Jr. added RBI singles, and the San Diego Padres snapped their eight-game losing streak with...",
-      "url": "http://www.espn.com/mlb/recap?gameId=401816043"
+      "note": "Here are the top players you should consider claiming off the fantasy baseball waiver wire this week.",
+      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49285205/fantasy-baseball-free-agent-pickups-waiver-wire-july-6-2026"
     },
     {
-      "title": "San Diego Padres vs. Los Angeles Dodgers: Game Highlights",
+      "title": "Fantasy Baseball Forecaster Week 15: July 6-19",
       "league": "MLB",
-      "note": "San Diego Padres vs. Los Angeles Dodgers: Game Highlights",
-      "url": "https://www.espn.com/video/clip/_/id/49282942/game-highlights"
+      "note": "Set your lineups for the weeks ahead in fantasy baseball with our preview featuring pitcher rankings, hitter ratings and schedule observations.",
+      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49251883/fantasy-baseball-forecaster-espn-2026-mlb-starting-pitcher-hitter-ranks-week-15-july-6-19"
     },
     {
-      "title": "Duke Brennan throws down big slam vs. Milwaukee Bucks",
+      "title": "Giannis Antetokounmpo posts Bucks goodbye, officially with Heat",
       "league": "NBA",
-      "note": "Duke Brennan throws down big slam vs. Milwaukee Bucks",
-      "url": "https://www.espn.com/video/clip/_/id/49279392/duke-brennan-throws-big-slam-vs-milwaukee-bucks"
+      "note": "The Giannis Antetokounmpo trade became official on Monday, ending his 13-year career with the Milwaukee Bucks as he heads to the Miami Heat.",
+      "url": "https://www.espn.com/nba/story/_/id/49287919/antetokounmpo-posts-bucks-goodbye-officially-heat"
     },
     {
-      "title": "Why Darryn Peterson, Cam Boozer stood out in summer league debuts",
+      "title": "NBA summer league 2026: How to watch, schedule, rosters, news",
       "league": "NBA",
-      "note": "Why Darryn Peterson, Cam Boozer stood out in summer league debuts",
-      "url": "https://www.espn.com/video/clip/_/id/49276422/why-darryn-peterson-cam-boozer-stood-summer-league-debuts"
+      "note": "Catch the latest updates from the 2026 NBA summer league tournament in Las Vegas.",
+      "url": "https://www.espn.com/nba/story/_/id/49272236/nba-summer-league-2026-how-watch-schedule-rosters-news"
     },
     {
-      "title": "Anaheim Ducks re-sign Pavel Mintyukov to five-year contract",
+      "title": "Alex Ovechkin not sure when he's done, wife says maybe 2 years",
       "league": "NHL",
-      "note": "Restricted free agent defenseman Pavel Mintyukov, who has 17 goals and 52 assists over 204 games in his first three seasons, signed a five-year contract extension S...",
-      "url": "https://www.espn.com/nhl/story/_/id/49281762/anaheim-ducks-re-sign-pavel-mintyukov-five-year-contract"
+      "note": "Alex Ovechkin won't commit to this being his last season, saying his wife said one year, maybe two.",
+      "url": "https://www.espn.com/nhl/story/_/id/49287411/alex-ovechkin-not-sure-done-wife-says-maybe-2-years"
     }
   ],
   "notes": [
