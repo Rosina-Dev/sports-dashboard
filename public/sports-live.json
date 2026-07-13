@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-06T18:19:10.349Z",
+  "generatedAt": "2026-07-13T17:32:20.598Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T18:19:10.349Z",
+      "checkedAt": "2026-07-13T17:32:20.598Z",
       "httpStatus": 200,
-      "headline": "Fantasy baseball free agent pickups: Pitching takes center stage",
+      "headline": "Athletics fire pitching coach Scott Emerson amid 9-game slide",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T18:19:10.385Z",
+      "checkedAt": "2026-07-13T17:32:20.635Z",
       "httpStatus": 200,
-      "headline": "Giannis Antetokounmpo posts Bucks goodbye, officially with Heat",
+      "headline": "Why McAfee is comparing Christian Pulisic to Paul George",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T18:19:10.387Z",
+      "checkedAt": "2026-07-13T17:32:20.636Z",
       "httpStatus": 200,
-      "headline": "Alex Ovechkin not sure when he's done, wife says maybe 2 years",
+      "headline": "2026 NHL free agency tracker: News, contracts, grades, buzz",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-07-06T18:19:10.388Z",
+      "checkedAt": "2026-07-13T17:32:20.638Z",
       "httpStatus": 200,
-      "headline": "Chicago Fire 'open' to offers for Mbekezeli Mbokazi after stellar World Cup - Agent Basia Michaels",
+      "headline": "New England Revolution re-sign USMNT GK Matt Turner on loan from Lyon",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-07-06T18:19:10.388Z",
+      "checkedAt": "2026-07-13T17:32:20.639Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-07-06T18:19:10.389Z",
+      "checkedAt": "2026-07-13T17:32:20.640Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Fantasy baseball free agent pickups: Pitching takes center stage",
+      "title": "Athletics fire pitching coach Scott Emerson amid 9-game slide",
       "league": "MLB",
-      "note": "Here are the top players you should consider claiming off the fantasy baseball waiver wire this week.",
-      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49285205/fantasy-baseball-free-agent-pickups-waiver-wire-july-6-2026"
+      "note": "The Athletics, who have a nine-game losing streak, have fired pitching coach Scott Emerson, with bullpen coach Dan Hubbs taking over on an interim basis.",
+      "url": "https://www.espn.com/mlb/story/_/id/49351171/athletics-fire-pitching-coach-scott-emerson-amid-9-game-slide"
     },
     {
-      "title": "Fantasy Baseball Forecaster Week 15: July 6-19",
+      "title": "Fantasy baseball prospects watch: The future is not quite now",
       "league": "MLB",
-      "note": "Set your lineups for the weeks ahead in fantasy baseball with our preview featuring pitcher rankings, hitter ratings and schedule observations.",
-      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49251883/fantasy-baseball-forecaster-espn-2026-mlb-starting-pitcher-hitter-ranks-week-15-july-6-19"
+      "note": "Eric Karabell reports from the MLB draft and Futures Game to let fantasy managers know whose names you need to know.",
+      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49350007/2026-fantasy-baseball-prospects-dynasty-leagues-rising-falling-mlb-futures"
     },
     {
-      "title": "Giannis Antetokounmpo posts Bucks goodbye, officially with Heat",
+      "title": "Why McAfee is comparing Christian Pulisic to Paul George",
       "league": "NBA",
-      "note": "The Giannis Antetokounmpo trade became official on Monday, ending his 13-year career with the Milwaukee Bucks as he heads to the Miami Heat.",
-      "url": "https://www.espn.com/nba/story/_/id/49287919/antetokounmpo-posts-bucks-goodbye-officially-heat"
+      "note": "Why McAfee is comparing Christian Pulisic to Paul George",
+      "url": "https://www.espn.com/video/clip/_/id/49351350/why-mcafee-comparing-christian-pulisic-paul-george"
     },
     {
-      "title": "NBA summer league 2026: How to watch, schedule, rosters, news",
+      "title": "Perk: 'Wemby should have signed a 10-year, 1 billion-dollar deal'",
       "league": "NBA",
-      "note": "Catch the latest updates from the 2026 NBA summer league tournament in Las Vegas.",
-      "url": "https://www.espn.com/nba/story/_/id/49272236/nba-summer-league-2026-how-watch-schedule-rosters-news"
+      "note": "Perk: 'Wemby should have signed a 10-year, 1 billion-dollar deal'",
+      "url": "https://www.espn.com/video/clip/_/id/49350278/wemby-signed-10-year-1-billion-dollar-deal"
     },
     {
-      "title": "Alex Ovechkin not sure when he's done, wife says maybe 2 years",
+      "title": "2026 NHL free agency tracker: News, contracts, grades, buzz",
       "league": "NHL",
-      "note": "Alex Ovechkin won't commit to this being his last season, saying his wife said one year, maybe two.",
-      "url": "https://www.espn.com/nhl/story/_/id/49287411/alex-ovechkin-not-sure-done-wife-says-maybe-2-years"
+      "note": "Get up to speed on all the latest veteran additions teams are making beginning on June 30.",
+      "url": "https://www.espn.com/nhl/story/_/id/49235590/nhl-free-agency-tracker-2026-contracts-teams-analysis-updates"
     }
   ],
   "notes": [
