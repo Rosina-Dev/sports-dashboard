@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-13T17:32:20.598Z",
+  "generatedAt": "2026-07-20T16:09:20.329Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-07-13T17:32:20.598Z",
+      "checkedAt": "2026-07-20T16:09:20.330Z",
       "httpStatus": 200,
-      "headline": "Athletics fire pitching coach Scott Emerson amid 9-game slide",
+      "headline": "Fantasy baseball: Buxton, Carroll both day-to-day and other Monday news",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-07-13T17:32:20.635Z",
+      "checkedAt": "2026-07-20T16:09:20.365Z",
       "httpStatus": 200,
-      "headline": "Why McAfee is comparing Christian Pulisic to Paul George",
+      "headline": "Why Cavs, Warriors stand out to Stephen A. as destinations for LeBron",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-07-13T17:32:20.636Z",
+      "checkedAt": "2026-07-20T16:09:20.366Z",
       "httpStatus": 200,
-      "headline": "2026 NHL free agency tracker: News, contracts, grades, buzz",
+      "headline": "Behind the scenes at the NHL Broadcast Training Camp",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-07-13T17:32:20.638Z",
+      "checkedAt": "2026-07-20T16:09:20.368Z",
       "httpStatus": 200,
-      "headline": "New England Revolution re-sign USMNT GK Matt Turner on loan from Lyon",
+      "headline": "Messi tracker: Goals, assists, key moments in 2026",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-07-13T17:32:20.639Z",
+      "checkedAt": "2026-07-20T16:09:20.369Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-07-13T17:32:20.640Z",
+      "checkedAt": "2026-07-20T16:09:20.370Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Athletics fire pitching coach Scott Emerson amid 9-game slide",
+      "title": "Fantasy baseball: Buxton, Carroll both day-to-day and other Monday news",
       "league": "MLB",
-      "note": "The Athletics, who have a nine-game losing streak, have fired pitching coach Scott Emerson, with bullpen coach Dan Hubbs taking over on an interim basis.",
-      "url": "https://www.espn.com/mlb/story/_/id/49351171/athletics-fire-pitching-coach-scott-emerson-amid-9-game-slide"
+      "note": "All of the important fantasy spin and actionable takeaways resulting from the latest baseball news.",
+      "url": "https://www.espn.com/fantasy/baseball/story/_/id/48297021/espn-fantasy-baseball-buzz-injuries-promotions-demotions-trades-prospects-lineup-changes-mlb-news-analysis-2026"
     },
     {
-      "title": "Fantasy baseball prospects watch: The future is not quite now",
+      "title": "Twins, Phillies unveil special Field of Dreams game uniforms",
       "league": "MLB",
-      "note": "Eric Karabell reports from the MLB draft and Futures Game to let fantasy managers know whose names you need to know.",
-      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49350007/2026-fantasy-baseball-prospects-dynasty-leagues-rising-falling-mlb-futures"
+      "note": "Both clubs will include throwback elements for their uniforms as the Field of Dreams game returns on Aug. 13.",
+      "url": "https://www.espn.com/mlb/story/_/id/49406196/minnesota-twins-philadelphia-phillies-field-dreams-game-2026-mlb-uniforms"
     },
     {
-      "title": "Why McAfee is comparing Christian Pulisic to Paul George",
+      "title": "Why Cavs, Warriors stand out to Stephen A. as destinations for LeBron",
       "league": "NBA",
-      "note": "Why McAfee is comparing Christian Pulisic to Paul George",
-      "url": "https://www.espn.com/video/clip/_/id/49351350/why-mcafee-comparing-christian-pulisic-paul-george"
+      "note": "Why Cavs, Warriors stand out to Stephen A. as destinations for LeBron",
+      "url": "https://www.espn.com/video/clip/_/id/49409982/why-cavs-warriors-stand-stephen-destinations-lebron"
     },
     {
-      "title": "Perk: 'Wemby should have signed a 10-year, 1 billion-dollar deal'",
+      "title": "NBA summer league superlatives: Which players impressed?",
       "league": "NBA",
-      "note": "Perk: 'Wemby should have signed a 10-year, 1 billion-dollar deal'",
-      "url": "https://www.espn.com/video/clip/_/id/49350278/wemby-signed-10-year-1-billion-dollar-deal"
+      "note": "With summer league now over, we select 10 players who stood out in Las Vegas.",
+      "url": "https://www.espn.com/nba/story/_/id/49391646/2026-2027-nba-summer-league-superlatives-mvp-aj-dybantsa-cameron-boozer-vegas"
     },
     {
-      "title": "2026 NHL free agency tracker: News, contracts, grades, buzz",
+      "title": "Behind the scenes at the NHL Broadcast Training Camp",
       "league": "NHL",
-      "note": "Get up to speed on all the latest veteran additions teams are making beginning on June 30.",
-      "url": "https://www.espn.com/nhl/story/_/id/49235590/nhl-free-agency-tracker-2026-contracts-teams-analysis-updates"
+      "note": "Who will be the next great hockey player turned analyst? We attended the latest training program in New York to find out.",
+      "url": "https://www.espn.com/nhl/story/_/id/49405523/nhl-players-broadcast-training-camp-announcers-analysts-tv"
     }
   ],
   "notes": [
