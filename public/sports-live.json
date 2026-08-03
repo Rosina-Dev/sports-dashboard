@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-27T17:11:58.145Z",
+  "generatedAt": "2026-08-03T17:22:19.586Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-07-27T17:11:58.145Z",
+      "checkedAt": "2026-08-03T17:22:19.586Z",
       "httpStatus": 200,
-      "headline": "2026 MLB trade deadline tracker: Rumors, news, analysis",
+      "headline": "2026 MLB trade deadline grades: Report cards for every deal",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-07-27T17:11:58.181Z",
+      "checkedAt": "2026-08-03T17:22:19.622Z",
       "httpStatus": 200,
-      "headline": "Michael Jordan and David Beckham spotted together in Ibiza",
+      "headline": "Chris Bosh cautions Wemby on blood clots: 'Take your medicine'",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-07-27T17:11:58.182Z",
+      "checkedAt": "2026-08-03T17:22:19.623Z",
       "httpStatus": 200,
-      "headline": "Canucks' Cammi Granato shifts from assistant GM to adviser role",
+      "headline": "Graf stays with Sharks on 3-year deal worth $12.75 million",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-07-27T17:11:58.183Z",
+      "checkedAt": "2026-08-03T17:22:19.625Z",
       "httpStatus": 200,
-      "headline": "MLS Power Rankings: Can Lewandowski propel Chicago up the order?",
+      "headline": "MLS Power Rankings: With Casemiro in tow, Miami retakes top spot",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-07-27T17:11:58.184Z",
+      "checkedAt": "2026-08-03T17:22:19.626Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-07-27T17:11:58.185Z",
+      "checkedAt": "2026-08-03T17:22:19.627Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "2026 MLB trade deadline tracker: Rumors, news, analysis",
+      "title": "2026 MLB trade deadline grades: Report cards for every deal",
       "league": "MLB",
-      "note": "Which contenders will make the biggest splash? Here's what we're hearing as 6 p.m. ET on Aug. 3 approaches.",
-      "url": "https://www.espn.com/mlb/story/_/id/49410877/2026-mlb-trade-deadline-tracker-rumors-alerts-news-latest-updates-analysis"
+      "note": "Our running scorecard for every big move before Monday's deadline.",
+      "url": "https://www.espn.com/mlb/story/_/id/49454655/2026-mlb-trade-deadline-grades-analysis-report-cards-every-deal"
     },
     {
-      "title": "Fantasy baseball: Bellinger to the IL and more news for Monday",
+      "title": "MLB trade deadline 2026: Ranking prospects who changed teams",
       "league": "MLB",
-      "note": "All of the important fantasy spin and actionable takeaways resulting from the latest baseball news.",
-      "url": "https://www.espn.com/fantasy/baseball/story/_/id/48297021/espn-fantasy-baseball-buzz-injuries-promotions-demotions-trades-prospects-lineup-changes-mlb-news-analysis-2026"
+      "note": "You know the major leaguers on the move -- but what about the potential stars of tomorrow headed the other way in those deals?",
+      "url": "https://www.espn.com/mlb/story/_/id/49464501/mlb-trade-deadline-2026-ranking-prospects-changed-teams"
     },
     {
-      "title": "Michael Jordan and David Beckham spotted together in Ibiza",
+      "title": "Chris Bosh cautions Wemby on blood clots: 'Take your medicine'",
       "league": "NBA",
-      "note": "The two sporting icons were joined by their wives for a lunch meetup, where the duo was seen embracing.",
-      "url": "https://www.espn.com/soccer/story/_/id/49462982/michael-jordan-david-beckham-meet-ibiza"
+      "note": "Retired Heat superstar Chris Bosh offered some advice and issued a warning to Spurs star Victor Wembanyama about his blood clot diagnosis and maintaining his health...",
+      "url": "https://www.espn.com/nba/story/_/id/49521358/chris-bosh-cautions-wemby-blood-clots-take-your-medicine"
     },
     {
-      "title": "76ers celebrate LeBron James' arrival with coronation fit for King",
+      "title": "NBA free agency 2026: Let's play fact vs. fiction after a wild month",
       "league": "NBA",
-      "note": "The 76ers and LeBron James announced Monday their two-year deal on the veteran's minimum for $8 million total was official and that the four-time NBA MVP was indeed...",
-      "url": "https://www.espn.com/nba/story/_/id/49463246/76ers-celebrate-lebron-james-coronation-fit-hoops-king"
+      "note": "NBA front office insider Bobby Marks answers the biggest questions as the dust settles on 2026 free agency.",
+      "url": "https://www.espn.com/nba/story/_/id/49490878/nba-free-agency-2026-bobby-marks-wemby-lebron-deals-giannis-trade-10-offseason-trends"
     },
     {
-      "title": "Canucks' Cammi Granato shifts from assistant GM to adviser role",
+      "title": "Graf stays with Sharks on 3-year deal worth $12.75 million",
       "league": "NHL",
-      "note": "Hockey Hall of Fame player Cammi Granato is changing roles within the Canucks' front office.",
-      "url": "https://www.espn.com/nhl/story/_/id/49442127/canucks-cammi-granato-shifts-assistant-gm-adviser-role"
+      "note": "Forward Collin Graf, who had 21 goals and 25 assists in 81 games last season, re-signed with the Sharks on a three-year deal worth $12.75 million.",
+      "url": "https://www.espn.com/nhl/story/_/id/49500411/graf-stays-sharks-3-year-deal-worth-1275-million"
     }
   ],
   "notes": [
