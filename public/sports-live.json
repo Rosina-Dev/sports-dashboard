@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-17T10:21:52.357Z",
+  "generatedAt": "2026-08-24T10:28:10.132Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-08-17T10:21:52.357Z",
+      "checkedAt": "2026-08-24T10:28:10.133Z",
       "httpStatus": 200,
-      "headline": "Henderson shines over 7 innings as the Brewers take 3 of 4 from the Dodgers",
+      "headline": "Guardians visit the Angels on 3-game road win streak",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-08-17T10:21:52.395Z",
+      "checkedAt": "2026-08-24T10:28:10.168Z",
       "httpStatus": 200,
-      "headline": "Colts, Pacers donate $125,000 each to Indiana flood relief",
+      "headline": "Klay Thompson lands with Heat after clearing waivers",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-08-17T10:21:52.396Z",
+      "checkedAt": "2026-08-24T10:28:10.169Z",
       "httpStatus": 200,
-      "headline": "Werenski reiterates Blue Jackets' future tied to contending",
+      "headline": "Sakic 'confident' Avalanche secure Makar deal before season",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-08-17T10:21:52.398Z",
+      "checkedAt": "2026-08-24T10:28:10.171Z",
       "httpStatus": 200,
-      "headline": "Austin FC vs. FC Dallas - Game Highlights",
+      "headline": "New England Revolution vs. New York City FC - Game Highlights",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-08-17T10:21:52.399Z",
+      "checkedAt": "2026-08-24T10:28:10.172Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-08-17T10:21:52.400Z",
+      "checkedAt": "2026-08-24T10:28:10.173Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Henderson shines over 7 innings as the Brewers take 3 of 4 from the Dodgers",
+      "title": "Guardians visit the Angels on 3-game road win streak",
       "league": "MLB",
-      "note": "Logan Henderson allowed one run in seven innings, Jake Bauers had four hits and two RBI, and the Milwaukee Brewers beat the Los Angeles Dodgers 6-2 on Sunday to tak...",
-      "url": "http://www.espn.com/mlb/recap?gameId=401816560"
+      "note": "Cleveland Guardians (65-66, second in the AL Central) vs. Los Angeles Angels (52-79, fourth in the AL West)",
+      "url": "http://www.espn.com/mlb/preview?gameId=401816661"
     },
     {
-      "title": "Orioles look to extend win streak, take on the Rays",
+      "title": "Giants look to break 3-game skid, take on the Reds",
       "league": "MLB",
-      "note": "Baltimore Orioles (61-63, fourth in the AL East) vs. Tampa Bay Rays (74-49, first in the AL East)",
-      "url": "http://www.espn.com/mlb/preview?gameId=401816563"
+      "note": "Cincinnati Reds (62-69, fifth in the NL Central) vs. San Francisco Giants (52-78, fourth in the NL West)",
+      "url": "http://www.espn.com/mlb/preview?gameId=401816660"
     },
     {
-      "title": "Colts, Pacers donate $125,000 each to Indiana flood relief",
+      "title": "Klay Thompson lands with Heat after clearing waivers",
       "league": "NBA",
-      "note": "The NFL's Indianapolis Colts and NBA's Indiana Pacers are donating $125,000 each to flood relief efforts throughout the state. The WNBA's Indiana Fever and the G Le...",
-      "url": "https://www.espn.com/nfl/story/_/id/49632088/colts-pacers-donate-125000-indiana-flood-relief"
+      "note": "Klay Thompson officially agreed to a two-year deal to join Giannis Antetokounmpo and the Miami Heat after clearing waivers on Sunday.",
+      "url": "https://www.espn.com/nba/story/_/id/49706703/klay-thompson-lands-heat-clearing-waivers"
     },
     {
-      "title": "LeBron James launches YouTube golf venture with Cavs reunion",
+      "title": "2026 NBA buzz: Latest free agency and trade updates",
       "league": "NBA",
-      "note": "New 76ers star LeBron James has launched his latest off-the-court venture, starting a YouTube channel focused on golf.",
-      "url": "https://www.espn.com/nba/story/_/id/49627647/lebron-james-launches-youtube-golf-venture-cavs-reunion"
+      "note": "We're tracking deals, trades and buzz across the NBA, including the latest Cavaliers, Nuggets and Clippers deal.",
+      "url": "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason"
     },
     {
-      "title": "Werenski reiterates Blue Jackets' future tied to contending",
+      "title": "Sakic 'confident' Avalanche secure Makar deal before season",
       "league": "NHL",
-      "note": "Zach Werenski would like to remain with the Columbus Blue Jackets long term, even though there are two seasons left on his current contract.",
-      "url": "https://www.espn.com/nhl/story/_/id/49603049/werenski-reiterates-blue-jackets-future-tied-contending"
+      "note": "Speaking at an Avalanche alumni game, Colorado general manager Joe Sakic on Sunday reiterated the confidence he has in that a contract extension for star defenseman...",
+      "url": "https://www.espn.com/nhl/story/_/id/49707432/sakic-confident-avalanche-secure-makar-deal-season"
     }
   ],
   "notes": [
