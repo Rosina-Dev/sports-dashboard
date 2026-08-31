@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T10:28:09.823Z",
+  "generatedAt": "2026-08-31T17:18:17.772Z",
   "cadence": "Scheduled GitHub Pages refresh: official UFC source checks plus curated dashboard analysis.",
   "sources": [
     {
@@ -9,10 +9,10 @@
       "url": "https://www.ufc.com/events",
       "nextAction": "Compare official event listings with curated upcoming-card data.",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:09.823Z",
+      "checkedAt": "2026-08-31T17:18:17.773Z",
       "httpStatus": 200,
-      "headline": "Events",
-      "summary": "UFC Events responded and exposed 8 relevant UFC signal(s) in the page text."
+      "headline": "Eventos",
+      "summary": "UFC Events responded and exposed 6 relevant UFC signal(s) in the page text."
     },
     {
       "id": "ufc-news",
@@ -20,10 +20,10 @@
       "url": "https://www.ufc.com/news",
       "nextAction": "Refresh dashboard news pulse from recent official headlines.",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:09.942Z",
+      "checkedAt": "2026-08-31T17:18:17.810Z",
       "httpStatus": 200,
-      "headline": "VIDEOS, ARTICLES & GALLERIES",
-      "summary": "UFC News responded and exposed 20 relevant UFC signal(s) in the page text."
+      "headline": "VIDEOS, ARTÍCULOS Y GALERÍAS",
+      "summary": "UFC News responded and exposed 1 relevant UFC signal(s) in the page text."
     },
     {
       "id": "ufc-rankings",
@@ -31,10 +31,10 @@
       "url": "https://www.ufc.com/rankings",
       "nextAction": "Compare official rankings with curated ranking impact notes.",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:09.943Z",
+      "checkedAt": "2026-08-31T17:18:17.810Z",
       "httpStatus": 200,
       "headline": "Rankings | UFC",
-      "summary": "UFC Rankings responded and exposed 66 relevant UFC signal(s) in the page text."
+      "summary": "UFC Rankings responded and exposed 42 relevant UFC signal(s) in the page text."
     }
   ],
   "notes": [

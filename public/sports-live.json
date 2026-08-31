@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-24T10:28:10.132Z",
+  "generatedAt": "2026-08-31T17:18:18.285Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:10.133Z",
+      "checkedAt": "2026-08-31T17:18:18.285Z",
       "httpStatus": 200,
-      "headline": "Guardians visit the Angels on 3-game road win streak",
+      "headline": "Fantasy Baseball Forecaster Playoff Round 1, Week 1: Aug. 31- Sept. 6",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:10.168Z",
+      "checkedAt": "2026-08-31T17:18:18.313Z",
       "httpStatus": 200,
-      "headline": "Klay Thompson lands with Heat after clearing waivers",
+      "headline": "Miami Heat offseason recap, early 2026-27 season preview",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:10.169Z",
+      "checkedAt": "2026-08-31T17:18:18.313Z",
       "httpStatus": 200,
-      "headline": "Sakic 'confident' Avalanche secure Makar deal before season",
+      "headline": "David Shuman joins Islanders' ownership group as limited partner",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:10.171Z",
+      "checkedAt": "2026-08-31T17:18:18.315Z",
       "httpStatus": 200,
-      "headline": "New England Revolution vs. New York City FC - Game Highlights",
+      "headline": "St. Louis CITY SC vs. FC Dallas - Game Highlights",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:10.172Z",
+      "checkedAt": "2026-08-31T17:18:18.315Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-08-24T10:28:10.173Z",
+      "checkedAt": "2026-08-31T17:18:18.316Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Guardians visit the Angels on 3-game road win streak",
+      "title": "Fantasy Baseball Forecaster Playoff Round 1, Week 1: Aug. 31- Sept. 6",
       "league": "MLB",
-      "note": "Cleveland Guardians (65-66, second in the AL Central) vs. Los Angeles Angels (52-79, fourth in the AL West)",
-      "url": "http://www.espn.com/mlb/preview?gameId=401816661"
+      "note": "Set your lineups for the weeks ahead in fantasy baseball with our preview featuring pitcher rankings, hitter ratings and schedule observations.",
+      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49753915/fantasy-baseball-forecaster-espn-2026-mlb-starting-pitcher-hitter-ranks-week-22-august-31-sept-6"
     },
     {
-      "title": "Giants look to break 3-game skid, take on the Reds",
+      "title": "Fantasy baseball forecaster: Team hitting ratings",
       "league": "MLB",
-      "note": "Cincinnati Reds (62-69, fifth in the NL Central) vs. San Francisco Giants (52-78, fourth in the NL West)",
-      "url": "http://www.espn.com/mlb/preview?gameId=401816660"
+      "note": "Stay ahead of the game and optimize your fantasy baseball hitters with our forecaster, which provides a rolling 10-day outlook of every team's hitting matchups as w...",
+      "url": "https://www.espn.com/fantasy/baseball/story/_/id/31165089/fantasy-baseball-forecaster-team-hitting-stolen-base-ratings-platoon-matchups-daily-weekly-leagues"
     },
     {
-      "title": "Klay Thompson lands with Heat after clearing waivers",
+      "title": "Miami Heat offseason recap, early 2026-27 season preview",
       "league": "NBA",
-      "note": "Klay Thompson officially agreed to a two-year deal to join Giannis Antetokounmpo and the Miami Heat after clearing waivers on Sunday.",
-      "url": "https://www.espn.com/nba/story/_/id/49706703/klay-thompson-lands-heat-clearing-waivers"
+      "note": "Miami landed Giannis to create one of the league's most dangerous frontcourts. What's next? We're recapping the offseason and taking an early look at 2026-27.",
+      "url": "https://www.espn.com/nba/story/_/id/49754660/miami-heat-offseason-recap-2026-27-season-preview-stats-roster-depth-chart"
     },
     {
-      "title": "2026 NBA buzz: Latest free agency and trade updates",
+      "title": "NBA offseason recap, early 2026-27 season previews by team",
       "league": "NBA",
-      "note": "We're tracking deals, trades and buzz across the NBA, including the latest Cavaliers, Nuggets and Clippers deal.",
-      "url": "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason"
+      "note": "We're looking back at the offseason and taking an early look at the regular season by rolling out one team profile each weekday through Sept. 18.",
+      "url": "https://www.espn.com/nba/story/_/id/49590770/nba-offseason-recap-2026-27-season-previews-stats-roster-depth-chart-schedules-30-teams"
     },
     {
-      "title": "Sakic 'confident' Avalanche secure Makar deal before season",
+      "title": "David Shuman joins Islanders' ownership group as limited partner",
       "league": "NHL",
-      "note": "Speaking at an Avalanche alumni game, Colorado general manager Joe Sakic on Sunday reiterated the confidence he has in that a contract extension for star defenseman...",
-      "url": "https://www.espn.com/nhl/story/_/id/49707432/sakic-confident-avalanche-secure-makar-deal-season"
+      "note": "David Shuman has joined the New York Islanders' ownership group as a limited partner, subject to NHL approval.",
+      "url": "https://www.espn.com/nhl/story/_/id/49784004/david-shuman-joins-islanders-ownership-group-limited-partner"
     }
   ],
   "notes": [
