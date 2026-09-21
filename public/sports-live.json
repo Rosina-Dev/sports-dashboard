@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-14T16:03:24.734Z",
+  "generatedAt": "2026-09-21T16:05:10.260Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-09-14T16:03:24.734Z",
+      "checkedAt": "2026-09-21T16:05:10.260Z",
       "httpStatus": 200,
-      "headline": "Fantasy Baseball Reliever Depth Chart",
+      "headline": "Fantasy baseball news: Yesavage returns as Toronto seeks a late-season miracle",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-09-14T16:03:24.764Z",
+      "checkedAt": "2026-09-21T16:05:10.296Z",
       "httpStatus": 200,
-      "headline": "Philadelphia 76ers offseason recap, early 2026-27 season preview",
+      "headline": "2026 NBA free agency: Grades for offseason signings, extensions",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-09-14T16:03:24.765Z",
+      "checkedAt": "2026-09-21T16:05:10.297Z",
       "httpStatus": 200,
-      "headline": "Canadiens sign coach Martin St. Louis to a multiyear extension",
+      "headline": "Greg Wyshynski's 'Plant my flag' list: Celebrini, Schaefer and players to take in every league",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-09-14T16:03:24.766Z",
+      "checkedAt": "2026-09-21T16:05:10.298Z",
       "httpStatus": 200,
-      "headline": "MLS Power Rankings: Chicago's slide continues as Nashville cement top spot",
+      "headline": "Dreyer outduels Messi as San Diego hands Miami 4th straight draw",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-09-14T16:03:24.767Z",
+      "checkedAt": "2026-09-21T16:05:10.299Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-09-14T16:03:24.768Z",
+      "checkedAt": "2026-09-21T16:05:10.300Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Fantasy Baseball Reliever Depth Chart",
-      "league": "MLB",
-      "note": "Our updated reliever depth chart displays the closer hierarchy for each team, as well as the fatigue factor in each MLB bullpen.",
-      "url": "https://www.espn.com/fantasy/baseball/flb/story?page=REcloserorgchart"
-    },
-    {
-      "title": "Fantasy baseball news and notes: White Sox and Guardians prepare for first-place battle",
+      "title": "Fantasy baseball news: Yesavage returns as Toronto seeks a late-season miracle",
       "league": "MLB",
       "note": "All of the important fantasy spin and actionable takeaways resulting from the latest baseball news.",
       "url": "https://www.espn.com/fantasy/baseball/story/_/id/48297021/espn-fantasy-baseball-buzz-injuries-promotions-demotions-trades-prospects-lineup-changes-mlb-news-analysis-2026"
     },
     {
-      "title": "Philadelphia 76ers offseason recap, early 2026-27 season preview",
-      "league": "NBA",
-      "note": "The Sixers overhauled their front office and their roster this offseason. Will the major moves end Philly's title drought?",
-      "url": "https://www.espn.com/nba/story/_/id/49884867/philadelphia-76ers-offseason-recap-2026-27-season-preview-stats-roster-depth-chart"
+      "title": "Fantasy Baseball Forecaster Playoff Round 2, Week 2: Sept. 21-27",
+      "league": "MLB",
+      "note": "Set your lineups for fantasy baseball's final week with our preview featuring pitcher rankings, hitter ratings and schedule observations.",
+      "url": "https://www.espn.com/fantasy/baseball/story/_/id/49972036/fantasy-baseball-forecaster-espn-2026-mlb-starting-pitcher-hitter-ranks-week-25-sept-21-27"
     },
     {
-      "title": "NBA offseason recap, early 2026-27 season previews by team",
+      "title": "2026 NBA free agency: Grades for offseason signings, extensions",
       "league": "NBA",
-      "note": "We're looking back at the offseason and taking an early look at the regular season by rolling out one team profile each weekday through Sept. 18.",
-      "url": "https://www.espn.com/nba/story/_/id/49590770/nba-offseason-recap-2026-27-season-previews-stats-roster-depth-chart-schedules-30-teams"
+      "note": "We're grading the biggest free agent signings and extensions, including Keyonte George's extension with the Jazz.",
+      "url": "https://www.espn.com/nba/story/_/id/48957095/2026-nba-free-agency-grades-offseason-signings-deals-contracts-extensions-depth-charts"
     },
     {
-      "title": "Canadiens sign coach Martin St. Louis to a multiyear extension",
+      "title": "The stat that could swing every NBA team's 2026-27 season",
+      "league": "NBA",
+      "note": "Let's dive into the trends, storylines and statistical nuggets that could define the NBA season.",
+      "url": "https://www.espn.com/nba/story/_/id/49956884/nba-teams-most-important-stat-2026-2027-season"
+    },
+    {
+      "title": "Greg Wyshynski's 'Plant my flag' list: Celebrini, Schaefer and players to take in every lea...",
       "league": "NHL",
-      "note": "The Canadiens have signed head coach Martin St. Louis to a multiyear extension.",
-      "url": "https://www.espn.com/nhl/story/_/id/49940783/canadiens-sign-coach-martin-st-louis-multiyear-extension"
+      "note": "Greg Wyshynski is back with the 10 players he's looking to draft in every 2026 fantasy hockey league.",
+      "url": "https://www.espn.com/fantasy/hockey/story/_/id/49974207/nhl-fantasy-hockey-breakouts-targets-sleepers-greg-wyshynski"
     }
   ],
   "notes": [
