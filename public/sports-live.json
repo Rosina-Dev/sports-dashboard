@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28T17:52:27.981Z",
+  "generatedAt": "2026-10-05T18:57:19.498Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-09-28T17:52:27.981Z",
+      "checkedAt": "2026-10-05T18:57:19.498Z",
       "httpStatus": 200,
-      "headline": "MLB ABS challenge rankings: Best and worst of 2026",
+      "headline": "Every team's odds to win the World Series: Brewers closing in on favorite Dodgers",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-09-28T17:52:28.017Z",
+      "checkedAt": "2026-10-05T18:57:19.535Z",
       "httpStatus": 200,
-      "headline": "LeBron James cites Tyrese Maxey as a key factor in his signing with 76ers",
+      "headline": "NBA preseason buzz: Latest on trades, news and intel",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-09-28T17:52:28.018Z",
+      "checkedAt": "2026-10-05T18:57:19.536Z",
       "httpStatus": 200,
-      "headline": "The ESPN app is your home for eveyrthing NHL",
+      "headline": "Fantasy hockey weekly picks: Can't get MacKinnon? Add his linemate instead!",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-09-28T17:52:28.020Z",
+      "checkedAt": "2026-10-05T18:57:19.538Z",
       "httpStatus": 200,
-      "headline": "MLS Power Rankings: No Cavan? No problem for surging Philadelphia",
+      "headline": "Scaloni: Messi's final Argentina match will be unforgettable",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-09-28T17:52:28.020Z",
+      "checkedAt": "2026-10-05T18:57:19.539Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-09-28T17:52:28.021Z",
+      "checkedAt": "2026-10-05T18:57:19.540Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "MLB ABS challenge rankings: Best and worst of 2026",
+      "title": "Every team's odds to win the World Series: Brewers closing in on favorite Dodgers",
       "league": "MLB",
-      "note": "We look at the challenge success rates of players, teams and umps, plus some of the season's biggest misses.",
-      "url": "https://www.espn.com/mlb/story/_/id/50013483/mlb-abs-challenges-best-worst-2026"
+      "note": "Every MLB team's odds to win the 2026 World Series as the playoffs continue.",
+      "url": "https://www.espn.com/espn/betting/story/_/id/46793185/espn-mlb-betting-odds-futures-bets-world-series-american-national-league"
     },
     {
-      "title": "MLB average game time on rise to 2:42, partly because of robot umps",
+      "title": "MLB 2026 playoffs: Ranking home-field advantage for every team",
       "league": "MLB",
-      "note": "The average time of a nine-inning MLB game increased by 3 minutes, 43 seconds this season to 2 hours, 42 minutes following the introduction of robot umpires.",
-      "url": "https://www.espn.com/mlb/story/_/id/50052799/mlb-average-game-increase-partly-robot-umpires"
+      "note": "From atmosphere to unique structures, some places are harder to play than others. Here are the clubs who benefit the most.",
+      "url": "https://www.espn.com/mlb/story/_/id/50103985/mlb-2026-playoffs-ranking-home-field-advantage-yankees-padres-rays-dodgers"
     },
     {
-      "title": "LeBron James cites Tyrese Maxey as a key factor in his signing with 76ers",
+      "title": "NBA preseason buzz: Latest on trades, news and intel",
       "league": "NBA",
-      "note": "LeBron James cites Tyrese Maxey as a key factor in his signing with 76ers",
-      "url": "https://www.espn.com/video/clip/_/id/50053495/lebron-james-cites-tyrese-maxey-key-factor-signing-76ers"
+      "note": "The NBA regular season is less than a month away, and we're tracking all the news, deals, and trades across the league.",
+      "url": "https://www.espn.com/nba/story/_/id/50028196/2026-27-nba-buzz-latest-live-updates-news-intel-trades-deals"
     },
     {
-      "title": "NBA regular-season buzz: Latest on trades, news and intel",
+      "title": "Knicks' Karl-Anthony Towns not expecting contract extension soon",
       "league": "NBA",
-      "note": "Here are the deals, trades and buzz across the NBA, including intel from Monday's media days.",
-      "url": "https://www.espn.com/nba/story/_/id/50028196/2026-27-nba-regular-season-buzz-latest-live-updates-news-intel-trades-deals"
+      "note": "Karl-Anthony Towns says the chances \"don't look good\" for him getting a new extension with the Knicks before the start of the regular season.",
+      "url": "https://www.espn.com/nba/story/_/id/50110415/knicks-karl-anthony-towns-not-expecting-extension-soon"
     },
     {
-      "title": "The ESPN app is your home for eveyrthing NHL",
+      "title": "Fantasy hockey weekly picks: Can't get MacKinnon? Add his linemate instead!",
       "league": "NHL",
-      "note": "The ESPN app is your home for everything NHL",
-      "url": "https://www.espn.com/video/clip/_/id/50052818/the-espn-app-your-home-everything-nhl"
+      "note": "Begin your fantasy hockey week with forwards, defensemen, goalies and streamers to add to your lineup.",
+      "url": "https://www.espn.com/fantasy/hockey/story/_/id/50110300/espn-nhl-fantasy-hockey-weekly-picks-forwards-defensemen-goalies-streamers"
     }
   ],
   "notes": [
