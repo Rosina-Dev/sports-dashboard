@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T18:57:41.384Z",
+  "generatedAt": "2026-11-09T20:16:50.394Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-11-04T18:57:41.384Z",
+      "checkedAt": "2026-11-09T20:16:50.394Z",
       "httpStatus": 200,
-      "headline": "Mad Dog calls for more civility in MLB labor talks",
+      "headline": "What kind of free agent market is Tarik Skubal looking at?",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-11-04T18:57:41.408Z",
+      "checkedAt": "2026-11-09T20:16:50.432Z",
       "httpStatus": 200,
-      "headline": "Wednesday's fantasy hoops adds, NBA bets to make: Jerome, Maxey bets stand out",
+      "headline": "NBA buzz: Latest on trades, news, roster moves and intel",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-11-04T18:57:41.409Z",
+      "checkedAt": "2026-11-09T20:16:50.433Z",
       "httpStatus": 200,
-      "headline": "Voters reject tax proposal tied to plans for Stars' new arena",
+      "headline": "Fantasy hockey: Pick up Maxim Shabanov, Jamie Drysdale, plus other moves to make",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-11-04T18:57:41.410Z",
+      "checkedAt": "2026-11-09T20:16:50.435Z",
       "httpStatus": 200,
-      "headline": "Robert Lewandowski's jersey outselling Lionel Messi's since Chicago arrival",
+      "headline": "Pierre brothers keep family rivalry alive for USMNT-Haiti Nations League QFs",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-11-04T18:57:41.411Z",
+      "checkedAt": "2026-11-09T20:16:50.436Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-11-04T18:57:41.412Z",
+      "checkedAt": "2026-11-09T20:16:50.437Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Mad Dog calls for more civility in MLB labor talks",
+      "title": "What kind of free agent market is Tarik Skubal looking at?",
       "league": "MLB",
-      "note": "Mad Dog calls for more civility in MLB labor talks",
-      "url": "https://www.espn.com/video/clip/_/id/50379936/mad-dog-calls-more-civility-mlb-labor-talks"
+      "note": "What kind of free agent market is Tarik Skubal looking at?",
+      "url": "https://www.espn.com/video/clip/_/id/50434745/what-kind-free-agent-market-tarik-skubal-looking-at"
     },
     {
-      "title": "Grading bold 2026 season predictions for all 30 MLB teams",
+      "title": "Who will win MVP? Cy Young? Picks, analysis for 2026 MLB awards week",
       "league": "MLB",
-      "note": "It's time to see if what we said about each club going into the season was accurate or not -- and what it means for 2027.",
-      "url": "https://www.espn.com/mlb/story/_/id/50359998/grading-bold-2026-season-predictions"
+      "note": "Baseball's best players and managers of 2026 collect their hardware this week -- starting tonight with the year's top rookies.",
+      "url": "https://www.espn.com/mlb/story/_/id/50391276/2026-season-awards-mvp-cy-young-al-nl"
     },
     {
-      "title": "Wednesday's fantasy hoops adds, NBA bets to make: Jerome, Maxey bets stand out",
+      "title": "NBA buzz: Latest on trades, news, roster moves and intel",
       "league": "NBA",
-      "note": "Andre Snellings breaks down Wednesday's NBA slate, highlighting the fantasy streamers to add and bets to make.",
-      "url": "https://www.espn.com/fantasy/basketball/story/_/id/50379954/fantasy-basketball-tips-nba-betting-picks-today"
+      "note": "The NBA is back. The buzz never left. Bookmark this page for the latest news, rumblings and analysis from ESPN's insiders.",
+      "url": "https://www.espn.com/nba/story/_/id/50028196/2026-27-nba-buzz-latest-live-updates-news-intel-trades-deals"
     },
     {
-      "title": "Warriors owner Joe Lacob ecstatic with early Yaxel Lendeborg returns",
+      "title": "Monday's fantasy hoops adds, NBA bets to make: Ty Jerome primed for a big game",
       "league": "NBA",
-      "note": "Warriors owner Joe Lacob is already convinced the team nailed its drafting of Yaxel Lendeborg, saying \"we got this one right.\"",
-      "url": "https://www.espn.com/nba/story/_/id/50380187/joe-lacob-thinks-warriors-nailed-drafting-yaxel-lendeborg"
+      "note": "Andre Snellings breaks down Monday's eight-game NBA slate, highlighting the fantasy streamers to add and bets to make.",
+      "url": "https://www.espn.com/fantasy/basketball/story/_/id/50434186/fantasy-basketball-tips-nba-betting-picks-today"
     },
     {
-      "title": "Voters reject tax proposal tied to plans for Stars' new arena",
+      "title": "Fantasy hockey: Pick up Maxim Shabanov, Jamie Drysdale, plus other moves to make",
       "league": "NHL",
-      "note": "Texas voters rejected a proposal to authorize taxes to help pay off $700 million in bonds for a proposed $3 billion development that includes an arena for the Stars.",
-      "url": "https://www.espn.com/nhl/story/_/id/50379877/voters-reject-tax-proposal-tied-plans-stars-new-arena"
+      "note": "Begin your fantasy hockey week with forwards, defensemen, goalies and streamers to add to your lineup.",
+      "url": "https://www.espn.com/fantasy/hockey/story/_/id/50433847/fantasy-hockey-picks-forwards-defense-goalies-streamers"
     }
   ],
   "notes": [
