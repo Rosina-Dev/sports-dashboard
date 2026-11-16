@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-09T20:16:50.394Z",
+  "generatedAt": "2026-11-16T19:55:45.233Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-11-09T20:16:50.394Z",
+      "checkedAt": "2026-11-16T19:55:45.234Z",
       "httpStatus": 200,
-      "headline": "What kind of free agent market is Tarik Skubal looking at?",
+      "headline": "Buster Posey, Jon Lester among 14 newcomers on baseball's Hall of Fame ballot",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-11-09T20:16:50.432Z",
+      "checkedAt": "2026-11-16T19:55:45.261Z",
       "httpStatus": 200,
-      "headline": "NBA buzz: Latest on trades, news, roster moves and intel",
+      "headline": "76ers star LeBron James ruled out vs. Nets due to lower back management",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-11-09T20:16:50.433Z",
+      "checkedAt": "2026-11-16T19:55:45.262Z",
       "httpStatus": 200,
-      "headline": "Fantasy hockey: Pick up Maxim Shabanov, Jamie Drysdale, plus other moves to make",
+      "headline": "Fantasy hockey pickups: High-volume streamers to help replace injured stars",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-11-09T20:16:50.435Z",
+      "checkedAt": "2026-11-16T19:55:45.263Z",
       "httpStatus": 200,
-      "headline": "Pierre brothers keep family rivalry alive for USMNT-Haiti Nations League QFs",
+      "headline": "MLS Cup playoff Power Rankings: Can history-making Nashville be stopped?",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-11-09T20:16:50.436Z",
+      "checkedAt": "2026-11-16T19:55:45.264Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-11-09T20:16:50.437Z",
+      "checkedAt": "2026-11-16T19:55:45.265Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "What kind of free agent market is Tarik Skubal looking at?",
+      "title": "Buster Posey, Jon Lester among 14 newcomers on baseball's Hall of Fame ballot",
       "league": "MLB",
-      "note": "What kind of free agent market is Tarik Skubal looking at?",
-      "url": "https://www.espn.com/video/clip/_/id/50434745/what-kind-free-agent-market-tarik-skubal-looking-at"
+      "note": "Buster Posey and Jon Lester are among 14 newcomers on baseball's Hall of Fame ballot, while former players Chase Utley and Andy Pettitte are among the 13 holdover c...",
+      "url": "https://www.espn.com/mlb/story/_/id/50502891/posey-lester-14-newcomers-baseball-hall-fame-ballot"
     },
     {
-      "title": "Who will win MVP? Cy Young? Picks, analysis for 2026 MLB awards week",
+      "title": "Every MLB team's chance of signing Skubal -- and their backup plans",
       "league": "MLB",
-      "note": "Baseball's best players and managers of 2026 collect their hardware this week -- starting tonight with the year's top rookies.",
-      "url": "https://www.espn.com/mlb/story/_/id/50391276/2026-season-awards-mvp-cy-young-al-nl"
+      "note": "Dodger or Met blue? We break down all 30 clubs' chances of landing the offseason's biggest free agent -- and who their Plan B should be.",
+      "url": "https://www.espn.com/mlb/story/_/id/50454235/tarik-skubal-all-30-teams-backup-plans"
     },
     {
-      "title": "NBA buzz: Latest on trades, news, roster moves and intel",
+      "title": "76ers star LeBron James ruled out vs. Nets due to lower back management",
       "league": "NBA",
-      "note": "The NBA is back. The buzz never left. Bookmark this page for the latest news, rumblings and analysis from ESPN's insiders.",
-      "url": "https://www.espn.com/nba/story/_/id/50028196/2026-27-nba-buzz-latest-live-updates-news-intel-trades-deals"
+      "note": "LeBron James will miss Monday's game against the Nets as the 76ers continue to manage his lower back.",
+      "url": "https://www.espn.com/nba/story/_/id/50503255/lebron-james-ruled-vs-nets-due-lower-back-management"
     },
     {
-      "title": "Monday's fantasy hoops adds, NBA bets to make: Ty Jerome primed for a big game",
+      "title": "Fantasy basketball adds and NBA bets: All eyes on Tyrese Maxey on Monday",
       "league": "NBA",
-      "note": "Andre Snellings breaks down Monday's eight-game NBA slate, highlighting the fantasy streamers to add and bets to make.",
-      "url": "https://www.espn.com/fantasy/basketball/story/_/id/50434186/fantasy-basketball-tips-nba-betting-picks-today"
+      "note": "Andre Snellings breaks down Monday's NBA slate, highlighting the fantasy streamers to add and bets to make.",
+      "url": "https://www.espn.com/fantasy/basketball/story/_/id/50502778/fantasy-basketball-tips-nba-betting-picks-today"
     },
     {
-      "title": "Fantasy hockey: Pick up Maxim Shabanov, Jamie Drysdale, plus other moves to make",
+      "title": "Fantasy hockey pickups: High-volume streamers to help replace injured stars",
       "league": "NHL",
       "note": "Begin your fantasy hockey week with forwards, defensemen, goalies and streamers to add to your lineup.",
-      "url": "https://www.espn.com/fantasy/hockey/story/_/id/50433847/fantasy-hockey-picks-forwards-defense-goalies-streamers"
+      "url": "https://www.espn.com/fantasy/hockey/story/_/id/50423711/fantasy-hockey-picks-forwards-defense-goalies-streamers"
     }
   ],
   "notes": [
