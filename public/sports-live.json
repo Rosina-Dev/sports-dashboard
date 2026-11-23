@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-16T19:55:45.233Z",
+  "generatedAt": "2026-11-23T21:49:17.128Z",
   "cadence": "Weekly GitHub Actions refresh: public sports news feeds plus official event-page source checks.",
   "sources": [
     {
@@ -9,9 +9,9 @@
       "league": "MLB",
       "url": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/news",
       "status": "ok",
-      "checkedAt": "2026-11-16T19:55:45.234Z",
+      "checkedAt": "2026-11-23T21:49:17.128Z",
       "httpStatus": 200,
-      "headline": "Buster Posey, Jon Lester among 14 newcomers on baseball's Hall of Fame ballot",
+      "headline": "MLB offers higher minimum salaries while union eyes local media revenue sharing",
       "summary": "MLB News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh baseball headlines and compare against dashboard MLB context."
     },
@@ -21,9 +21,9 @@
       "league": "NBA",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
       "status": "ok",
-      "checkedAt": "2026-11-16T19:55:45.261Z",
+      "checkedAt": "2026-11-23T21:49:17.165Z",
       "httpStatus": 200,
-      "headline": "76ers star LeBron James ruled out vs. Nets due to lower back management",
+      "headline": "Fantasy risers and fallers: Trade Davion Mitchell? Move on from De'Aaron Fox?",
       "summary": "NBA News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and summer-league headline context."
     },
@@ -33,9 +33,9 @@
       "league": "NHL",
       "url": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/news",
       "status": "ok",
-      "checkedAt": "2026-11-16T19:55:45.262Z",
+      "checkedAt": "2026-11-23T21:49:17.166Z",
       "httpStatus": 200,
-      "headline": "Fantasy hockey pickups: High-volume streamers to help replace injured stars",
+      "headline": "Stanley Cup odds: Canadiens surge after trading for Dylan Larkin",
       "summary": "NHL News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh offseason and schedule headline context."
     },
@@ -45,9 +45,9 @@
       "league": "MLS",
       "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/news",
       "status": "ok",
-      "checkedAt": "2026-11-16T19:55:45.263Z",
+      "checkedAt": "2026-11-23T21:49:17.167Z",
       "httpStatus": 200,
-      "headline": "MLS Cup playoff Power Rankings: Can history-making Nashville be stopped?",
+      "headline": "Orlando City fires interim coach Perelman, assistant Setti after playoff exit",
       "summary": "MLS News returned 6 headline(s); the dashboard uses the top broad-interest item.",
       "nextAction": "Refresh MLS headline context and compare against dashboard standings snapshot."
     },
@@ -57,7 +57,7 @@
       "league": "FIFA",
       "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
       "status": "ok",
-      "checkedAt": "2026-11-16T19:55:45.264Z",
+      "checkedAt": "2026-11-23T21:49:17.168Z",
       "httpStatus": 200,
       "headline": "FIFA World Cup",
       "summary": "FIFA World Cup responded; review the official page for current details.",
@@ -69,7 +69,7 @@
       "league": "Tennis",
       "url": "https://www.wimbledon.com/en_GB/scores/schedule/index.html",
       "status": "ok",
-      "checkedAt": "2026-11-16T19:55:45.265Z",
+      "checkedAt": "2026-11-23T21:49:17.169Z",
       "httpStatus": 200,
       "headline": "Order of Play",
       "summary": "Wimbledon responded and exposed 1 schedule or event signal(s) in the page text.",
@@ -78,34 +78,34 @@
   ],
   "newsItems": [
     {
-      "title": "Buster Posey, Jon Lester among 14 newcomers on baseball's Hall of Fame ballot",
+      "title": "MLB offers higher minimum salaries while union eyes local media revenue sharing",
       "league": "MLB",
-      "note": "Buster Posey and Jon Lester are among 14 newcomers on baseball's Hall of Fame ballot, while former players Chase Utley and Andy Pettitte are among the 13 holdover c...",
-      "url": "https://www.espn.com/mlb/story/_/id/50502891/posey-lester-14-newcomers-baseball-hall-fame-ballot"
+      "note": "MLB suggested more measures Monday to get players paid earlier in their careers while the players union agreed to share local media equally among the 30 teams.",
+      "url": "https://www.espn.com/mlb/story/_/id/50576198/mlb-offers-higher-minimum-player-salaries-lockout-looms"
     },
     {
-      "title": "Every MLB team's chance of signing Skubal -- and their backup plans",
+      "title": "Sources: Yankees agree to 1-year, $4M deal with reliever Suter",
       "league": "MLB",
-      "note": "Dodger or Met blue? We break down all 30 clubs' chances of landing the offseason's biggest free agent -- and who their Plan B should be.",
-      "url": "https://www.espn.com/mlb/story/_/id/50454235/tarik-skubal-all-30-teams-backup-plans"
+      "note": "The Yankees and left-handed reliever Brent Suter are in agreement on a one-year, $4 million contract with a club option for 2028, sources told ESPN's Jeff Passan on...",
+      "url": "https://www.espn.com/mlb/story/_/id/50576087/yankees-agree-1-year-4m-deal-reliever-suter"
     },
     {
-      "title": "76ers star LeBron James ruled out vs. Nets due to lower back management",
+      "title": "Fantasy risers and fallers: Trade Davion Mitchell? Move on from De'Aaron Fox?",
       "league": "NBA",
-      "note": "LeBron James will miss Monday's game against the Nets as the 76ers continue to manage his lower back.",
-      "url": "https://www.espn.com/nba/story/_/id/50503255/lebron-james-ruled-vs-nets-due-lower-back-management"
+      "note": "Steve Alexander looks at three players on the rise and three who are slumping and how fantasy managers should react.",
+      "url": "https://www.espn.com/fantasy/basketball/story/_/id/50575130/fantasy-basketball-risers-fallers-keep-cut-add-today"
     },
     {
-      "title": "Fantasy basketball adds and NBA bets: All eyes on Tyrese Maxey on Monday",
+      "title": "2026 NBA Cup: Schedule, format, groups, updates and more",
       "league": "NBA",
-      "note": "Andre Snellings breaks down Monday's NBA slate, highlighting the fantasy streamers to add and bets to make.",
-      "url": "https://www.espn.com/fantasy/basketball/story/_/id/50502778/fantasy-basketball-tips-nba-betting-picks-today"
+      "note": "Here's everything you need to know about the fourth annual in-season tournament, including the recent win by the Nuggets.",
+      "url": "https://www.espn.com/nba/story/_/id/49577473/2026-nba-season-tournament-cup-format-highlights-updates"
     },
     {
-      "title": "Fantasy hockey pickups: High-volume streamers to help replace injured stars",
+      "title": "Stanley Cup odds: Canadiens surge after trading for Dylan Larkin",
       "league": "NHL",
-      "note": "Begin your fantasy hockey week with forwards, defensemen, goalies and streamers to add to your lineup.",
-      "url": "https://www.espn.com/fantasy/hockey/story/_/id/50423711/fantasy-hockey-picks-forwards-defense-goalies-streamers"
+      "note": "The Carolina Hurricanes lead Stanley Cup odds, while the Montreal Canadiens rise after trading for Dylan Larkin.",
+      "url": "https://www.espn.com/espn/betting/story/_/id/44686270/2026-nhl-stanley-cup-playoffs-championship-odds"
     }
   ],
   "notes": [
